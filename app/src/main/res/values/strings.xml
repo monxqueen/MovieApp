@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ProjetoIntegrador</string>
+    <string name="movie_genre">Ação</string>
+    <string name="movie_search">Pesquisar por um filme...</string>
+</resources>

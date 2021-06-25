@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="backgroundColor">#E5E5E5</color>
+    <color name="bigTextColor">#223334</color>
+    <color name="smallTextColor">#737599</color>
+    <color name="movieTextColor">#12153D</color>
+    <color name="movieInfoTextColor">#9A9BB2</color>
+    <color name="greenPrimaryColor">#11C76F</color>
+    <color name="buttonGenreColor">#AFAFAF</color>
+    <color name="starColor">#FCC419</color>
+    <color name="searchColor">#000000</color>
+</resources>

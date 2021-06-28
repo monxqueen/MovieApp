@@ -2,4 +2,9 @@
     <string name="app_name">ProjetoIntegrador</string>
     <string name="movie_genre">Ação</string>
     <string name="movie_search">Pesquisar por um filme...</string>
+    <string name="movie_title">Ford vs Ferrari</string>
+    <string name="movie_img_description">movie banner picture</string>
+    <string name="heart_icon_description">heart icon</string>
+    <string name="star_icon_description">star icon</string>
+    <string name="movie_rating">81%</string>
 </resources>

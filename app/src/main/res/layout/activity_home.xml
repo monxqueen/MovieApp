@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context=".MainActivity">
+    tools:context=".HomeActivity">
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/submitSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/large"
-        android:layout_marginVertical="49dp"
-        android:background="none"
+        android:layout_marginVertical="@dimen/xxlarge"
+        android:backgroundTint="@color/backgroundColor"
         android:src="@drawable/ic_baseline_search_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,17 +22,41 @@
         android:id="@+id/searchMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginVertical="@dimen/xlarge"
+        android:layout_marginStart="@dimen/small"
+        android:layout_marginEnd="@dimen/xxlarge"
         android:ems="16"
         android:hint="@string/movie_search"
         android:inputType="text"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        android:textSize="@dimen/small_sp"
+        app:layout_constraintStart_toEndOf="@+id/submitSearch"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLytOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/xlarge"
+        android:background="@color/backgroundColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchMovie" />
+
+    <!-- probably add recycler view of movie genres here and set top of viewpager to bottom of this rv -->
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLytOptions"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+    <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvGenres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +73,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchMovie"
         tools:listitem="@layout/item_movie"/>
-    <!--alterar depois pra app:layout_constraintTop_toBottomOf="@+id/rvGenres"-->
-    <!--aqui na activity só deixa o edittext de pesquisar por filme e o imageview da lupa, o resto transfere tudo pra um fragment e coloca as recyclerviews na horizontal (kotlin)-->
+    alterar depois pra app:layout_constraintTop_toBottomOf="@+id/rvGenres"
+    aqui na activity só deixa o edittext de pesquisar por filme e o imageview da lupa, o resto transfere tudo pra um fragment e coloca as recyclerviews na horizontal (kotlin)-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

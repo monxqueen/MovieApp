@@ -24,19 +24,22 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/xlarge"
         android:layout_marginStart="@dimen/small"
-        android:layout_marginEnd="@dimen/xxlarge"
         android:ems="16"
+        android:backgroundTint="@color/black"
+        android:textColorHint="@color/black"
         android:hint="@string/movie_search"
         android:inputType="text"
         android:textSize="@dimen/small_sp"
+        app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/submitSearch" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLytOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/xlarge"
+        app:tabTextColor="@color/movieTitleColor"
         android:background="@color/backgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +55,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLytOptions"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-
 
 
     <!--<androidx.recyclerview.widget.RecyclerView

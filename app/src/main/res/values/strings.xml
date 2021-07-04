@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">ProjetoIntegrador</string>
-    <string name="movie_genre">Ação</string>
+    <string name="movie_genre">Genre</string>
     <string name="movie_search">Pesquisar por um filme...</string>
-    <string name="movie_title">Sweet Tooth</string>
+    <string name="movie_title">Movie title</string>
     <string name="movie_img_description">movie banner picture</string>
     <string name="heart_icon_description">heart icon</string>
     <string name="star_icon_description">star icon</string>
     <string name="movie_rating">81%</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="users_avaluation">
+        Avaliação dos usuários
+    </string>
+    <string name="synopsis">Sinopse</string>
+    <string name="cast">Elenco</string>
+    <string name="movie_synopsis">American car designer Carroll Shelby and driver Kn Miles battle corporate interference and the laws of physics to build a revolutionary race car for Ford in order.</string>
+    <string name="duration">2h 32min</string>
 </resources>

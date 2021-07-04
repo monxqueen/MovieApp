@@ -12,7 +12,9 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class FavoriteMoviesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
+    //private lateinit var moviesAdapter: MoviesRvAdapter
+
     private var param1: String? = null
     private var param2: String? = null
 
@@ -39,6 +41,10 @@ class FavoriteMoviesFragment : Fragment() {
         txtTest2.setOnClickListener {
             Toast.makeText(requireActivity(), "Fragment 2", Toast.LENGTH_SHORT).show()
         }
+        //val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
+        /*rvMovies.adapter = moviesRvAdapter
+          rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+         */
     }
 
     companion object {

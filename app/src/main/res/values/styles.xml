@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="movieTitle">
+        <item name="android:text">@string/movie_title</item>
+        <item name="android:textColor">@color/movieTitleColor</item>
+        <item name="android:textSize">@dimen/large_sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="movieAdditionalInfo">
+        <item name="android:textSize">@dimen/small_sp</item>
+        <item name="android:textColor">@color/movieInfoTextColor</item>
+    </style>
+
+    <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
+    </style>
+
+    <style name="ShapeAppearance_custom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+        <item name="cornerSizeBottomRight">32dp</item>
+    </style>
+
+    <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners2</item>
+    </style>
+
+    <style name="ShapeAppearance_custom_corners2" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">32dp</item>
+        <item name="cornerSizeBottomLeft">32dp</item>
+    </style>
+</resources>

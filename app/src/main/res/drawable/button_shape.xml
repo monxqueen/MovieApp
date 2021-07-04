@@ -4,10 +4,10 @@
 
     <solid android:color="@color/buttonGenreColor" />
     <size
-        android:width="105dp"
-        android:height="40dp"
-        android:viewportWidth="105"
-        android:viewportHeight="40" />
+        android:width="75dp"
+        android:height="30dp"
+        android:viewportWidth="75"
+        android:viewportHeight="30" />
     <corners android:radius="50dp" />
 
 </shape>

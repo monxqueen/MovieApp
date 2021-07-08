@@ -2,17 +2,19 @@
 <resources>
     <style name="movieTitle">
         <item name="android:text">@string/movie_title</item>
+        <item name="fontFamily">@font/lato_regular</item>
         <item name="android:textColor">@color/movieTitleColor</item>
-        <item name="android:textSize">@dimen/large_sp</item>
+        <item name="android:textSize">@dimen/medium_sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="movieAdditionalInfo">
         <item name="android:textSize">@dimen/small_sp</item>
+        <item name="fontFamily">@font/lato_regular</item>
         <item name="android:textColor">@color/movieInfoTextColor</item>
     </style>
 
-    <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
+<!-->style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
     </style>
 
@@ -20,7 +22,7 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeBottomLeft">32dp</item>
         <item name="cornerSizeBottomRight">32dp</item>
-    </style>
+    </style>-->
 
     <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners2</item>
@@ -30,5 +32,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">32dp</item>
         <item name="cornerSizeBottomLeft">32dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.Card.Media" parent="">
+        <item name="cornerSizeBottomLeft">40dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
     </style>
 </resources>

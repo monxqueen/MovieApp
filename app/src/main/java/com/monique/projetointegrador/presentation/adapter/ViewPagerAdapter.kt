@@ -1,9 +1,10 @@
-package com.monique.projetointegrador
+package com.monique.projetointegrador.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
+import com.monique.projetointegrador.presentation.AllMoviesFragment
+import com.monique.projetointegrador.presentation.FavoriteMoviesFragment
 
 class ViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     override fun getCount(): Int {

@@ -1,19 +1,24 @@
-package com.monique.projetointegrador
+package com.monique.projetointegrador.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.monique.projetointegrador.R
+import com.monique.projetointegrador.data.model.Movies
 
-class MoviesRvAdapter(private var dataset: List<Movies>): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
+class MoviesRvAdapter(val context: Context, private var dataset: List<Movies>): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var imgMovie: ImageView? = view.findViewById(R.id.imgMovie)
         var titleMovie: TextView? = view.findViewById(R.id.titleMovie)
         var rateMovie: TextView? = view.findViewById(R.id.rateMovie)
-        var favIcon: ImageView? = view.findViewById(R.id.notFavIcon)
+        var favBtn: ToggleButton = view.findViewById(R.id.favBtn)
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -24,15 +29,16 @@ class MoviesRvAdapter(private var dataset: List<Movies>): RecyclerView.Adapter<M
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(dataset[position].getImg() !== ""){
+            holder.imgMovie?.let { Glide.with(context).load(dataset[position].getImg()).into(it) }
+        }
         holder.titleMovie?.text = dataset[position].getTitle()
-        holder.rateMovie?.text = dataset[position].getRate().toString()
-        holder.favIcon?.setOnClickListener {
-            if(dataset[position].getIsFavorite()){
-                it.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
-                dataset[position].setIsFavorite(false)
-            }else{
-                it.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
+        holder.rateMovie?.text = dataset[position].getRating().toString()
+        holder.favBtn.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
                 dataset[position].setIsFavorite(true)
+            }else{
+                dataset[position].setIsFavorite(false)
             }
         }
     }

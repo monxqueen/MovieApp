@@ -1,4 +1,4 @@
-package com.monique.projetointegrador
+package com.monique.projetointegrador.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,6 +6,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.monique.projetointegrador.R
+import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
 
 class HomeActivity : AppCompatActivity() {
 

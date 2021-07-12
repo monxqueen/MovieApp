@@ -1,21 +1,30 @@
 package com.monique.projetointegrador.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.data.model.Genres
 import com.monique.projetointegrador.data.model.Movies
+import com.monique.projetointegrador.data.repository.Network
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class AllMoviesFragment : Fragment() {
+class AllMoviesFragment : Fragment() { /*se for utilizar a interface de fav movies, coloca FavMoviesListListener como parâmetro aqui*/
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
+    private lateinit var progressBar: ProgressBar
+    var favMoviesList: MutableList<Movies> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +40,16 @@ class AllMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genresList = listOf("Ação", "Terror", "Romance", "Animação", "infantil", "Comedia")
-        val moviesList = listOf(
-            Movies(title = "Moana", rating = "98", img = "https://images-na.ssl-images-amazon.com/images/I/A1JOaV3B6fL._AC_SY679_.jpg"),
-            Movies(title = "Frozen", rating = "50", img = "https://images-na.ssl-images-amazon.com/images/I/81zbSEXnDOL.jpg"),
-            Movies(title = "Barbie", rating = "100", img = "https://images-na.ssl-images-amazon.com/images/I/51MzRRo9tbL._AC_.jpg")
-        )
+        progressBar = view.findViewById(R.id.loading)
+
+        val genresList: MutableList<Genres> = mutableListOf()
+        val moviesList: MutableList<Movies> = mutableListOf()
 
         val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
 
         genresAdapter = GenresRvAdapter(view.context, genresList)
-        moviesAdapter = MoviesRvAdapter(view.context, moviesList)
+        moviesAdapter = MoviesRvAdapter(context = view.context, dataset = moviesList)
 
         rvMovies.adapter = moviesAdapter
         rvGenres.adapter = genresAdapter
@@ -50,10 +57,55 @@ class AllMoviesFragment : Fragment() {
         rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
+        getGenres()
+        getPopularMovies()
+    }
+
+    @SuppressLint("CheckResult")
+    fun getPopularMovies(){
+        Network.getService().getPopularMovies()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+            }
+            .doOnComplete {
+                progressBar.visibility = View.GONE
+            }
+            .subscribe { response ->
+                moviesAdapter.dataset.addAll(response.results)
+                moviesAdapter.notifyDataSetChanged()
+            }
+        //dps q carregar a req da api, colocar o progress bar como gone: loading.visibility = View.GONE
+    }
+
+    @SuppressLint("CheckResult")
+    fun getGenres(){
+        Network.getService().getAllGenres()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError {
+            }
+            .subscribe { response ->
+                genresAdapter.dataset.addAll(response.genres)
+                genresAdapter.notifyDataSetChanged()
+            }
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = AllMoviesFragment()
     }
+
+    /*override fun addToFavorite(element: Movies){
+        favMoviesList.add(element)
+        Toast.makeText(requireContext(), "Filme adicionado aos favoritos", Toast.LENGTH_LONG).show()
+    }
+
+    override fun removeFromFavorite(position: Int){
+        favMoviesList.removeAt(position)
+    }
+
+    override fun elementIsFavorite(element: Movies): Boolean{
+        return favMoviesList.contains(element)
+    }*/
 }

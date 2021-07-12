@@ -4,23 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/xlarge">
+    android:paddingStart="@dimen/large"
+    tools:ignore="RtlSymmetry">
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_marginTop="@dimen/large"
         android:id="@+id/cvImage"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small"
+        android:layout_marginTop="@dimen/large"
+        android:layout_marginEnd="@dimen/medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        card_view:cardBackgroundColor="@color/transparent"
+        card_view:cardBackgroundColor="@android:color/transparent"
         card_view:cardCornerRadius="@dimen/xlarge"
-        card_view:cardElevation="@dimen/small">
+        card_view:cardElevation="@dimen/xsmall">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/imgMovie"
                 android:layout_width="match_parent"
@@ -32,24 +36,12 @@
         </FrameLayout>
     </androidx.cardview.widget.CardView>
 
-
-    <!--<com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/cvImage"
-        android:layout_width="260dp"
-        android:layout_height="390dp"
-        android:layout_margin="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
-        tools:src="@drawable/img_exemplo"/>-->
-
     <TextView
         android:id="@+id/titleMovie"
+        style="@style/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large"
-        style="@style/movieTitle"
         app:layout_constraintEnd_toEndOf="@+id/cvImage"
         app:layout_constraintStart_toStartOf="@+id/cvImage"
         app:layout_constraintTop_toBottomOf="@+id/cvImage" />
@@ -59,12 +51,12 @@
         android:layout_width="@dimen/large"
         android:layout_height="@dimen/medium"
         android:layout_marginStart="@dimen/xsmall"
-        android:checked="false"
-        android:text=""
-        android:textOn=""
-        android:textOff=""
-        android:contentDescription="@string/heart_icon_description"
         android:background="@drawable/heart_button"
+        android:checked="false"
+        android:contentDescription="@string/heart_icon_description"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="@+id/titleMovie"
         app:layout_constraintStart_toEndOf="@+id/titleMovie"
         app:layout_constraintTop_toTopOf="@+id/titleMovie" />
@@ -74,7 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/xsmall"
-        android:layout_marginEnd="@dimen/medium"
+        android:layout_marginEnd="@dimen/xsmall"
         android:contentDescription="@string/star_icon_description"
         android:src="@drawable/ic_baseline_star_24"
         app:layout_constraintEnd_toEndOf="@+id/cvImage"
@@ -85,13 +77,11 @@
         android:id="@+id/rateMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/xsmall"
-        android:text="@string/movie_rating"
         android:fontFamily="@font/lato_regular"
+        android:text="@string/movie_rating"
         android:textColor="@color/movieTitleColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/star"
         app:layout_constraintTop_toTopOf="@+id/star" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

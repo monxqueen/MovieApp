@@ -11,9 +11,10 @@
         android:id="@+id/submitSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/large"
-        android:layout_marginTop="@dimen/large"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
         android:backgroundTint="@color/backgroundColor"
+        android:contentDescription="@string/search_button_description"
         android:src="@drawable/ic_baseline_search_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,36 +28,87 @@
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
         app:layout_constraintTop_toTopOf="@+id/submitSearch" />-->
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/searchMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/xsmall"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/movieInfoTextColor"
         android:ems="15"
+        android:fontFamily="@font/lato_regular"
         android:hint="@string/movie_search"
         android:inputType="text"
-        android:fontFamily="@font/lato_regular"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/movieInfoTextColor"
         android:textSize="@dimen/small_sp"
         app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
         app:layout_constraintTop_toTopOf="@+id/submitSearch" />
 
+    <!--<EditText
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/xsmall"
+        android:backgroundTint="@color/black"
+        android:ems="15"
+        android:fontFamily="@font/lato_regular"
+        android:hint="@string/movie_search"
+        android:inputType="text"
+        android:textColorHint="@color/black"
+        android:textSize="@dimen/small_sp"
+        app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
+        app:layout_constraintStart_toEndOf="@+id/submitSearch"
+        app:layout_constraintTop_toTopOf="@+id/submitSearch" />-->
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLytOptions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lato_regular"
         android:layout_marginTop="@dimen/medium"
-        app:tabIndicatorColor="@color/greenPrimaryColor"
-        app:tabTextColor="@color/movieTitleColor"
-        android:layout_marginHorizontal="@dimen/large"
-        android:background="@color/backgroundColor"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchMovie" />
+        app:layout_constraintTop_toBottomOf="@+id/searchMovie"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/greenPrimaryColor"
+        app:tabIndicatorFullWidth="false"
+        app:tabSelectedTextColor="@color/movieTitleColor"
+        app:tabTextAppearance="@style/CustomTabTextLayout"
+        app:tabTextColor="#2A12153D" />
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small"
+        android:visibility="gone"
+        android:src="@drawable/tab_indicator"
+        app:layout_constraintStart_toStartOf="@+id/submitSearch"
+        app:layout_constraintTop_toBottomOf="@+id/submitSearch" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/movieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="@string/search_mode"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/lato_regular"
+        android:text="@string/return_to_home"
+        android:textColor="@color/greenPrimaryColor"
+        android:textSize="@dimen/small_sp"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -64,7 +116,6 @@
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLytOptions"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tabLytOptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

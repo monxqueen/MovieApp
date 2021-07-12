@@ -12,29 +12,15 @@
         android:id="@+id/returnBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small"
         android:layout_marginStart="@dimen/xsmall"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:fabSize="mini"
+        android:layout_marginTop="@dimen/small"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/floating_btn_description"
+        android:src="@drawable/ic_round_navigate_before"
         app:borderWidth="0dp"
-        android:backgroundTint="@color/transparent"
-        android:src="@drawable/ic_round_navigate_before" />
-
-   <!-- <com.google.android.material.card.MaterialCardView
-        android:id="@+id/imgCardView"
-        style="@style/CustomCardCorners"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:fabSize="mini"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="paren">
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/img_exemplo2"
-                android:scaleType="centerCrop"/>
-    </com.google.android.material.card.MaterialCardView>-->
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/posterMovie"
@@ -44,7 +30,7 @@
         android:src="@drawable/img_exemplo2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.Card.Media"/>
+        app:shapeAppearanceOverlay="@style/shapeableImageStyle" />
 
 
     <com.google.android.material.card.MaterialCardView
@@ -80,12 +66,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="@dimen/small"
+        android:layout_marginTop="@dimen/medium"
         android:text="@string/movie_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:elevation="@dimen/medium"
@@ -101,6 +88,7 @@
         android:layout_width="@dimen/large"
         android:layout_height="@dimen/large"
         android:layout_marginStart="@dimen/small"
+        android:contentDescription="@string/star_rating_description"
         android:elevation="@dimen/small"
         android:src="@drawable/ic_baseline_star_24"
         app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
@@ -144,12 +132,12 @@
         android:id="@+id/favBtnMovieInfo"
         android:layout_width="@dimen/xlarge"
         android:layout_height="@dimen/large"
-        android:checked="false"
-        android:text=""
-        android:textOn=""
-        android:textOff=""
         android:layout_marginEnd="@dimen/large"
         android:background="@drawable/heart_button"
+        android:checked="false"
+        android:text=""
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="@+id/movieTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/movieTitle" />
@@ -158,6 +146,7 @@
         android:id="@+id/genreRvMovieInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/movieYear"
         app:layout_constraintTop_toBottomOf="@+id/movieYear"
         tools:listitem="@layout/item_genre" />
@@ -169,7 +158,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large"
         android:text="@string/synopsis"
-        android:textSize="@dimen/medium_sp"
+        android:textSize="20sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/movieYear"
         app:layout_constraintTop_toBottomOf="@+id/genreRvMovieInfo" />
@@ -182,6 +171,7 @@
         android:layout_marginTop="@dimen/xsmall"
         android:fontFamily="@font/lato_regular"
         android:text="@string/movie_synopsis"
+        android:textColor="@color/movieInfoTextColor"
         app:layout_constraintStart_toStartOf="@+id/txtViewSynopsis"
         app:layout_constraintTop_toBottomOf="@+id/txtViewSynopsis" />
 
@@ -192,7 +182,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large"
         android:text="@string/cast"
-        android:textSize="@dimen/medium_sp"
+        android:textSize="20sp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/txtViewSynopsis"
         app:layout_constraintTop_toBottomOf="@+id/movieSynopsis" />

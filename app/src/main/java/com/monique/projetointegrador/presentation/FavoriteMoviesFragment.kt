@@ -5,14 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.data.model.Genres
+import com.monique.projetointegrador.data.model.Movies
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
+import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 
-class FavoriteMoviesFragment : Fragment() {
+class FavoriteMoviesFragment : Fragment() { /*se for utilizar a interface de fav movies, coloca FavMoviesListListener como parâmetro aqui e recebe a lista de filmes fav da fragment all movies*/
 
-    //private lateinit var moviesAdapter: MoviesRvAdapter
+    private lateinit var moviesAdapter: MoviesRvAdapter
+    private var favMoviesList: MutableList<Movies> = mutableListOf()
 
     private lateinit var genresAdapter: GenresRvAdapter
 
@@ -30,15 +35,30 @@ class FavoriteMoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genresList = listOf("Ação", "Terror", "Romance", "Animação", "infantil", "Comedia")
+        val genresList: MutableList<Genres> = mutableListOf()
 
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
         genresAdapter = GenresRvAdapter(view.context, genresList)
         rvGenres.adapter = genresAdapter
         rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        //val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
-        /*rvMovies.adapter = moviesRvAdapter
-          rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-         */
+        val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
+        moviesAdapter = MoviesRvAdapter(context = view.context, dataset = favMoviesList)
+        rvMovies.adapter = moviesAdapter
+        rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+
+        //dps q carregar a req da api, colocar o progress bar como gone: loading.visibility = View.GONE
     }
+
+    /*override fun addToFavorite(element: Movies){
+        favMoviesList.add(element)
+        Toast.makeText(requireContext(), "Filme adicionado aos favoritos", Toast.LENGTH_LONG).show()
+    }
+
+    override fun removeFromFavorite(position: Int){
+        favMoviesList.removeAt(position)
+    }
+
+    override fun elementIsFavorite(element: Movies): Boolean{
+        return favMoviesList.contains(element)
+    }*/
 }

@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.data.model.Genres
 
-class GenresRvAdapter(val context: Context, private val dataSet: List<String>): RecyclerView.Adapter<GenresRvAdapter.ViewHolder>() {
+class GenresRvAdapter(val context: Context, val dataset: MutableList<Genres> = mutableListOf()): RecyclerView.Adapter<GenresRvAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val genre: Chip? = view.findViewById(R.id.itemGenre)
@@ -22,12 +23,9 @@ class GenresRvAdapter(val context: Context, private val dataSet: List<String>): 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.genre?.text = dataSet[position]
+        holder.genre?.text = dataset[position].name
         // change chip backgrund color when clicked: unfinished
-        holder.genre?.setOnClickListener {
-            it.setBackgroundResource(R.color.greenPrimaryColor)
-        }
     }
 
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = dataset.size
 }

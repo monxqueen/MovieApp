@@ -16,7 +16,7 @@ object Network {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
-        //okhttp me ajuda a enfiar algo no meu request através do addInterceptor, nesse caso estou inserindo a minha api key.
+        //okhttp me ajuda a colocar algo no meu request através do addInterceptor, nesse caso estou inserindo a minha api key.
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.addInterceptor(logging)
         okHttpClient.addInterceptor { chain ->

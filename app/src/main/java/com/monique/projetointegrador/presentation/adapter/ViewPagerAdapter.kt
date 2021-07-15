@@ -1,31 +1,22 @@
 package com.monique.projetointegrador.presentation.adapter
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.monique.projetointegrador.presentation.AllMoviesFragment
 import com.monique.projetointegrador.presentation.FavoriteMoviesFragment
 
-class ViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
-    override fun getCount(): Int {
+class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+    override fun getItemCount(): Int {
         return 2
     }
 
-    override fun getItem(position: Int): Fragment {
-        var fragment: Fragment = AllMoviesFragment()
-        when(position){
-            0 -> fragment = AllMoviesFragment()
-            1 -> fragment = FavoriteMoviesFragment()
+    override fun createFragment(position: Int): Fragment {
+        return when(position){
+            0 -> AllMoviesFragment()
+            1 -> FavoriteMoviesFragment()
+            else -> AllMoviesFragment()
         }
-        return fragment
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        var tabLayoutText = ""
-        when(position){
-            0 -> tabLayoutText = "Todos os filmes"
-            1 -> tabLayoutText = "Favoritos"
-        }
-        return tabLayoutText
-    }
 }

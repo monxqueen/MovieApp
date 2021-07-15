@@ -14,11 +14,11 @@
         <item name="android:textSize">@dimen/medium_sp</item>
     </style>
 
-    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@drawable/background_color_chip_state</item>
-        <item name="android:textColor">@drawable/text_color_chip_state</item>
+    <style name="CustomChipColors" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
     </style>
-
+    
     <style name="movieAdditionalInfo">
         <item name="android:textSize">@dimen/small_sp</item>
         <item name="fontFamily">@font/lato_regular</item>

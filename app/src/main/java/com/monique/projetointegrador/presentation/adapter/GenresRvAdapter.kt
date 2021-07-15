@@ -24,7 +24,10 @@ class GenresRvAdapter(val context: Context, val dataset: MutableList<Genres> = m
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.genre?.text = dataset[position].name
-        // change chip backgrund color when clicked: unfinished
+        holder.genre?.setOnCheckedChangeListener { chip, isChecked ->
+            // Responds to chip checked/unchecked
+        }
+
     }
 
     override fun getItemCount() = dataset.size

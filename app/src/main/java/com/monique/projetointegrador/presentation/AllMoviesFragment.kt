@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.model.Genres
 import com.monique.projetointegrador.data.model.Movies
 import com.monique.projetointegrador.data.repository.Network
+import com.monique.projetointegrador.domain.AllMoviesFragmentViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,6 +25,7 @@ class AllMoviesFragment : Fragment() { /*se for utilizar a interface de fav movi
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
     var favMoviesList: MutableList<Movies> = mutableListOf()
+    private var viewModel = AllMoviesFragmentViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,24 +59,6 @@ class AllMoviesFragment : Fragment() { /*se for utilizar a interface de fav movi
         rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
         getGenres()
-        getPopularMovies()
-    }
-
-    @SuppressLint("CheckResult")
-    fun getPopularMovies(){
-        Network.getService().getPopularMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
-            }
-            .doOnComplete {
-                progressBar.visibility = View.GONE
-            }
-            .subscribe { response ->
-                moviesAdapter.dataset.addAll(response.results)
-                moviesAdapter.notifyDataSetChanged()
-            }
-        //dps q carregar a req da api, colocar o progress bar como gone: loading.visibility = View.GONE
     }
 
     @SuppressLint("CheckResult")

@@ -22,6 +22,8 @@ interface TMDBService {
     fun getCast()
 
     @GET("genre/movie/list")
-    //fun getAllGenres(@Query("pt-BR") language: String): Observable<ResponseGenres>
     fun getAllGenres(): Observable<ResponseGenres>
+
+    @GET("discover/movie")
+    fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Observable<ResponseMovies>
 }

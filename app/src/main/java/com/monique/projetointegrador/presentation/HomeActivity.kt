@@ -30,14 +30,11 @@ class HomeActivity : AppCompatActivity() {
         searchBtn = findViewById(R.id.submitSearch)
         tbLytOptions = findViewById(R.id.tabLytOptions)
         viewPager = findViewById(R.id.viewPager)
-        //viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        //tbLytOptions.setupWithViewPager(viewPager)
         viewPager.adapter = ViewPagerAdapter(this)
 
         TabLayoutMediator(tbLytOptions, viewPager){ tab, position ->
             tab.text = getTabTitle(position)
         }.attach()
-
     }
 
     private fun getTabTitle(position: Int): String{
@@ -46,6 +43,10 @@ class HomeActivity : AppCompatActivity() {
             1 -> "Favoritos"
             else -> ""
         }
+    }
+
+    fun getViewPager(): ViewPager2{
+        return viewPager
     }
 
 }

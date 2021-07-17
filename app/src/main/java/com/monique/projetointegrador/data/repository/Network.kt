@@ -24,6 +24,7 @@ object Network {
             val originalHttpUrl = original.url()
             val urlWithKey = originalHttpUrl.newBuilder()
                 .addQueryParameter("api_key", Constants.PRIVATE_KEY.value)
+                .addQueryParameter("language", "pt-BR")
                 .build()
 
             chain.proceed(original.newBuilder().url(urlWithKey).build())

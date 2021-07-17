@@ -1,31 +1,25 @@
 package com.monique.projetointegrador.presentation
 
-import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.model.Genres
 import com.monique.projetointegrador.data.model.Movies
-import com.monique.projetointegrador.data.repository.Network
-import com.monique.projetointegrador.domain.AllMoviesFragmentViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
-class AllMoviesFragment : Fragment() { /*se for utilizar a interface de fav movies, coloca FavMoviesListListener como parâmetro aqui*/
+class AllMoviesFragment : Fragment(), MovieListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
-    var favMoviesList: MutableList<Movies> = mutableListOf()
-    private var viewModel = AllMoviesFragmentViewModel()
+    private val viewModel = AllMoviesFragmentViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,54 +35,88 @@ class AllMoviesFragment : Fragment() { /*se for utilizar a interface de fav movi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        progressBar = view.findViewById(R.id.loading)
-
-        val genresList: MutableList<Genres> = mutableListOf()
-        val moviesList: MutableList<Movies> = mutableListOf()
-
         val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
 
-        genresAdapter = GenresRvAdapter(view.context, genresList)
-        moviesAdapter = MoviesRvAdapter(context = view.context, dataset = moviesList)
+        progressBar = view.findViewById(R.id.loading)
+
+        genresAdapter = GenresRvAdapter(context = view.context, listener = this)
+        moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
 
         rvMovies.adapter = moviesAdapter
         rvGenres.adapter = genresAdapter
 
-        rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        viewModel.getMovies()
+        viewModel.getGenres()
 
-        getGenres()
+        getGenresToShow()
+        getMoviesToShow()
     }
 
-    @SuppressLint("CheckResult")
-    fun getGenres(){
-        Network.getService().getAllGenres()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnError {
+    private fun getMoviesToShow(){
+        viewModel.moviesLiveData.observe(viewLifecycleOwner, { response ->
+            response?.let{
+                moviesAdapter.dataset.clear()
+                moviesAdapter.dataset.addAll(it)
+                moviesAdapter.notifyDataSetChanged()
+                progressBar.visibility = View.GONE
             }
-            .subscribe { response ->
-                genresAdapter.dataset.addAll(response.genres)
+
+        })
+    }
+
+    private fun getGenresToShow(){
+        viewModel.genresLiveData.observe(viewLifecycleOwner,{ response ->
+            response?.let{
+                genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
             }
+        })
+    }
+
+    override fun openMovieDetails(movie: Movies){
+        val intent = Intent(requireContext(), MovieInfoActivity::class.java)
+        intent.putExtra("MOVIE_INFO", movie)
+        startActivity(intent)
+    }
+
+    override fun loadMoviesWithGenre(genresId: List<Int>) {
+        viewModel.getMoviesByGenre(genresId)
+        getMoviesToShow()
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = AllMoviesFragment()
     }
+    /*rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)*/
 
-    /*override fun addToFavorite(element: Movies){
-        favMoviesList.add(element)
-        Toast.makeText(requireContext(), "Filme adicionado aos favoritos", Toast.LENGTH_LONG).show()
+    //scroll das recyclerviews estavam muito bugados quando comecei a utilizar o viewpager2, então essa função pode me ajudar a consertar o problema:
+    /*val listener = object : RecyclerView.OnItemTouchListener {
+        override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+            val action = e.action
+            if (rvMovies.canScrollHorizontally(RecyclerView.FOCUS_FORWARD)) {
+                when (action) {
+                    MotionEvent.ACTION_MOVE -> rv.parent
+                        .requestDisallowInterceptTouchEvent(true)
+                }
+                return false
+            }
+            else {
+                when (action) {
+                    MotionEvent.ACTION_MOVE -> rv.parent
+                        .requestDisallowInterceptTouchEvent(false)
+                }
+                rvMovies.removeOnItemTouchListener(this)
+                rvGenres.removeOnItemTouchListener(this)
+                return true
+            }
+        }
+
+        override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+        override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
     }
-
-    override fun removeFromFavorite(position: Int){
-        favMoviesList.removeAt(position)
-    }
-
-    override fun elementIsFavorite(element: Movies): Boolean{
-        return favMoviesList.contains(element)
-    }*/
+    rvGenres.addOnItemTouchListener(listener)
+    rvMovies.addOnItemTouchListener(listener)*/
 }

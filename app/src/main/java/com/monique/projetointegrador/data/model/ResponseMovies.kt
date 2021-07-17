@@ -1,3 +1,6 @@
 package com.monique.projetointegrador.data.model
 
-data class ResponseMovies(val results: List<Movies>, val total_results: Int)
+import com.google.gson.annotations.SerializedName
+
+data class ResponseMovies(@SerializedName("results")
+                          val movieResults: List<Movies>)

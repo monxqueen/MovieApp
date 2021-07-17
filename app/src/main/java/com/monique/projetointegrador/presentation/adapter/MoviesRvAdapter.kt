@@ -12,13 +12,13 @@ import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.data.model.Constants
 import com.monique.projetointegrador.data.model.Movies
 import com.monique.projetointegrador.presentation.MovieListener
 import com.monique.projetointegrador.presentation.MovieInfoActivity
 
 class MoviesRvAdapter(val context: Context, private val listener: MovieListener? = null, var dataset: MutableList<Movies> = mutableListOf()): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
 
-    var favMoviesList: MutableList<Movies> = mutableListOf()
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var imgMovie: ImageView? = view.findViewById(R.id.imgMovie)
         var titleMovie: TextView? = view.findViewById(R.id.titleMovie)
@@ -34,9 +34,9 @@ class MoviesRvAdapter(val context: Context, private val listener: MovieListener?
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        /*if(dataset[position].getImg() !== ""){
-            holder.imgMovie?.let { Glide.with(context).load(dataset[position].getImg()).into(it) }
-        }*/
+        if(dataset[position].getImg() !== ""){
+            holder.imgMovie?.let { Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].getImg()).into(it) }
+        }
         holder.titleMovie?.text = dataset[position].getTitle()
         holder.rateMovie?.text = dataset[position].showRating()
         holder.favBtn.setOnCheckedChangeListener { _, isChecked ->
@@ -59,8 +59,4 @@ class MoviesRvAdapter(val context: Context, private val listener: MovieListener?
 
     override fun getItemCount() = dataset.size
 
-    fun changeDataSet(newDataSet: MutableList<Movies>){
-        dataset = newDataSet
-        notifyDataSetChanged()
-    }
 }

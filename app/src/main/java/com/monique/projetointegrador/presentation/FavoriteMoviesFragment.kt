@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
@@ -38,7 +37,7 @@ class FavoriteMoviesFragment : Fragment() { /*se for utilizar a interface de fav
         val genresList: MutableList<Genres> = mutableListOf()
 
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
-        genresAdapter = GenresRvAdapter(view.context, genresList)
+        genresAdapter = GenresRvAdapter(context = view.context, dataset = genresList)
         rvGenres.adapter = genresAdapter
         rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
         val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
@@ -46,7 +45,6 @@ class FavoriteMoviesFragment : Fragment() { /*se for utilizar a interface de fav
         rvMovies.adapter = moviesAdapter
         rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
-        //dps q carregar a req da api, colocar o progress bar como gone: loading.visibility = View.GONE
     }
 
     /*override fun addToFavorite(element: Movies){

@@ -11,6 +11,7 @@
         android:layout_marginStart="@dimen/medium"
         android:fontFamily="@font/lato_regular"
         android:text="@string/movie_genre"
+        android:textSize="@dimen/small_sp"
         app:checkedIconEnabled="false"
         style="@style/CustomChipColors"
         app:layout_constraintBottom_toBottomOf="parent"

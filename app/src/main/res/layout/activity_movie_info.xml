@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/backgroundColor"
-        tools:context=".presentation.MovieInfoActivity">
+        tools:context=".presentation.MovieDetailsActivity">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/returnBtn"
@@ -70,7 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="@dimen/medium"
+            android:layout_marginTop="16dp"
+            android:maxEms="9"
+            tools:text="aaaaaaa a a a a a a aofaskfaokfos"
             android:text="@string/movie_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
@@ -137,14 +139,14 @@
             android:layout_width="@dimen/xlarge"
             android:layout_height="@dimen/large"
             android:layout_marginEnd="@dimen/large"
+            android:layout_marginTop="@dimen/xsmall"
             android:background="@drawable/heart_button"
             android:checked="false"
             android:text=""
             android:textOff=""
             android:textOn=""
-            app:layout_constraintBottom_toBottomOf="@+id/movieTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/movieTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/genreRvMovieInfo"
@@ -198,8 +200,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/xsmall"
             android:orientation="horizontal"
+            android:paddingBottom="@dimen/medium"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="@id/castTxtView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/castTxtView"
             tools:listitem="@layout/item_cast" />
 

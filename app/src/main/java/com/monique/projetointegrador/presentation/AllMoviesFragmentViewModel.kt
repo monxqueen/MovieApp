@@ -1,50 +1,75 @@
 package com.monique.projetointegrador.presentation
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.monique.projetointegrador.data.model.Genres
-import com.monique.projetointegrador.data.model.Movies
-import com.monique.projetointegrador.data.repository.Network
+import com.monique.projetointegrador.data.repository.MoviesRepositoryImpl
+import com.monique.projetointegrador.domain.Genre
+import com.monique.projetointegrador.domain.Movie
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class AllMoviesFragmentViewModel(): ViewModel() {
+class AllMoviesFragmentViewModel: ViewModel() {
 
-    private val _moviesLiveData = MutableLiveData<List<Movies>>(mutableListOf())
-    val moviesLiveData : LiveData<List<Movies>> = _moviesLiveData
-    private val _genresLiveData = MutableLiveData<List<Genres>>()
-    val genresLiveData : LiveData<List<Genres>> = _genresLiveData
+    private val moviesRepositoryImpl = MoviesRepositoryImpl()
 
-    @SuppressLint("CheckResult")
+    private val _moviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
+    val movieListLiveData : LiveData<List<Movie>> = _moviesLiveData
+
+    private val _genresLiveData = MutableLiveData<List<Genre>>()
+    val genreListLiveData : LiveData<List<Genre>> = _genresLiveData
+
+    private val disposable = CompositeDisposable()
+
     fun getMovies(){
-        Network.getService().getPopularMovies()
+        moviesRepositoryImpl.getPopularMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{ response ->
-                _moviesLiveData.value = response.movieResults
-            }
+            .subscribe(
+                {result ->
+                    _moviesLiveData.value = result
+                },
+                {
+                    print(it.message)
+                }
+            ).handleDisposable()
     }
 
-    @SuppressLint("CheckResult")
     fun getGenres(){
-        Network.getService().getAllGenres()
+        moviesRepositoryImpl.getAllGenres()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe{ response ->
-                _genresLiveData.value = response.genres
-            }
+            .subscribe(
+                {result ->
+                    _genresLiveData.value = result
+                },
+                {
+                    print(it.message)
+                }
+            ).handleDisposable()
     }
 
-    @SuppressLint("CheckResult")
     fun getMoviesByGenre(genresId: List<Int>){
-        Network.getService().getMoviesByGenre(genresId.joinToString(","))
+        moviesRepositoryImpl.getMoviesByGenre(genresId.joinToString(","))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                response ->
-                _moviesLiveData.value = response.movieResults
-            }
+            .subscribe (
+                {result ->
+                    _moviesLiveData.value = result
+                },
+                {
+                    print(it.message)
+                }
+            ).handleDisposable()
     }
+
+    //gerenciamento de memória
+    override fun onCleared() {
+        disposable.dispose()
+        super.onCleared()
+    }
+
+    fun Disposable.handleDisposable(): Disposable = apply { disposable.add(this) }
 }

@@ -1,6 +1,6 @@
-package com.monique.projetointegrador.data.repository
+package com.monique.projetointegrador.data.base
 
-import com.monique.projetointegrador.data.model.Constants
+import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,14 +9,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Network {
 
-    fun getService(): TMDBService {
+    private fun createService(): Retrofit {
 
         //criando uma instância do logging interceptor pra poder me mostrar no logcat tudo que vier do body da aplicação
-        //precisa baixar a bibliotecado logging interceptor la no build.gradle
+        //precisa importar a biblioteca do logging interceptor la no build.gradle
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
-        //okhttp me ajuda a colocar algo no meu request através do addInterceptor, nesse caso estou inserindo a minha api key.
+        //okhttp me ajuda a colocar algo no meu request (url) através do addInterceptor, nesse caso estou inserindo a minha api key.
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.addInterceptor(logging)
         okHttpClient.addInterceptor { chain ->
@@ -30,14 +30,17 @@ object Network {
             chain.proceed(original.newBuilder().url(urlWithKey).build())
         }
 
-        val api = Retrofit.Builder()
+        return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL.value)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient.build())
             .build()
+    }
 
-        return api.create(TMDBService::class.java)
+    fun getMoviesRemoteSource(): MoviesRemoteSource {
+        val api = createService()
+        return api.create(MoviesRemoteSource::class.java)
     }
 
 }

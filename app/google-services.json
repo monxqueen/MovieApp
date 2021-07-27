@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "240349480598",
+    "project_id": "projetointegrador-ebba8",
+    "storage_bucket": "projetointegrador-ebba8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240349480598:android:13878555fbed30bcdde4b7",
+        "android_client_info": {
+          "package_name": "com.monique.projetointegrador"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240349480598-micr7cc2gcuq7g5pvba7q7dji6aqq33g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQnvHvwOQ6Dfgy3fZCjJYXHoGDwnomKAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240349480598-micr7cc2gcuq7g5pvba7q7dji6aqq33g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

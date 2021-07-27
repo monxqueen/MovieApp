@@ -4,48 +4,49 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.data.repository.MoviesRepositoryImpl
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.Cast
+import com.monique.projetointegrador.domain.MovieDetail
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class FavoriteMoviesFragmentViewModel(): ViewModel() {
+class MovieDetailsActivityViewModel: ViewModel() {
+
     private val moviesRepositoryImpl = MoviesRepositoryImpl()
 
-    private val _genresLiveData = MutableLiveData<List<Genre>>()
-    val genreListLiveData : LiveData<List<Genre>> = _genresLiveData
+    private val _movieLiveData = MutableLiveData<MovieDetail>()
+    val movieLiveData: LiveData<MovieDetail> = _movieLiveData
 
-    private val _moviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
-    val movieListLiveData : LiveData<List<Movie>> = _moviesLiveData
+    private val _castLiveData = MutableLiveData<List<Cast>>()
+    val castLiveData: LiveData<List<Cast>> = _castLiveData
 
-    val disposable = CompositeDisposable()
+    private val disposable = CompositeDisposable()
 
-    fun getGenres(){
-        moviesRepositoryImpl.getAllGenres()
+    fun getMovieDetails(movieId: Int){
+        moviesRepositoryImpl.getMovieDetails(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {result ->
-                    _genresLiveData.value = result
+                { result ->
+                    _movieLiveData.value = result
                 },
                 {
-                    print(it.message)
+                    TODO()
                 }
             ).handleDisposable()
     }
 
-    fun getMoviesByGenre(genresId: List<Int>){
-        moviesRepositoryImpl.getMoviesByGenre(genresId.joinToString(","))
+    fun getCast(movieId: Int){
+        moviesRepositoryImpl.getCast(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe (
-                {result ->
-                    _moviesLiveData.value = result
+            .subscribe(
+                { result ->
+                    _castLiveData.value = result
                 },
                 {
-                    print(it.message)
+                    TODO()
                 }
             ).handleDisposable()
     }

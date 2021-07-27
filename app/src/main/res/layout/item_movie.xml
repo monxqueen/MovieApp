@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/large"
+    android:paddingStart="@dimen/medium"
     tools:ignore="RtlSymmetry">
 
     <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -12,7 +12,7 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/small"
-        android:layout_marginTop="@dimen/large"
+        android:layout_marginTop="@dimen/medium"
         android:layout_marginEnd="@dimen/medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:clickable="true"
+                android:focusable="true"
                 android:contentDescription="@string/movie_img_description"
                 tools:src="@drawable/img_exemplo2" />
 
@@ -39,9 +41,13 @@
     <TextView
         android:id="@+id/titleMovie"
         style="@style/movieTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/large"
+        android:maxEms="8"
+        tools:text="Aaaaaaagsdgaaaaa aaaaa a a aaaaaaaaaaaaaaaa aaaaa"
+        android:textAlignment="center"
+        android:layout_marginHorizontal="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
         app:layout_constraintEnd_toEndOf="@+id/cvImage"
         app:layout_constraintStart_toStartOf="@+id/cvImage"
         app:layout_constraintTop_toBottomOf="@+id/cvImage" />
@@ -57,7 +63,6 @@
         android:text=""
         android:textOff=""
         android:textOn=""
-        app:layout_constraintBottom_toBottomOf="@+id/titleMovie"
         app:layout_constraintStart_toEndOf="@+id/titleMovie"
         app:layout_constraintTop_toTopOf="@+id/titleMovie" />
 

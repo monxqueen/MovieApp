@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/small"
+    android:paddingHorizontal="@dimen/small"
     tools:ignore="RtlSymmetry">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -36,6 +36,9 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato_regular"
         android:text="@string/role"
+        android:maxEms="5"
+        android:textAlignment="center"
+        tools:text="Akskfka ksfkakw sfkasfkas kwrka"
         android:textColor="@color/movieInfoTextColor"
         app:layout_constraintEnd_toEndOf="@+id/personName"
         app:layout_constraintStart_toStartOf="@+id/personName"

@@ -9,8 +9,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.data.model.Genres
-import com.monique.projetointegrador.data.model.Movies
+import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 
@@ -20,6 +19,8 @@ class AllMoviesFragment : Fragment(), MovieListener {
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
     private val viewModel = AllMoviesFragmentViewModel()
+    private val movies: MutableList<Movie> = mutableListOf()
+    //private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +43,10 @@ class AllMoviesFragment : Fragment(), MovieListener {
 
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
-
         rvMovies.adapter = moviesAdapter
         rvGenres.adapter = genresAdapter
+
+        //db = AppDatabase.getInstance(requireContext())
 
         viewModel.getMovies()
         viewModel.getGenres()
@@ -54,10 +56,11 @@ class AllMoviesFragment : Fragment(), MovieListener {
     }
 
     private fun getMoviesToShow(){
-        viewModel.moviesLiveData.observe(viewLifecycleOwner, { response ->
+        viewModel.movieListLiveData.observe(viewLifecycleOwner, { response ->
             response?.let{
+                movies.addAll(it)
                 moviesAdapter.dataset.clear()
-                moviesAdapter.dataset.addAll(it)
+                moviesAdapter.dataset.addAll(movies)
                 moviesAdapter.notifyDataSetChanged()
                 progressBar.visibility = View.GONE
             }
@@ -66,7 +69,7 @@ class AllMoviesFragment : Fragment(), MovieListener {
     }
 
     private fun getGenresToShow(){
-        viewModel.genresLiveData.observe(viewLifecycleOwner,{ response ->
+        viewModel.genreListLiveData.observe(viewLifecycleOwner,{ response ->
             response?.let{
                 genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
@@ -74,9 +77,9 @@ class AllMoviesFragment : Fragment(), MovieListener {
         })
     }
 
-    override fun openMovieDetails(movie: Movies){
-        val intent = Intent(requireContext(), MovieInfoActivity::class.java)
-        intent.putExtra("MOVIE_INFO", movie)
+    override fun openMovieDetails(movieId: Int){
+        val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
+        intent.putExtra("MOVIE_ID", movieId)
         startActivity(intent)
     }
 
@@ -85,38 +88,36 @@ class AllMoviesFragment : Fragment(), MovieListener {
         getMoviesToShow()
     }
 
+    /**************************** IMPLEMENTAR *****************************/
+    override fun saveMoviesToFavoriteTab(movie: Movie, addOrRemove: String) {
+        /*val favoriteMoviesDao = db.favoriteMoviesDao()
+        val genreMovieBindingDao = db.genreMovieBindingDao()
+        favoriteMoviesDao.insert(movie)
+        lateinit var genreMovieBinding: GenreMovieBinding
+        for(genreId in movie.genres){
+            genreMovieBinding = GenreMovieBinding(
+                genreId = genreId,
+                movieId = movie.id
+            )
+            genreMovieBindingDao.insertGenreMovie(genreMovieBinding)
+        }*/
+        if(addOrRemove == "add"){
+            if(!FavoriteMoviesFragment.favMoviesList.contains(movie)){
+                FavoriteMoviesFragment.favMoviesList.add(movie)
+            }
+        }else{
+            if(FavoriteMoviesFragment.favMoviesList.contains(movie)){
+                FavoriteMoviesFragment.favMoviesList.remove(movie)
+            }
+        }
+
+
+        /*val intent = Intent(requireContext(), FavoriteMoviesFragment::class.java)
+        intent.putParcelableArrayListExtra("FAVORITE_MOVIES", ArrayList(favoriteMovies))*/
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = AllMoviesFragment()
     }
-    /*rvGenres.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        rvMovies.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)*/
-
-    //scroll das recyclerviews estavam muito bugados quando comecei a utilizar o viewpager2, então essa função pode me ajudar a consertar o problema:
-    /*val listener = object : RecyclerView.OnItemTouchListener {
-        override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-            val action = e.action
-            if (rvMovies.canScrollHorizontally(RecyclerView.FOCUS_FORWARD)) {
-                when (action) {
-                    MotionEvent.ACTION_MOVE -> rv.parent
-                        .requestDisallowInterceptTouchEvent(true)
-                }
-                return false
-            }
-            else {
-                when (action) {
-                    MotionEvent.ACTION_MOVE -> rv.parent
-                        .requestDisallowInterceptTouchEvent(false)
-                }
-                rvMovies.removeOnItemTouchListener(this)
-                rvGenres.removeOnItemTouchListener(this)
-                return true
-            }
-        }
-
-        override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-        override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-    }
-    rvGenres.addOnItemTouchListener(listener)
-    rvMovies.addOnItemTouchListener(listener)*/
 }

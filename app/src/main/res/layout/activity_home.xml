@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/backgroundColor"
     tools:context=".presentation.HomeActivity">
 
@@ -26,7 +31,7 @@
         android:paddingHorizontal="@dimen/small"
         android:queryHint="@string/movie_search"
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" />-->
+        app:layout_constraintTop_toTopOf="@+id/submitSearch" /
 
     <AutoCompleteTextView
         android:id="@+id/searchMovie"
@@ -42,23 +47,23 @@
         android:textSize="@dimen/small_sp"
         app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" />
+        app:layout_constraintTop_toTopOf="@+id/submitSearch" />>-->
 
-    <!--<EditText
-
+    <EditText
+        android:id="@+id/searchMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/xsmall"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/movieInfoTextColor"
         android:ems="15"
         android:fontFamily="@font/lato_regular"
         android:hint="@string/movie_search"
         android:inputType="text"
-        android:textColorHint="@color/black"
+        android:textColorHint="@color/movieInfoTextColor"
         android:textSize="@dimen/small_sp"
         app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
         app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" />-->
+        app:layout_constraintTop_toTopOf="@+id/submitSearch" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLytOptions"
@@ -76,8 +81,9 @@
         app:tabTextAppearance="@style/CustomTabTextLayout"
         app:tabTextColor="#2A12153D" />
 
+
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/greenIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/small"
@@ -87,17 +93,18 @@
         app:layout_constraintTop_toBottomOf="@+id/submitSearch" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/searchModeTxt"
         style="@style/movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/search_mode"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintStart_toStartOf="@+id/greenIcon"
+        app:layout_constraintTop_toBottomOf="@+id/greenIcon" />
 
     <TextView
+        android:id="@+id/backToHomeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -107,8 +114,44 @@
         android:textSize="@dimen/small_sp"
         android:visibility="gone"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
+        app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGenresHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium"
+        android:visibility="invisible"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backToHomeBtn"
+        tools:listitem="@layout/item_all_genres" />
+
+    <ProgressBar
+        android:id="@+id/loadingHome"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMoviesHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvGenres"
+        tools:listitem="@layout/item_movie" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
@@ -119,3 +162,4 @@
         app:layout_constraintTop_toBottomOf="@+id/tabLytOptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

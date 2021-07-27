@@ -1,8 +1,9 @@
 package com.monique.projetointegrador.presentation
 
-import com.monique.projetointegrador.data.model.Movies
+import com.monique.projetointegrador.domain.Movie
 
 interface MovieListener {
-    fun openMovieDetails(movie: Movies)
+    fun openMovieDetails(movieId: Int)
     fun loadMoviesWithGenre(genreIds: List<Int>)
+    fun saveMoviesToFavoriteTab(movie: Movie, addOrRemove: String)
 }

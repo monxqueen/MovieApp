@@ -9,7 +9,7 @@ data class Movie(
     val id: Int,
     val title: String? = null,
     val rating: String? = null,
-    val genres: List<Int>,
+    val genreIds: List<Int>,
     var isFavorite: Boolean = false,
 ) : Parcelable
 

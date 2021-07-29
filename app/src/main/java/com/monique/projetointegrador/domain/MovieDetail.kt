@@ -8,5 +8,6 @@ class MovieDetail(
     val release_date: String,
     val runtime: Int? = null,
     val vote_average: Float,
-    val title: String
+    val title: String,
+    var isFavorite: Boolean = false,
 )

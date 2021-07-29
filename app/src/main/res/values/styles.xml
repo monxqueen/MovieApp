@@ -27,11 +27,11 @@
         <item name="android:textColor">@color/movieInfoTextColor</item>
     </style>
 
-    <style name="CustomCardCorners2" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners2</item>
+    <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
     </style>
 
-    <style name="ShapeAppearance_custom_corners2" parent="">
+    <style name="ShapeAppearance_custom_corners" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopLeft">32dp</item>
         <item name="cornerSizeBottomLeft">32dp</item>

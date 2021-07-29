@@ -39,7 +39,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            style="@style/CustomCardCorners2"
+            style="@style/CustomCardCorners"
             android:layout_width="140dp"
             android:layout_height="75dp"
             android:backgroundTint="@color/white"

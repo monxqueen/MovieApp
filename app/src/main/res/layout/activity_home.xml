@@ -140,7 +140,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMoviesHome"
         android:layout_width="wrap_content"
@@ -150,7 +149,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvGenres"
+        app:layout_constraintTop_toBottomOf="@+id/rvGenresHome"
         tools:listitem="@layout/item_movie" />
 
     <androidx.viewpager2.widget.ViewPager2

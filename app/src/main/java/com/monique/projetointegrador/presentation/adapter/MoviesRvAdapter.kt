@@ -42,22 +42,34 @@ class MoviesRvAdapter(
         }
         holder.titleMovie?.text = dataset[position].title
         holder.rateMovie?.text = dataset[position].rating
-        holder.favBtn?.setOnCheckedChangeListener { toggle, isChecked ->
-            //isChecked assigns true or false
-            if(dataset[position].isFavorite){
-                holder.favBtn?.toggle()
-                dataset[position].isFavorite = false
-                listener?.saveMoviesToFavoriteTab(dataset[position], "remove")
-            }else{
-                holder.favBtn?.toggle()
-                dataset[position].isFavorite = true
-                listener?.saveMoviesToFavoriteTab(dataset[position], "add")
-            }
-            //listener?.saveMoviesToFavoriteTab(dataset[position])
-        }
+
         holder.imgMovie?.setOnClickListener {
             listener?.openMovieDetails(dataset[position].id)
         }
+
+        holder.favBtn?.isChecked = dataset[position].isFavorite
+        holder.favBtn?.setOnCheckedChangeListener { _, isChecked ->
+            listener?.onFavoriteClickedListener(dataset[position], isChecked)
+        }
+        /*if(dataset[position].isFavorite){
+            holder.favBtn?.isActivated
+        }else{
+            holder.favBtn?.isChecked = false
+        }
+        holder.favBtn?.setOnClickListener {
+            //isChecked assigns true or false
+            if(dataset[position].isFavorite){
+                holder.favBtn?.isChecked = false
+                dataset[position].isFavorite = false
+                listener?.saveMoviesToFavoriteTab(dataset[position], "remove")
+                //notifyDataSetChanged()
+            }else{
+                holder.favBtn?.isChecked
+                dataset[position].isFavorite = true
+                listener?.saveMoviesToFavoriteTab(dataset[position], "add")
+            }
+        }*/
+
     }
 
     override fun getItemCount() = dataset.size

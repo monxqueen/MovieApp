@@ -6,14 +6,15 @@ import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.data.repository.MoviesRepositoryImpl
 import com.monique.projetointegrador.domain.Cast
 import com.monique.projetointegrador.domain.MovieDetail
+import com.monique.projetointegrador.domain.usecase.GetMovieDetailsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MovieDetailsActivityViewModel: ViewModel() {
+class MovieDetailsViewModel: ViewModel() {
 
-    private val moviesRepositoryImpl = MoviesRepositoryImpl()
+    private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
     val movieLiveData: LiveData<MovieDetail> = _movieLiveData
@@ -24,7 +25,7 @@ class MovieDetailsActivityViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
 
     fun getMovieDetails(movieId: Int){
-        moviesRepositoryImpl.getMovieDetails(movieId)
+        getMovieDetailsUseCase.executeMovie(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -38,7 +39,7 @@ class MovieDetailsActivityViewModel: ViewModel() {
     }
 
     fun getCast(movieId: Int){
-        moviesRepositoryImpl.getCast(movieId)
+        getMovieDetailsUseCase.executeCast(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -56,5 +57,5 @@ class MovieDetailsActivityViewModel: ViewModel() {
         super.onCleared()
     }
 
-    fun Disposable.handleDisposable(): Disposable = apply { disposable.add(this) }
+    private fun Disposable.handleDisposable(): Disposable = apply { disposable.add(this) }
 }

@@ -7,7 +7,7 @@ import com.monique.projetointegrador.data.repository.MoviesRepositoryImpl
 import com.monique.projetointegrador.domain.Genre
 import com.monique.projetointegrador.domain.Movie
 
-class HomeActivityViewModel: ViewModel() {
+class HomeViewModel: ViewModel() {
 
     private val moviesRepositoryImpl = MoviesRepositoryImpl()
 

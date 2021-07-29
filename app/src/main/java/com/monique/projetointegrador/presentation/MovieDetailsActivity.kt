@@ -30,7 +30,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var castRv: RecyclerView
     private lateinit var castRvAdapter: CastRvAdapter
     private lateinit var genresRvAdapter: MovieDetailsGenresRvAdapter
-    private val viewModel = MovieDetailsActivityViewModel()
+    private val viewModel = MovieDetailsViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +76,12 @@ class MovieDetailsActivity : AppCompatActivity() {
         castRv.adapter = castRvAdapter
         viewModel.getCast(movie.id)
         getCastOfMovie()
+
+        //ainda não tenho acesso se ele é favorito ou não
+        //pois no adapter eu só mudo esse atributo pro objeto da classe Movie, e não MovieDetail
+        if(movie.isFavorite){
+            favButton.isChecked
+        }
 
         movie.backdrop_path?.let{
             Glide.with(this).load(Constants.BASE_URL_IMAGE.value + movie.backdrop_path).into(posterMovie)

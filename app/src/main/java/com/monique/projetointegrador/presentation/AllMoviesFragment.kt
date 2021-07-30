@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 
@@ -19,7 +20,6 @@ class AllMoviesFragment : Fragment(), MovieListener {
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
-    //private val viewModel = AllMoviesViewModel()
     private lateinit var moviesViewModel: MoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,28 +82,19 @@ class AllMoviesFragment : Fragment(), MovieListener {
         startActivity(intent)
     }
 
-    override fun loadMoviesWithGenre(genresId: List<Int>) {
-        moviesViewModel.getMoviesByGenre(genresId)
+    override fun loadMoviesWithGenre(genreIds: List<Int>) {
+        moviesViewModel.getMoviesByGenre(genreIds)
     }
 
-    /*override fun saveMoviesToFavoriteTab(movie: Movie, addOrRemove: String) {
-        if(addOrRemove == "add"){
-            viewModel.favoriteMovie(movie)
-        }else{
-            viewModel.unfavoriteMovie(movie)
-        }
-    }*/
 
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if(isChecked){
+            movie.isFavorite = true
             moviesViewModel.favoriteMovie(movie)
         }else{
+            movie.isFavorite = false
             moviesViewModel.unfavoriteMovie(movie)
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() = AllMoviesFragment()
-    }
 }

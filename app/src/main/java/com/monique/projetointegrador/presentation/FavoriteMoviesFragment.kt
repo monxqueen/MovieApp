@@ -21,7 +21,6 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var rvGenres: RecyclerView
     private lateinit var rvMovies: RecyclerView
-    //private val viewModelFavorites = FavoriteMoviesViewModel()
     private lateinit var viewModelFavorites: MoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,18 +64,6 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
         })
     }
 
-    /*private fun observeFavoriteMovies(){
-        viewModelFavorites.movieListLiveData.observe(viewLifecycleOwner, { result ->
-            result?.let{
-                it.forEach { it.isFavorite = true }
-                moviesAdapter.dataset.addAll(it)
-                moviesAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
-            }
-
-        })
-    }*/
-
     private fun observeFavoriteMovies(){
         viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner, { result ->
             result?.let{
@@ -89,19 +76,11 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
         })
     }
 
-    /*override fun saveMoviesToFavoriteTab(movie: Movie, addOrRemove: String) {
-        if(addOrRemove == "remove"){
-            viewModelFavorites.unfavoriteMovie(movie)
-        }
-    }*/
-
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if(!isChecked){
             viewModelFavorites.unfavoriteMovie(movie)
         }
     }
-
-
 
     override fun openMovieDetails(movieId: Int){
         val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
@@ -113,9 +92,4 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
         /*viewModel.getMoviesByGenre(genresId)
         getMoviesToShow()*/
     }
-
-    companion object {
-        var favMoviesList = mutableListOf<Movie>()
-    }
-
 }

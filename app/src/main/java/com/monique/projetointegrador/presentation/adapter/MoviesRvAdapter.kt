@@ -48,27 +48,9 @@ class MoviesRvAdapter(
         }
 
         holder.favBtn?.isChecked = dataset[position].isFavorite
-        holder.favBtn?.setOnCheckedChangeListener { _, isChecked ->
-            listener?.onFavoriteClickedListener(dataset[position], isChecked)
-        }
-        /*if(dataset[position].isFavorite){
-            holder.favBtn?.isActivated
-        }else{
-            holder.favBtn?.isChecked = false
-        }
         holder.favBtn?.setOnClickListener {
-            //isChecked assigns true or false
-            if(dataset[position].isFavorite){
-                holder.favBtn?.isChecked = false
-                dataset[position].isFavorite = false
-                listener?.saveMoviesToFavoriteTab(dataset[position], "remove")
-                //notifyDataSetChanged()
-            }else{
-                holder.favBtn?.isChecked
-                dataset[position].isFavorite = true
-                listener?.saveMoviesToFavoriteTab(dataset[position], "add")
-            }
-        }*/
+            listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)
+        }
 
     }
 

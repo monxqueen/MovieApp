@@ -3,7 +3,6 @@ package com.monique.projetointegrador.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.monique.projetointegrador.data.repository.MoviesRepositoryImpl
 import com.monique.projetointegrador.domain.Cast
 import com.monique.projetointegrador.domain.MovieDetail
 import com.monique.projetointegrador.domain.usecase.GetMovieDetailsUseCase

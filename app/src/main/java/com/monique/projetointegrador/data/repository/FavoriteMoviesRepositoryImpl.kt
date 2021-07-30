@@ -42,4 +42,8 @@ class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
                 movieMapper.map(it)
             }
     }
+
+    override fun checkIfFavorite(movie: Movie): Single<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

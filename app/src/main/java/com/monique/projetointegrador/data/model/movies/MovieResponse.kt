@@ -13,5 +13,6 @@ data class MovieResponse(
     val rating: String? = null,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
+    var isFavorite: Boolean = false
 )
 

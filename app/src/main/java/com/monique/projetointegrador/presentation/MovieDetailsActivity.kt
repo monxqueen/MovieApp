@@ -57,7 +57,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun getMovieDetails(){
@@ -77,12 +76,6 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel.getCast(movie.id)
         getCastOfMovie()
 
-        //ainda não tenho acesso se ele é favorito ou não
-        //pois no adapter eu só mudo esse atributo pro objeto da classe Movie, e não MovieDetail
-        if(movie.isFavorite){
-            favButton.isChecked
-        }
-
         movie.backdrop_path?.let{
             Glide.with(this).load(Constants.BASE_URL_IMAGE.value + movie.backdrop_path).into(posterMovie)
         }
@@ -95,10 +88,10 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         movieTitle.text = movie.title
         movieRating.text = ratingConversion(movie.vote_average)
+        favButton.isChecked = movie.isFavorite
         movieYear.text = movie.release_date.take(4)
 
-
-        //FALTA: CERTIFICATION
+        //FALTA FAZER A REQ DO CERTIFICATION
     }
 
     private fun getCastOfMovie(){
@@ -114,10 +107,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         val time = runtime/60
         val onlyHours = time.toString().substringBefore(".").toInt()
         val onlyMinutes = runtime - (onlyHours * 60)
-        if(onlyHours == 0){
-            return onlyMinutes.toString()+"min"
+        return if(onlyHours == 0){
+            onlyMinutes.toString()+"min"
         }else{
-            return onlyHours.toString()+"h "+onlyMinutes.toString()+"min"
+            onlyHours.toString()+"h "+onlyMinutes.toString()+"min"
         }
     }
 

@@ -33,7 +33,10 @@ object MovieLocalDataSourceImpl: MovieLocalDataSource{
 
     override fun unfavoriteMovie(movie: MovieResponse): Single<List<MovieResponse>> {
         return Single.create { emitter ->
-            val result = favoriteMoviesList.remove(movie)
+            val movieToRemove = favoriteMoviesList.find {
+                it.id == movie.id
+            }
+            val result = favoriteMoviesList.remove(movieToRemove)
             if (result) {
                 emitter.onSuccess(favoriteMoviesList)
             } else {
@@ -54,7 +57,7 @@ object MovieLocalDataSourceImpl: MovieLocalDataSource{
             if (result) {
                 emitter.onSuccess(true)
             } else {
-                emitter.onError(IllegalStateException())
+                emitter.onSuccess(false)
             }
         }
     }

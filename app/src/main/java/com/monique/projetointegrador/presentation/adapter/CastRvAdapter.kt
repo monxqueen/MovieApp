@@ -14,7 +14,6 @@ import com.monique.projetointegrador.domain.Cast
 
 class CastRvAdapter(val context: Context, val dataset: MutableList<Cast> = mutableListOf()): RecyclerView.Adapter<CastRvAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cast, parent, false)
         return ViewHolder(view)

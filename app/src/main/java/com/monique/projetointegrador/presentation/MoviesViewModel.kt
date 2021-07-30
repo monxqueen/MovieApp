@@ -95,7 +95,7 @@ class MoviesViewModel: ViewModel() {
             .subscribe(
                 {
                     _favoriteMoviesLiveData.value = it
-                    checkFavorites()
+                    //checkFavorites()
                 },
                 {
                     print(it.message)
@@ -110,7 +110,7 @@ class MoviesViewModel: ViewModel() {
             .subscribe(
                 {
                     _favoriteMoviesLiveData.value = it
-                    checkFavorites()
+                    //checkFavorites()
                 },
                 {
                     print(it.message)

@@ -8,7 +8,7 @@ import com.google.android.material.chip.Chip
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.domain.Genre
 
-class MovieDetailsGenresRvAdapter(var dataset: List<Genre> = mutableListOf()): RecyclerView.Adapter<MovieDetailsGenresRvAdapter.ViewHolder>() {
+class MovieDetailsGenresRvAdapter(private var dataset: List<Genre> = mutableListOf()): RecyclerView.Adapter<MovieDetailsGenresRvAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val itemGenre: Chip? = view.findViewById(R.id.itemGenre)

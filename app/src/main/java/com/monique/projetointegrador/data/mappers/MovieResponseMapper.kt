@@ -11,6 +11,7 @@ class MovieResponseMapper {
                 title = movie.title,
                 rating = movie.rating,
                 genreIds = movie.genreIds,
+                isFavorite = movie.isFavorite
             )
     }
 }

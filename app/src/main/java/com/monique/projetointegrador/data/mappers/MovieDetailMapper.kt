@@ -13,7 +13,8 @@ class MovieDetailMapper {
             release_date = movieResponse.release_date,
             runtime = movieResponse.runtime,
             vote_average = movieResponse.vote_average,
-            title = movieResponse.title
+            title = movieResponse.title,
+            isFavorite = movieResponse.isFavorite
         )
         return movieDetailed
     }

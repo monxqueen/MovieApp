@@ -32,7 +32,7 @@ class GenresRvAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.genreChip?.text = dataset[position].name
-        holder.genreChip?.setOnCheckedChangeListener { chip, isChecked ->
+        holder.genreChip?.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 selectedItems.add(dataset[position].id)
             }else{

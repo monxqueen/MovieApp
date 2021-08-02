@@ -24,31 +24,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<SearchView
-        android:id="@+id/searchMovie"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/small"
-        android:queryHint="@string/movie_search"
-        app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" /
-
-    <AutoCompleteTextView
-        android:id="@+id/searchMovie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/xsmall"
-        android:backgroundTint="@color/movieInfoTextColor"
-        android:ems="15"
-        android:fontFamily="@font/lato_regular"
-        android:hint="@string/movie_search"
-        android:inputType="text"
-        android:textColorHint="@color/movieInfoTextColor"
-        android:textSize="@dimen/small_sp"
-        app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
-        app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" />>-->
-
     <EditText
         android:id="@+id/searchMovie"
         android:layout_width="wrap_content"
@@ -81,7 +56,6 @@
         app:tabTextAppearance="@style/CustomTabTextLayout"
         app:tabTextColor="#2A12153D" />
 
-
     <ImageView
         android:id="@+id/greenIcon"
         android:layout_width="wrap_content"
@@ -109,48 +83,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/lato_regular"
+        android:visibility="gone"
         android:text="@string/return_to_home"
         android:textColor="@color/greenPrimaryColor"
         android:textSize="@dimen/small_sp"
-        android:visibility="gone"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
         app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGenresHome"
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:id="@+id/searchFragmentContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium"
-        android:visibility="invisible"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backToHomeBtn"
-        tools:listitem="@layout/item_all_genres" />
-
-    <ProgressBar
-        android:id="@+id/loadingHome"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMoviesHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="invisible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvGenresHome"
-        tools:listitem="@layout/item_movie" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

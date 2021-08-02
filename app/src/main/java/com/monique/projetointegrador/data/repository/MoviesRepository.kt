@@ -1,9 +1,7 @@
 package com.monique.projetointegrador.data.repository
 
-import com.monique.projetointegrador.domain.Cast
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.domain.Movie
-import com.monique.projetointegrador.domain.MovieDetail
+import android.net.Uri
+import com.monique.projetointegrador.domain.*
 import io.reactivex.Single
 
 interface MoviesRepository {
@@ -12,4 +10,6 @@ interface MoviesRepository {
     fun getAllGenres(): Single<List<Genre>>
     fun getCast(movieId: Int): Single<List<Cast>>
     fun getMoviesByGenre(genresId: String): Single<List<Movie>>
+    fun getCertification(movieId: Int): Single<List<Certification>>?
+    fun searchForMovie(movieSearched: Uri): Single<List<Movie>>
 }

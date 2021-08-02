@@ -16,9 +16,7 @@ class GenresRvAdapter(
     var dataset: MutableList<Genre> = mutableListOf()
 ): RecyclerView.Adapter<GenresRvAdapter.ViewHolder>() {
 
-
     private val selectedItems: MutableList<Int> = mutableListOf()
-
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val genreChip: Chip? = view.findViewById(R.id.itemGenre)

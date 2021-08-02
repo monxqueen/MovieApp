@@ -1,17 +1,11 @@
 package com.monique.projetointegrador.data.repository
 
+import android.net.Uri
 import com.monique.projetointegrador.data.base.Network
-import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSourceImpl
-import com.monique.projetointegrador.data.mappers.CastMapper
-import com.monique.projetointegrador.data.mappers.GenreMapper
-import com.monique.projetointegrador.data.mappers.MovieDetailMapper
-import com.monique.projetointegrador.data.mappers.MovieMapper
+import com.monique.projetointegrador.data.mappers.*
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
-import com.monique.projetointegrador.domain.Cast
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.domain.Movie
-import com.monique.projetointegrador.domain.MovieDetail
+import com.monique.projetointegrador.domain.*
 import io.reactivex.Single
 
 class MoviesRepositoryImpl: MoviesRepository {
@@ -21,6 +15,7 @@ class MoviesRepositoryImpl: MoviesRepository {
     private val genreMapper = GenreMapper()
     private val castMapper = CastMapper()
     private val movieDetailMapper = MovieDetailMapper()
+    private val certificationMapper = CertificationMapper()
 
     override fun getPopularMovies(): Single<List<Movie>> {
         return moviesRemoteSource
@@ -96,6 +91,37 @@ class MoviesRepositoryImpl: MoviesRepository {
             .getCast(movieId)
             .map {
                 castMapper.map(it.cast)
+            }
+    }
+
+    override fun getCertification(movieId: Int): Single<List<Certification>> {
+        return moviesRemoteSource
+            .getCertification(movieId)
+            .map {
+                val br = it.results.find { certificationResponse ->
+                    certificationResponse.region == "BR" }
+                certificationMapper.map(br?.release_date)
+            }
+    }
+
+    override fun searchForMovie(movieSearched: Uri): Single<List<Movie>> {
+        return moviesRemoteSource
+            .searchForMovie(movieSearched)
+            .flatMap { movieResponseList ->
+                movieLocalDataSource
+                    .getFavoriteMovies()
+                    .map { favoriteMovieList ->
+                        movieResponseList.movieResults.forEach { movieResponse ->
+                            val result = favoriteMovieList.any { favoriteMovie ->
+                                favoriteMovie.id == movieResponse.id
+                            }
+                            movieResponse.isFavorite = result
+                        }
+                        movieResponseList.movieResults
+                    }
+            }
+            .map {
+                movieMapper.map(it)
             }
     }
 

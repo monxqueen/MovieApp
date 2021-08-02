@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -13,21 +14,19 @@ import com.monique.projetointegrador.R
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var searchEdtTxt: EditText
+    private var searchEdtTxt: EditText? = null
     private lateinit var searchBtn: ImageButton
     private lateinit var greenIcon: ImageView
     private lateinit var searchModeTxt: TextView
     private lateinit var backToHomeBtn: TextView
     private lateinit var tbLytOptions: TabLayout
     private lateinit var viewPager: ViewPager2
-    private lateinit var genresRv: RecyclerView
-    private lateinit var moviesRv: RecyclerView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var movieRvAdapter: MoviesRvAdapter
-    private lateinit var genresRvAdapter: GenresRvAdapter
+    private lateinit var fragmentContainer: FrameLayout
+    private lateinit var movieSearched: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,26 +43,39 @@ class HomeActivity : AppCompatActivity() {
         greenIcon = findViewById(R.id.greenIcon)
         searchModeTxt = findViewById(R.id.searchModeTxt)
         backToHomeBtn = findViewById(R.id.backToHomeBtn)
-        genresRv = findViewById(R.id.rvGenresHome)
-        moviesRv = findViewById(R.id.rvMoviesHome)
-        progressBar = findViewById(R.id.loadingHome)
+        fragmentContainer = findViewById(R.id.searchFragmentContainer)
 
         viewPager.adapter = ViewPagerAdapter(this)
         TabLayoutMediator(tbLytOptions, viewPager){ tab, position ->
             tab.text = getTabTitle(position)
         }.attach()
 
-        searchEdtTxt.setOnClickListener {
+        searchEdtTxt?.setOnClickListener {
             tbLytOptions.visibility = View.INVISIBLE
             viewPager.visibility = View.INVISIBLE
             greenIcon.visibility = View.VISIBLE
             searchModeTxt.visibility = View.VISIBLE
             backToHomeBtn.visibility = View.VISIBLE
 
-            val movieSearched = searchEdtTxt.text.toString()
+            movieSearched = searchEdtTxt?.text.toString()
+            val fragment = SearchMoviesFragment.newInstance(movieSearched)
+
+            supportFragmentManager.beginTransaction()
+                .add(R.id.searchFragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
 
         }
 
+        backToHomeBtn.setOnClickListener {
+            fragmentContainer.visibility = View.INVISIBLE
+            tbLytOptions.visibility = View.VISIBLE
+            viewPager.visibility = View.VISIBLE
+            greenIcon.visibility = View.INVISIBLE
+            searchModeTxt.visibility = View.INVISIBLE
+            backToHomeBtn.visibility = View.INVISIBLE
+            searchEdtTxt?.text?.clear()
+        }
     }
 
     private fun getTabTitle(position: Int): String{
@@ -72,10 +84,6 @@ class HomeActivity : AppCompatActivity() {
             1 -> "Favoritos"
             else -> ""
         }
-    }
-
-    fun getViewPager(): ViewPager2{
-        return viewPager
     }
 
 }

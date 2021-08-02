@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.domain.Cast
+import com.monique.projetointegrador.domain.Certification
 import com.monique.projetointegrador.domain.MovieDetail
 import com.monique.projetointegrador.domain.usecase.GetMovieDetailsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,9 +18,10 @@ class MovieDetailsViewModel: ViewModel() {
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
     val movieLiveData: LiveData<MovieDetail> = _movieLiveData
-
     private val _castLiveData = MutableLiveData<List<Cast>>()
     val castLiveData: LiveData<List<Cast>> = _castLiveData
+    private val _certificationLiveData = MutableLiveData<List<Certification>>()
+    val certificationLiveData: LiveData<List<Certification>> = _certificationLiveData
 
     private val disposable = CompositeDisposable()
 
@@ -32,7 +34,7 @@ class MovieDetailsViewModel: ViewModel() {
                     _movieLiveData.value = result
                 },
                 {
-                    TODO()
+
                 }
             ).handleDisposable()
     }
@@ -44,6 +46,20 @@ class MovieDetailsViewModel: ViewModel() {
             .subscribe(
                 { result ->
                     _castLiveData.value = result
+                },
+                {
+                    TODO()
+                }
+            ).handleDisposable()
+    }
+
+    fun getCertification(movieId: Int){
+        getMovieDetailsUseCase.executeCertification(movieId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    _certificationLiveData.value = result
                 },
                 {
                     TODO()

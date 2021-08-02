@@ -74,7 +74,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         castRvAdapter = CastRvAdapter(this)
         castRv.adapter = castRvAdapter
         viewModel.getCast(movie.id)
-        getCastOfMovie()
+        observeCastOfMovie()
 
         movie.backdrop_path?.let{
             Glide.with(this).load(Constants.BASE_URL_IMAGE.value + movie.backdrop_path).into(posterMovie)
@@ -91,12 +91,23 @@ class MovieDetailsActivity : AppCompatActivity() {
         favButton.isChecked = movie.isFavorite
         movieYear.text = movie.release_date.take(4)
 
-        //FALTA FAZER A REQ DO CERTIFICATION
+        viewModel.getCertification(movie.id)
+        observeCertification()
     }
 
-    private fun getCastOfMovie(){
-        viewModel.castLiveData.observe(this, { response ->
-            response?.let{
+    private fun observeCertification(){
+        viewModel.certificationLiveData.observe(this, { result ->
+            result?.let{
+                it.forEach {
+                    ageRestriction.text = "PG-" + it.certification
+                }
+            }
+        })
+    }
+
+    private fun observeCastOfMovie(){
+        viewModel.castLiveData.observe(this, { result ->
+            result?.let{
                 castRvAdapter.dataset.addAll(it)
                 castRvAdapter.notifyDataSetChanged()
             }
@@ -118,6 +129,5 @@ class MovieDetailsActivity : AppCompatActivity() {
         val rating = (vote_average*10).toInt().toString()
         return "$rating%"
     }
-
 
 }

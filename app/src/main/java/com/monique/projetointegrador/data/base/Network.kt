@@ -9,6 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Network {
 
+    fun getMoviesRemoteSource(): MoviesRemoteSource {
+        val api = createService()
+        return api.create(MoviesRemoteSource::class.java)
+    }
+
     private fun createService(): Retrofit {
 
         //criando uma instância do logging interceptor pra poder me mostrar no logcat tudo que vier do body da aplicação
@@ -37,10 +42,4 @@ object Network {
             .client(okHttpClient.build())
             .build()
     }
-
-    fun getMoviesRemoteSource(): MoviesRemoteSource {
-        val api = createService()
-        return api.create(MoviesRemoteSource::class.java)
-    }
-
 }

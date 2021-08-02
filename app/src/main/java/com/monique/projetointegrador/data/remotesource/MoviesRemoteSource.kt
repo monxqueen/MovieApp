@@ -1,5 +1,6 @@
 package com.monique.projetointegrador.data.remotesource
 
+import android.net.Uri
 import com.monique.projetointegrador.data.model.cast.ResponseCast
 import com.monique.projetointegrador.data.model.certification.ResponseCertification
 import com.monique.projetointegrador.data.model.genres.ResponseGenres
@@ -21,7 +22,7 @@ interface MoviesRemoteSource {
     fun getMovieDetails(@Path("movie_id") movieId: Int): Single<MovieDetailResponse>
 
     @GET("search/movie")
-    fun searchForMovie(@Query("movieSearched") query: String): Single<ResponseMovies>
+    fun searchForMovie(@Query("query") movieSearched: Uri): Single<ResponseMovies>
 
     @GET("movie/{movie_id}/credits")
     fun getCast(@Path("movie_id") movieId: Int): Single<ResponseCast>

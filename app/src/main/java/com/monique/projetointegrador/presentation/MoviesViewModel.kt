@@ -1,14 +1,12 @@
 package com.monique.projetointegrador.presentation
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.domain.Genre
 import com.monique.projetointegrador.domain.Movie
-import com.monique.projetointegrador.domain.usecase.FavoriteMoviesUseCase
-import com.monique.projetointegrador.domain.usecase.GetAllMoviesUseCase
-import com.monique.projetointegrador.domain.usecase.GetGenresUseCase
-import com.monique.projetointegrador.domain.usecase.GetMoviesByGenreUseCase
+import com.monique.projetointegrador.domain.usecase.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -20,6 +18,7 @@ class MoviesViewModel: ViewModel() {
     private val getGenresUseCase = GetGenresUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val favoriteMoviesUseCase = FavoriteMoviesUseCase()
+    private val searchForMoviesUseCase = SearchForMovieUseCase()
 
     private val _moviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
     val movieListLiveData : LiveData<List<Movie>> = _moviesLiveData
@@ -29,6 +28,9 @@ class MoviesViewModel: ViewModel() {
 
     private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
     val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
+
+    private val _searchResultsLiveData = MutableLiveData<List<Movie>>(mutableListOf())
+    val searchResultsLiveData : LiveData<List<Movie>> = _searchResultsLiveData
 
     private val disposable = CompositeDisposable()
 
@@ -111,6 +113,20 @@ class MoviesViewModel: ViewModel() {
                 {
                     _favoriteMoviesLiveData.value = it
                     //checkFavorites()
+                },
+                {
+                    print(it.message)
+                }
+            ).handleDisposable()
+    }
+
+    fun searchForMovie(movieSearched: Uri){
+        searchForMoviesUseCase.executeSearch(movieSearched)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _searchResultsLiveData.value = it
                 },
                 {
                     print(it.message)

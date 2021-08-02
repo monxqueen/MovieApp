@@ -31,7 +31,7 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home_movies, container,  false)
+        return inflater.inflate(R.layout.fragment_home_movies, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,41 +55,52 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
         observeFavoriteMovies()
     }
 
-    private fun observeGenres(){
-        viewModelFavorites.genreListLiveData.observe(viewLifecycleOwner, { response ->
-            response?.let{
+    private fun observeGenres() {
+        viewModelFavorites.genreListLiveData.observe(viewLifecycleOwner, { result ->
+            result?.let {
                 genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
             }
         })
     }
 
-    private fun observeFavoriteMovies(){
+    private fun observeFavoriteMovies() {
         viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner, { result ->
-            result?.let{
+            result?.let {
                 moviesAdapter.dataset.clear()
                 moviesAdapter.dataset.addAll(it)
                 moviesAdapter.notifyDataSetChanged()
                 progressBar.visibility = View.GONE
             }
-
         })
     }
 
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
-        if(!isChecked){
+        if (!isChecked) {
+            movie.isFavorite = false
             viewModelFavorites.unfavoriteMovie(movie)
         }
     }
 
-    override fun openMovieDetails(movieId: Int){
+    override fun openMovieDetails(movieId: Int) {
         val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
         intent.putExtra("MOVIE_ID", movieId)
         startActivity(intent)
     }
 
-    override fun loadMoviesWithGenre(genresId: List<Int>) {
-        /*viewModel.getMoviesByGenre(genresId)
-        getMoviesToShow()*/
+    override fun loadMoviesWithGenre(genreIds: List<Int>) {
+        viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner, { result ->
+            result?.let { movies ->
+                val movieList = mutableListOf<Movie>()
+                movies.forEach { movie ->
+                    if (movie.genreIds.containsAll(genreIds)) {
+                        movieList.add(movie)
+                    }
+                }
+                moviesAdapter.dataset.clear()
+                moviesAdapter.dataset.addAll(movieList)
+                moviesAdapter.notifyDataSetChanged()
+            }
+        })
     }
 }

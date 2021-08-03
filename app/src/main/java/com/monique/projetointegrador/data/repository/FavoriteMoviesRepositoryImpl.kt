@@ -12,11 +12,6 @@ class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
     private val movieMapper = MovieMapper()
     private val movieResponseMapper = MovieResponseMapper()
 
-    /*override fun favoriteMovie(movie: Movie): Single<Boolean> {
-        val movieMapped = movieResponseMapper.map(movie)
-        return movieLocalDataSource.favoriteMovie(movieMapped)
-    }*/
-
     override fun favoriteMovie(movie: Movie): Single<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)
         return movieLocalDataSource

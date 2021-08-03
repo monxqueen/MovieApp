@@ -20,7 +20,6 @@ class MoviesRvAdapter(
     var dataset: MutableList<Movie> = mutableListOf()
 ): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
 
-    //private val favoriteMovies: MutableList<Movie> = mutableListOf()
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var imgMovie: ImageView? = view.findViewById(R.id.imgMovie)
@@ -46,7 +45,6 @@ class MoviesRvAdapter(
         holder.imgMovie?.setOnClickListener {
             listener?.openMovieDetails(dataset[position].id)
         }
-
         holder.favBtn?.isChecked = dataset[position].isFavorite
         holder.favBtn?.setOnClickListener {
             listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)

@@ -11,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
+import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.domain.MovieDetail
 import com.monique.projetointegrador.presentation.adapter.CastRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MovieDetailsGenresRvAdapter
@@ -89,6 +90,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         movieTitle.text = movie.title
         movieRating.text = ratingConversion(movie.vote_average)
         favButton.isChecked = movie.isFavorite
+        favButton.setOnClickListener {
+            if(movie.isFavorite){
+                removeFromFavorites(movie)
+            }
+        }
         movieYear.text = movie.release_date.take(4)
 
         viewModel.getCertification(movie.id)
@@ -130,4 +136,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         return "$rating%"
     }
 
+    fun removeFromFavorites(movie: MovieDetail){
+
+    }
 }

@@ -39,8 +39,6 @@ class AllMoviesFragment : Fragment(), MovieListener {
         val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
 
-        progressBar = view.findViewById(R.id.loading)
-
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
         rvMovies.adapter = moviesAdapter
@@ -49,7 +47,7 @@ class AllMoviesFragment : Fragment(), MovieListener {
         moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         moviesViewModel.getPopularMovies()
         moviesViewModel.getGenres()
-
+        progressBar = view.findViewById(R.id.loading)
         observeGenres()
         observeMovies()
     }
@@ -83,7 +81,6 @@ class AllMoviesFragment : Fragment(), MovieListener {
     override fun loadMoviesWithGenre(genreIds: List<Int>) {
         moviesViewModel.getMoviesByGenre(genreIds)
     }
-
 
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if(isChecked){

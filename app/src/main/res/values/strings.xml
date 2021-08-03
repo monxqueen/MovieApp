@@ -17,7 +17,7 @@
     <string name="person_name">Name</string>
     <string name="year_released">released year</string>
     <string name="users_rating_txt">Avaliação dos usuários</string>
-    <string name="age_restriction">parental guidence</string>
+    <string name="age_restriction">parental guidance</string>
     <string name="movie_not_found">Esse filme não existe</string>
     <string name="couldnt_find">Não conseguimos encontrar o filme que você procura. Por favor, refaça sua busca.</string>
     <string name="floating_btn_description">return to previous page button</string>

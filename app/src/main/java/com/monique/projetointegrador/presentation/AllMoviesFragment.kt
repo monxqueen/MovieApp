@@ -52,6 +52,11 @@ class AllMoviesFragment : Fragment(), MovieListener {
         observeMovies()
     }
 
+    override fun onResume() {
+        super.onResume()
+        moviesAdapter.notifyDataSetChanged()
+    }
+
     private fun observeMovies(){
         moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { response ->
             response?.let{

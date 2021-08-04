@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.domain.Cast
 import com.monique.projetointegrador.domain.Certification
+import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.domain.MovieDetail
+import com.monique.projetointegrador.domain.usecase.FavoriteMoviesUseCase
 import com.monique.projetointegrador.domain.usecase.GetMovieDetailsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,6 +17,7 @@ import io.reactivex.schedulers.Schedulers
 class MovieDetailsViewModel: ViewModel() {
 
     private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
+    private val favoriteMoviesUseCase = FavoriteMoviesUseCase()
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
     val movieLiveData: LiveData<MovieDetail> = _movieLiveData
@@ -22,6 +25,8 @@ class MovieDetailsViewModel: ViewModel() {
     val castLiveData: LiveData<List<Cast>> = _castLiveData
     private val _certificationLiveData = MutableLiveData<List<Certification>>()
     val certificationLiveData: LiveData<List<Certification>> = _certificationLiveData
+    private val _favoriteMoviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
+    val favoriteMoviesLiveData : LiveData<List<Movie>> = _favoriteMoviesLiveData
 
     private val disposable = CompositeDisposable()
 
@@ -60,6 +65,30 @@ class MovieDetailsViewModel: ViewModel() {
             .subscribe(
                 { result ->
                     _certificationLiveData.value = result
+                },
+                {
+                    TODO()
+                }
+            ).handleDisposable()
+    }
+
+    fun removeFromFavorites(movie: MovieDetail){
+        val genreIdsList = mutableListOf<Int>()
+        movie.genres.forEach { genre ->
+            genreIdsList.add(genre.id)
+        }
+        val mappedMovie = Movie(
+            id = movie.id,
+            title = movie.title,
+            genreIds = genreIdsList,
+            isFavorite = false
+        )
+        favoriteMoviesUseCase.removeFavoriteMovie(mappedMovie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _favoriteMoviesLiveData.value = it
                 },
                 {
                     TODO()

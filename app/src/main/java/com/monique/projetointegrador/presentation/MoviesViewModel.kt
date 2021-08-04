@@ -105,14 +105,19 @@ class MoviesViewModel: ViewModel() {
             ).handleDisposable()
     }
 
-    fun unfavoriteMovie(movie: Movie){
-        favoriteMoviesUseCase.removeFavoriteMovie(movie)
+    fun unfavoriteMovie(movieToRemove: Movie){
+        favoriteMoviesUseCase.removeFavoriteMovie(movieToRemove)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
                     _favoriteMoviesLiveData.value = it
-                    //checkFavorites()
+                    val result = _moviesLiveData.value?.find { movie ->
+                        movie.id == movieToRemove.id
+                    }
+                    result?.let {
+                        it.isFavorite = false
+                    }
                 },
                 {
                     print(it.message)
@@ -132,17 +137,6 @@ class MoviesViewModel: ViewModel() {
                     print(it.message)
                 }
             ).handleDisposable()
-    }
-
-    fun checkFavorites(){
-        favoriteMoviesLiveData.value?.forEach{ movie ->
-            favoriteMoviesUseCase.isFavorite(movie)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{ result ->
-                    movie.isFavorite = result
-                }
-        }
     }
 
     override fun onCleared() {

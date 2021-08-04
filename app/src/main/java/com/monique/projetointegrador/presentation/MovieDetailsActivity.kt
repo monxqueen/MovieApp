@@ -91,8 +91,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         movieRating.text = ratingConversion(movie.vote_average)
         favButton.isChecked = movie.isFavorite
         favButton.setOnClickListener {
-            if(movie.isFavorite){
+            if(movie.isFavorite) {
                 removeFromFavorites(movie)
+            } else {
+                addToFavorites(movie)
             }
         }
         movieYear.text = movie.release_date.take(4)
@@ -137,6 +139,10 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     fun removeFromFavorites(movie: MovieDetail){
+        viewModel.removeFromFavorites(movie)
+    }
+
+    fun addToFavorites(movie: MovieDetail){
 
     }
 }

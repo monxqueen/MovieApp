@@ -46,6 +46,7 @@ class HomeActivity : AppCompatActivity() {
         fragmentContainer = findViewById(R.id.searchFragmentContainer)
 
         viewPager.adapter = ViewPagerAdapter(this)
+        viewPager.isUserInputEnabled = false
         TabLayoutMediator(tbLytOptions, viewPager){ tab, position ->
             tab.text = getTabTitle(position)
         }.attach()

@@ -3,6 +3,7 @@ package com.monique.projetointegrador.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +26,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var movieYear: TextView
     private lateinit var ageRestriction: TextView
     private lateinit var movieDuration: TextView
-    private lateinit var favButton: ToggleButton
+    private lateinit var favButton: ImageView
     private lateinit var genresRv: RecyclerView
     private lateinit var movieSynopsis: TextView
     private lateinit var castRv: RecyclerView
@@ -55,8 +56,9 @@ class MovieDetailsActivity : AppCompatActivity() {
         getMovieDetails()
 
         returnBtn.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            /*val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)*/
+            finish()
         }
     }
 
@@ -89,14 +91,18 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         movieTitle.text = movie.title
         movieRating.text = ratingConversion(movie.vote_average)
-        favButton.isChecked = movie.isFavorite
-        favButton.setOnClickListener {
+        if(movie.isFavorite){
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }else{
+            favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        }
+        /*favButton.setOnClickListener {
             if(movie.isFavorite) {
                 removeFromFavorites(movie)
             } else {
                 addToFavorites(movie)
             }
-        }
+        }*/
         movieYear.text = movie.release_date.take(4)
 
         viewModel.getCertification(movie.id)
@@ -107,7 +113,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         viewModel.certificationLiveData.observe(this, { result ->
             result?.let{
                 it.forEach {
-                    ageRestriction.text = "PG-" + it.certification
+                    ageRestriction.text = ("PG-" + it.certification)
                 }
             }
         })
@@ -138,11 +144,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         return "$rating%"
     }
 
-    fun removeFromFavorites(movie: MovieDetail){
+    /*private fun removeFromFavorites(movie: MovieDetail){
         viewModel.removeFromFavorites(movie)
     }
 
-    fun addToFavorites(movie: MovieDetail){
-
-    }
+    private fun addToFavorites(movie: MovieDetail){
+        viewModel.addToFavorites(movie)
+    }*/
 }

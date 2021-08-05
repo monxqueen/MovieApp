@@ -55,7 +55,6 @@ class SearchMoviesFragment : Fragment(), MovieListener {
         movieSearched?.let{
             val replacedMovie = it.replace(" ", "-")
             val movieUri = replacedMovie.toUri()
-            Log.d("MovieSearched", it)
             moviesViewModel.searchForMovie(movieUri)
             observeSearchResults()
         }

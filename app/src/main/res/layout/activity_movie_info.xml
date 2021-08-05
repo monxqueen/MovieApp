@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/xsmall"
             android:layout_marginTop="@dimen/small"
-            android:backgroundTint="@android:color/transparent"
+            android:backgroundTint="#A1FFFFFF"
             android:contentDescription="@string/floating_btn_description"
             android:src="@drawable/ic_round_navigate_before"
             app:borderWidth="0dp"
@@ -133,7 +133,18 @@
             app:layout_constraintStart_toEndOf="@+id/ageRestriction"
             app:layout_constraintTop_toTopOf="@+id/ageRestriction" />
 
-        <ToggleButton
+        <ImageView
+            android:id="@+id/favBtnMovieInfo"
+            android:layout_width="@dimen/xlarge"
+            android:layout_height="@dimen/large"
+            android:layout_marginEnd="@dimen/large"
+            android:layout_marginTop="@dimen/xsmall"
+            android:src="@drawable/ic_baseline_favorite_border_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+            />
+
+        <!--<ToggleButton
             android:id="@+id/favBtnMovieInfo"
             android:layout_width="@dimen/xlarge"
             android:layout_height="@dimen/large"
@@ -141,11 +152,12 @@
             android:layout_marginTop="@dimen/xsmall"
             android:background="@drawable/heart_button"
             android:checked="false"
+            android:clickable="false"
             android:text=""
             android:textOff=""
             android:textOn=""
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/genreRvMovieInfo"
@@ -153,7 +165,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintStart_toStartOf="@+id/movieYear"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieYear"
             tools:listitem="@layout/item_movie_genres" />
 

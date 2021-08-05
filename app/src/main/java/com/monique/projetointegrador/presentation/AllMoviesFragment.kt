@@ -57,6 +57,8 @@ class AllMoviesFragment : Fragment(), MovieListener {
         moviesAdapter.notifyDataSetChanged()
     }
 
+
+
     private fun observeMovies(){
         moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { response ->
             response?.let{

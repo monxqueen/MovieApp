@@ -38,7 +38,7 @@
         android:text="@string/role"
         android:maxEms="5"
         android:textAlignment="center"
-        tools:text="Akskfka ksfkakw sfkasfkas kwrka"
+        tools:text="@string/role"
         android:textColor="@color/movieInfoTextColor"
         app:layout_constraintEnd_toEndOf="@+id/personName"
         app:layout_constraintStart_toStartOf="@+id/personName"

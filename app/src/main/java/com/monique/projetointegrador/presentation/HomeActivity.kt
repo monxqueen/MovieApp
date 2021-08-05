@@ -51,9 +51,12 @@ class HomeActivity : AppCompatActivity() {
             tab.text = getTabTitle(position)
         }.attach()
 
+        /*searchEdtTxt?.addTextChangedListener(
+
+        )*/
         searchEdtTxt?.setOnClickListener {
-            tbLytOptions.visibility = View.INVISIBLE
-            viewPager.visibility = View.INVISIBLE
+            tbLytOptions.visibility = View.GONE
+            viewPager.visibility = View.GONE
             greenIcon.visibility = View.VISIBLE
             searchModeTxt.visibility = View.VISIBLE
             backToHomeBtn.visibility = View.VISIBLE
@@ -76,6 +79,7 @@ class HomeActivity : AppCompatActivity() {
             searchModeTxt.visibility = View.INVISIBLE
             backToHomeBtn.visibility = View.INVISIBLE
             searchEdtTxt?.text?.clear()
+            finish()
         }
     }
 

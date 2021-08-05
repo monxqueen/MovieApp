@@ -96,6 +96,31 @@ class MovieDetailsViewModel: ViewModel() {
             ).handleDisposable()
     }
 
+    //não funciona como deveria (classe moviedetail precisa de um poster_path)
+    fun addToFavorites(movie: MovieDetail){
+        val genreIdsList = mutableListOf<Int>()
+        movie.genres.forEach { genre ->
+            genreIdsList.add(genre.id)
+        }
+        val mappedMovie = Movie(
+            id = movie.id,
+            title = movie.title,
+            genreIds = genreIdsList,
+            isFavorite = false
+        )
+        favoriteMoviesUseCase.addFavoriteMovie(mappedMovie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    _favoriteMoviesLiveData.value = it
+                },
+                {
+                    TODO()
+                }
+            ).handleDisposable()
+    }
+
     override fun onCleared() {
         disposable.dispose()
         super.onCleared()

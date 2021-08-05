@@ -1,6 +1,7 @@
 package com.monique.projetointegrador.presentation
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,8 +43,8 @@ class MoviesViewModel: ViewModel() {
                 {result ->
                     _moviesLiveData.value = result
                 },
-                {
-                    print(it.message)
+                { error ->
+                    Log.e("ErroReq", "erro: " + error.cause)
                 }
             ).handleDisposable()
     }
@@ -134,10 +135,31 @@ class MoviesViewModel: ViewModel() {
                     _searchResultsLiveData.value = it
                 },
                 {
+                    Log.e("ErroSearch", "Mensagem do erro: " + it.message)
+                }
+            ).handleDisposable()
+    }
+
+    fun updateMovies(){
+        favoriteMoviesUseCase.getFavoriteMovies()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe( //
+                { favoriteMoviesList ->
+                    _favoriteMoviesLiveData.value = favoriteMoviesList
+                    _moviesLiveData.value?.forEach { movie ->
+                        val result = favoriteMoviesList.any { favoriteMovie ->
+                            favoriteMovie.id == movie.id
+                        }
+                        movie.isFavorite = result
+                    }
+                },
+                {
                     print(it.message)
                 }
             ).handleDisposable()
     }
+
 
     override fun onCleared() {
         disposable.dispose()

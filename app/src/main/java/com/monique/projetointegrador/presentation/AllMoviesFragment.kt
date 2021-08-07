@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
@@ -14,6 +15,7 @@ import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
+import com.monique.projetointegrador.presentation.model.ViewState
 
 class AllMoviesFragment : Fragment(), MovieListener {
 
@@ -50,14 +52,13 @@ class AllMoviesFragment : Fragment(), MovieListener {
         progressBar = view.findViewById(R.id.loading)
         observeGenres()
         observeMovies()
+        observeViewState()
     }
 
     override fun onResume() {
         super.onResume()
         moviesAdapter.notifyDataSetChanged()
     }
-
-
 
     private fun observeMovies(){
         moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { response ->
@@ -75,6 +76,18 @@ class AllMoviesFragment : Fragment(), MovieListener {
             response?.let{
                 genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+
+    private fun observeViewState(){
+        moviesViewModel.viewStateLiveData.observe(viewLifecycleOwner, { result ->
+            when(result){
+                ViewState.GeneralError -> {
+                    Toast.makeText(requireContext(), "General error all movies fragment", Toast.LENGTH_LONG).show()
+                    val intent = Intent(requireContext(), GeneralErrorActivity::class.java)
+                    startActivity(intent)
+                }
             }
         })
     }

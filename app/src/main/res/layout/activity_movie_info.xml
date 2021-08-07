@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/shapeableImageStyle"
-            tools:src="@drawable/img_exemplo2"/>
+            tools:src="@drawable/img_exemplo2" />
 
 
         <com.google.android.material.card.MaterialCardView
@@ -74,7 +74,7 @@
             android:maxEms="9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            tools:text="@string/movie_title"/>
+            tools:text="@string/movie_title" />
 
         <TextView
             android:id="@+id/textView3"
@@ -137,12 +137,11 @@
             android:id="@+id/favBtnMovieInfo"
             android:layout_width="@dimen/xlarge"
             android:layout_height="@dimen/large"
-            android:layout_marginEnd="@dimen/large"
             android:layout_marginTop="@dimen/xsmall"
+            android:layout_marginEnd="@dimen/large"
             android:src="@drawable/ic_baseline_favorite_border_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
         <!--<ToggleButton
             android:id="@+id/favBtnMovieInfo"
@@ -165,7 +164,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieYear"
             tools:listitem="@layout/item_movie_genres" />
 
@@ -192,7 +191,7 @@
             android:textColor="@color/movieInfoTextColor"
             app:layout_constraintStart_toStartOf="@+id/txtViewSynopsis"
             app:layout_constraintTop_toBottomOf="@+id/txtViewSynopsis"
-            tools:text="@string/synopsis"/>
+            tools:text="@string/synopsis" />
 
         <TextView
             android:id="@+id/castTxtView"

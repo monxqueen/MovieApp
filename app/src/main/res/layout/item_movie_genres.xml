@@ -18,7 +18,6 @@
         app:chipBackgroundColor="@color/backgroundColor"
         app:chipStrokeColor="@color/chip_background_color"
         app:chipStrokeWidth="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

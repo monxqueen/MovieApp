@@ -1,20 +1,19 @@
 package com.monique.projetointegrador.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
-import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
-import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
-import kotlinx.android.synthetic.main.activity_home.*
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -27,6 +26,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var fragmentContainer: FrameLayout
     private lateinit var movieSearched: String
+    private var searchFragment: SearchMoviesFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,35 +51,61 @@ class HomeActivity : AppCompatActivity() {
             tab.text = getTabTitle(position)
         }.attach()
 
-        /*searchEdtTxt?.addTextChangedListener(
-
-        )*/
-        searchEdtTxt?.setOnClickListener {
-            tbLytOptions.visibility = View.GONE
-            viewPager.visibility = View.GONE
-            greenIcon.visibility = View.VISIBLE
-            searchModeTxt.visibility = View.VISIBLE
-            backToHomeBtn.visibility = View.VISIBLE
-
-            movieSearched = searchEdtTxt?.text.toString()
-            val fragment = SearchMoviesFragment.newInstance(movieSearched)
-
-            supportFragmentManager.beginTransaction()
-                .add(R.id.searchFragmentContainer, fragment)
-                .addToBackStack(null)
-                .commit()
-
+        searchEdtTxt?.setOnEditorActionListener { _, actionId, _ ->
+            when(actionId) {
+                EditorInfo.IME_ACTION_SEARCH -> {
+                    movieSearched = searchEdtTxt?.text.toString()
+                    if(searchFragment == null) {
+                        searchFragment = SearchMoviesFragment.newInstance(movieSearched)
+                        searchFragment?.let{
+                            supportFragmentManager.beginTransaction()
+                                .replace(R.id.searchFragmentContainer, it)
+                                //.addToBackStack(null)
+                                .commit()
+                        }
+                    }
+                    else {
+                        searchFragment?.updateQuery(movieSearched.toUri())
+                    }
+                    true}
+                else -> false
+            }
         }
 
+        searchEdtTxt?.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                tbLytOptions.visibility = View.GONE
+                viewPager.visibility = View.GONE
+                greenIcon.visibility = View.VISIBLE
+                searchModeTxt.visibility = View.VISIBLE
+                backToHomeBtn.visibility = View.VISIBLE
+                fragmentContainer.visibility = View.VISIBLE
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null) {
+                    if (s.isEmpty()) {
+                        tbLytOptions.visibility = View.VISIBLE
+                        viewPager.visibility = View.VISIBLE
+                        fragmentContainer.visibility = View.GONE
+                        greenIcon.visibility = View.GONE
+                        searchModeTxt.visibility = View.GONE
+                        backToHomeBtn.visibility = View.GONE
+                    }
+                }
+            }
+        })
+
         backToHomeBtn.setOnClickListener {
-            fragmentContainer.visibility = View.INVISIBLE
             tbLytOptions.visibility = View.VISIBLE
             viewPager.visibility = View.VISIBLE
-            greenIcon.visibility = View.INVISIBLE
-            searchModeTxt.visibility = View.INVISIBLE
-            backToHomeBtn.visibility = View.INVISIBLE
+            fragmentContainer.visibility = View.GONE
+            greenIcon.visibility = View.GONE
+            searchModeTxt.visibility = View.GONE
+            backToHomeBtn.visibility = View.GONE
             searchEdtTxt?.text?.clear()
-            finish()
         }
     }
 

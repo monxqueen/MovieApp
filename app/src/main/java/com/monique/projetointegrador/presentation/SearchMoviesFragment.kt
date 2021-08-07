@@ -1,14 +1,14 @@
 package com.monique.projetointegrador.presentation
 
-import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +16,7 @@ import com.monique.projetointegrador.R
 import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
+import com.monique.projetointegrador.presentation.model.ViewState
 
 class SearchMoviesFragment : Fragment(), MovieListener {
 
@@ -23,7 +24,9 @@ class SearchMoviesFragment : Fragment(), MovieListener {
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
-    private lateinit var moviesViewModel: MoviesViewModel
+    private lateinit var movieNotFound: View
+    private lateinit var rvMovies: RecyclerView
+    private var moviesViewModel = MoviesViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,44 +45,69 @@ class SearchMoviesFragment : Fragment(), MovieListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
+        rvMovies = view.findViewById(R.id.rvMovies)
         val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
+
+        movieNotFound = view.findViewById(R.id.movieNotFound)
         progressBar = view.findViewById(R.id.loading)
+        progressBar.visibility = View.VISIBLE
 
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
         rvMovies.adapter = moviesAdapter
         rvGenres.adapter = genresAdapter
 
-        moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
-        movieSearched?.let{
-            val replacedMovie = it.replace(" ", "-")
-            val movieUri = replacedMovie.toUri()
-            moviesViewModel.searchForMovie(movieUri)
-            observeSearchResults()
+        val movieUri = movieSearched?.toUri()
+        if(movieUri != null){
+            updateQuery(movieUri)
         }
-        observeGenres()
-
+        observeMovies()
+        progressBar.visibility = View.GONE
     }
 
-    private fun observeSearchResults(){
+    fun updateQuery(query: Uri){
+        observeGenres()
+        setObservers()
+        moviesViewModel.searchForMovie(query)
+        moviesViewModel.getGenres()
+        movieNotFound.visibility = View.GONE
+    }
+
+    private fun observeMovies(){
         moviesViewModel.searchResultsLiveData.observe(viewLifecycleOwner, { result ->
             result?.let{
+                rvMovies.visibility = View.VISIBLE
                 moviesAdapter.dataset.clear()
                 moviesAdapter.dataset.addAll(it)
                 moviesAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
             }
         })
     }
 
     private fun observeGenres(){
         moviesViewModel.genreListLiveData.observe(viewLifecycleOwner, { result ->
-            result?.let{
+            result?.let {
                 genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
             }
         })
+    }
+
+    private fun setObservers(){
+        moviesViewModel.viewStateLiveData.observe(viewLifecycleOwner, { result ->
+            when (result) {
+                ViewState.MovieNotFound -> {
+                    movieNotFound.visibility = View.VISIBLE
+                    rvMovies.visibility = View.GONE
+                }
+                ViewState.GeneralError -> {
+                    Toast.makeText(requireContext(), "General error", Toast.LENGTH_LONG).show()
+                    val intent = Intent(requireContext(), GeneralErrorActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
+
     }
 
     override fun openMovieDetails(movieId: Int) {
@@ -116,6 +144,7 @@ class SearchMoviesFragment : Fragment(), MovieListener {
 
     companion object {
         private const val ARG_PARAM1 = "movieSearched"
+
         @JvmStatic
         fun newInstance(movieSearched: String) =
             SearchMoviesFragment().apply {

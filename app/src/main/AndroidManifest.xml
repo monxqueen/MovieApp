@@ -11,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoIntegrador">
-        <activity android:name=".presentation.MovieDetailsActivity"></activity>
+        <activity android:name=".presentation.GeneralErrorActivity"></activity>
+        <activity android:name=".presentation.MovieDetailsActivity" />
         <activity android:name=".presentation.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

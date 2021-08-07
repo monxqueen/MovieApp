@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.monique.projetointegrador.domain.Genre
 import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.domain.usecase.*
+import com.monique.projetointegrador.presentation.model.ViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -33,6 +34,9 @@ class MoviesViewModel: ViewModel() {
     private val _searchResultsLiveData = MutableLiveData<List<Movie>>(mutableListOf())
     val searchResultsLiveData : LiveData<List<Movie>> = _searchResultsLiveData
 
+    private val _viewStateLiveData = MutableLiveData<ViewState>()
+    val viewStateLiveData : LiveData<ViewState> = _viewStateLiveData
+
     private val disposable = CompositeDisposable()
 
     fun getPopularMovies(){
@@ -43,8 +47,9 @@ class MoviesViewModel: ViewModel() {
                 {result ->
                     _moviesLiveData.value = result
                 },
-                { error ->
-                    Log.e("ErroReq", "erro: " + error.cause)
+                {
+                    Log.e("ErroReq", "erro: " + it.cause)
+                    _viewStateLiveData.value = ViewState.GeneralError
                 }
             ).handleDisposable()
     }
@@ -58,7 +63,8 @@ class MoviesViewModel: ViewModel() {
                     _moviesLiveData.value = result
                 },
                 {
-                    print(it.message)
+                    Log.e("ErroReq", "erro: " + it.cause)
+                    _viewStateLiveData.value = ViewState.GeneralError
                 }
             ).handleDisposable()
     }
@@ -72,7 +78,8 @@ class MoviesViewModel: ViewModel() {
                     _genresLiveData.value = result
                 },
                 {
-                    print(it.message)
+                    Log.e("ErroReq", "erro: " + it.cause)
+                   _viewStateLiveData.value = ViewState.GeneralError
                 }
             ).handleDisposable()
     }
@@ -98,7 +105,6 @@ class MoviesViewModel: ViewModel() {
             .subscribe(
                 {
                     _favoriteMoviesLiveData.value = it
-                    //checkFavorites()
                 },
                 {
                     print(it.message)
@@ -130,12 +136,17 @@ class MoviesViewModel: ViewModel() {
         searchForMoviesUseCase.executeSearch(movieSearched)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            //.timeout(5, TimeUnit.SECONDS)
             .subscribe(
                 {
                     _searchResultsLiveData.value = it
+                    if (it.isEmpty()) {
+                        _viewStateLiveData.value = ViewState.MovieNotFound
+                    }
                 },
                 {
-                    Log.e("ErroSearch", "Mensagem do erro: " + it.message)
+                    Log.e("ErrorSearch", "Mensagem do erro: " + it.message)
+                    _viewStateLiveData.value = ViewState.GeneralError
                 }
             ).handleDisposable()
     }

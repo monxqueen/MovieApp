@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
-    tools:context=".presentation.fragment.FragmentMovieNotFound">
-
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColor">
 
     <ImageView
         android:id="@+id/notFoundImg"
@@ -36,6 +33,7 @@
         android:paddingHorizontal="@dimen/small"
         android:text="@string/couldnt_find"
         android:textAlignment="center"
+        android:textColor="@color/movieInfoTextColor"
         android:textSize="@dimen/small_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

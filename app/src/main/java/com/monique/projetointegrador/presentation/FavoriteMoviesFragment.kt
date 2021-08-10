@@ -51,8 +51,12 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
 
         viewModelFavorites.getGenres()
         observeGenres()
-        viewModelFavorites.getFavoriteMovies()
         observeFavoriteMovies()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModelFavorites.getFavoriteMovies()
     }
 
     private fun observeGenres() {

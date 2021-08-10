@@ -10,7 +10,7 @@ data class MovieResponse(
     @SerializedName("title")
     val title: String? = null,
     @SerializedName("vote_average")
-    val rating: String? = null,
+    val rating: Float,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     var isFavorite: Boolean = false

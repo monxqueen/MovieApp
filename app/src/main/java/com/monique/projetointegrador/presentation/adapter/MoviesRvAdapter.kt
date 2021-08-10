@@ -40,7 +40,7 @@ class MoviesRvAdapter(
             holder.imgMovie?.let { Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].imgHome).into(it) }
         }
         holder.titleMovie?.text = dataset[position].title
-        holder.rateMovie?.text = dataset[position].rating
+        holder.rateMovie?.text = dataset[position].getRating()
 
         holder.imgMovie?.setOnClickListener {
             listener?.openMovieDetails(dataset[position].id)

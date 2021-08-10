@@ -13,10 +13,14 @@ class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0 -> AllMoviesFragment()
-            1 -> FavoriteMoviesFragment()
+            ALL_MOVIES_POSITION -> AllMoviesFragment()
+            FAVORITE_MOVIES_POSITION -> FavoriteMoviesFragment()
             else -> AllMoviesFragment()
         }
     }
 
+    companion object {
+        const val ALL_MOVIES_POSITION = 0
+        const val FAVORITE_MOVIES_POSITION = 1
+    }
 }

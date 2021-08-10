@@ -5,17 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
-import com.monique.projetointegrador.domain.Movie
 import com.monique.projetointegrador.domain.MovieDetail
 import com.monique.projetointegrador.presentation.adapter.CastRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MovieDetailsGenresRvAdapter
+import com.monique.projetointegrador.presentation.model.ViewState
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -53,16 +52,24 @@ class MovieDetailsActivity : AppCompatActivity() {
         val movieId = intent.extras?.getInt("MOVIE_ID")
 
         viewModel.getMovieDetails(movieId!!)
-        getMovieDetails()
+        observeMovieDetails()
+        observeViewState()
 
-        returnBtn.setOnClickListener {
-            /*val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)*/
-            finish()
-        }
+        returnBtn.setOnClickListener { finish() }
     }
 
-    private fun getMovieDetails(){
+    private fun observeViewState(){
+        viewModel.viewStateLiveData.observe(this, { result ->
+            when(result){
+                ViewState.GeneralError -> {
+                    val intent = Intent(this, GeneralErrorActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
+    }
+
+    private fun observeMovieDetails(){
         viewModel.movieLiveData.observe(this, { response ->
             response?.let{
                 showMovie(it)
@@ -86,24 +93,19 @@ class MovieDetailsActivity : AppCompatActivity() {
             movieSynopsis.text = it
         }
         movie.runtime?.let{
-            movieDuration.text = timeConversion(it)
+            movieDuration.text = movie.getRuntime()
         }
 
         movieTitle.text = movie.title
-        movieRating.text = ratingConversion(movie.vote_average)
+        movieRating.text = movie.getRating()
+
         if(movie.isFavorite){
             favButton.setImageResource(R.drawable.ic_baseline_favorite_24)
         }else{
             favButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         }
-        /*favButton.setOnClickListener {
-            if(movie.isFavorite) {
-                removeFromFavorites(movie)
-            } else {
-                addToFavorites(movie)
-            }
-        }*/
-        movieYear.text = movie.release_date.take(4)
+
+        movieYear.text = movie.getReleaseYear()
 
         viewModel.getCertification(movie.id)
         observeCertification()
@@ -128,6 +130,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         })
     }
 
+    //move this into movie detail class
     private fun timeConversion(runtime: Int): String{
         val time = runtime/60
         val onlyHours = time.toString().substringBefore(".").toInt()
@@ -144,11 +147,5 @@ class MovieDetailsActivity : AppCompatActivity() {
         return "$rating%"
     }
 
-    /*private fun removeFromFavorites(movie: MovieDetail){
-        viewModel.removeFromFavorites(movie)
-    }
 
-    private fun addToFavorites(movie: MovieDetail){
-        viewModel.addToFavorites(movie)
-    }*/
 }

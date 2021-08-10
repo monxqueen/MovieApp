@@ -79,7 +79,7 @@ class MovieDetailsViewModel: ViewModel() {
             ).handleDisposable()
     }
 
-    fun removeFromFavorites(movie: MovieDetail){
+    /*fun removeFromFavorites(movie: MovieDetail){
         val mappedMovie: Movie = mapDetailToMovie(movie)
         favoriteMoviesUseCase.removeFavoriteMovie(mappedMovie)
             .subscribeOn(Schedulers.io())
@@ -122,7 +122,7 @@ class MovieDetailsViewModel: ViewModel() {
             isFavorite = false
         )
         return mappedMovie
-    }
+    }*/
 
     override fun onCleared() {
         disposable.dispose()

@@ -1,5 +1,7 @@
 package com.monique.projetointegrador
 
+import com.monique.projetointegrador.domain.Genre
+import com.monique.projetointegrador.domain.MovieDetail
 import org.junit.Test
 
 import org.junit.Assert.*

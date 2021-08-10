@@ -14,7 +14,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
 
-
+const val ALL_MOVIES_POSITION = 0
+const val FAVORITE_MOVIES_POSITION = 1
 class HomeActivity : AppCompatActivity() {
 
     private var searchEdtTxt: EditText? = null
@@ -60,7 +61,6 @@ class HomeActivity : AppCompatActivity() {
                         searchFragment?.let{
                             supportFragmentManager.beginTransaction()
                                 .replace(R.id.searchFragmentContainer, it)
-                                //.addToBackStack(null)
                                 .commit()
                         }
                     }
@@ -87,6 +87,7 @@ class HomeActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (s != null) {
                     if (s.isEmpty()) {
+                        viewPager.setCurrentItem(ViewPagerAdapter.ALL_MOVIES_POSITION, false)
                         tbLytOptions.visibility = View.VISIBLE
                         viewPager.visibility = View.VISIBLE
                         fragmentContainer.visibility = View.GONE
@@ -111,8 +112,8 @@ class HomeActivity : AppCompatActivity() {
 
     private fun getTabTitle(position: Int): String{
         return when (position){
-            0 -> "Todos os filmes"
-            1 -> "Favoritos"
+            ALL_MOVIES_POSITION -> "Todos os filmes"
+            FAVORITE_MOVIES_POSITION -> "Favoritos"
             else -> ""
         }
     }

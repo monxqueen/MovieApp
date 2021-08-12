@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoIntegrador">
         <activity android:name=".presentation.GeneralErrorActivity"></activity>
-        <activity android:name=".presentation.MovieDetailsActivity" />
+        <activity android:name=".presentation.moviedetails.MovieDetailsActivity" />
         <activity android:name=".presentation.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
-import com.monique.projetointegrador.domain.Movie
-import com.monique.projetointegrador.presentation.MovieListener
+import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.presentation.ClickListener
 
 class MoviesRvAdapter(
     val context: Context,
-    private val listener: MovieListener? = null,
+    private val listener: ClickListener? = null,
     var dataset: MutableList<Movie> = mutableListOf()
 ): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
 
@@ -45,6 +45,7 @@ class MoviesRvAdapter(
         holder.imgMovie?.setOnClickListener {
             listener?.openMovieDetails(dataset[position].id)
         }
+
         holder.favBtn?.isChecked = dataset[position].isFavorite
         holder.favBtn?.setOnClickListener {
             listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)

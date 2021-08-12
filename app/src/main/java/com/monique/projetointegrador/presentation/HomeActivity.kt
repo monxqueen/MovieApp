@@ -13,9 +13,11 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
+import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter.Companion.ALL_MOVIES_POSITION
+import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter.Companion.FAVORITE_MOVIES_POSITION
+import com.monique.projetointegrador.presentation.moviesearch.SearchMoviesFragment
 
-const val ALL_MOVIES_POSITION = 0
-const val FAVORITE_MOVIES_POSITION = 1
+
 class HomeActivity : AppCompatActivity() {
 
     private var searchEdtTxt: EditText? = null
@@ -33,10 +35,10 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        bindviews()
+        bindViews()
     }
 
-    private fun bindviews(){
+    private fun bindViews(){
         searchEdtTxt = findViewById(R.id.searchMovie)
         searchBtn = findViewById(R.id.submitSearch)
         tbLytOptions = findViewById(R.id.tabLytOptions)
@@ -76,36 +78,21 @@ class HomeActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                tbLytOptions.visibility = View.GONE
-                viewPager.visibility = View.GONE
-                greenIcon.visibility = View.VISIBLE
-                searchModeTxt.visibility = View.VISIBLE
-                backToHomeBtn.visibility = View.VISIBLE
-                fragmentContainer.visibility = View.VISIBLE
+                visibilitySearchMode()
             }
 
             override fun afterTextChanged(s: Editable?) {
                 if (s != null) {
                     if (s.isEmpty()) {
-                        viewPager.setCurrentItem(ViewPagerAdapter.ALL_MOVIES_POSITION, false)
-                        tbLytOptions.visibility = View.VISIBLE
-                        viewPager.visibility = View.VISIBLE
-                        fragmentContainer.visibility = View.GONE
-                        greenIcon.visibility = View.GONE
-                        searchModeTxt.visibility = View.GONE
-                        backToHomeBtn.visibility = View.GONE
+                        viewPager.setCurrentItem(ALL_MOVIES_POSITION, false)
+                        visibilityNotSearchMode()
                     }
                 }
             }
         })
 
         backToHomeBtn.setOnClickListener {
-            tbLytOptions.visibility = View.VISIBLE
-            viewPager.visibility = View.VISIBLE
-            fragmentContainer.visibility = View.GONE
-            greenIcon.visibility = View.GONE
-            searchModeTxt.visibility = View.GONE
-            backToHomeBtn.visibility = View.GONE
+            visibilityNotSearchMode()
             searchEdtTxt?.text?.clear()
         }
     }
@@ -116,6 +103,24 @@ class HomeActivity : AppCompatActivity() {
             FAVORITE_MOVIES_POSITION -> "Favoritos"
             else -> ""
         }
+    }
+
+    private fun visibilitySearchMode(){
+        tbLytOptions.visibility = View.GONE
+        viewPager.visibility = View.GONE
+        greenIcon.visibility = View.VISIBLE
+        searchModeTxt.visibility = View.VISIBLE
+        backToHomeBtn.visibility = View.VISIBLE
+        fragmentContainer.visibility = View.VISIBLE
+    }
+
+    private fun visibilityNotSearchMode(){
+        tbLytOptions.visibility = View.VISIBLE
+        viewPager.visibility = View.VISIBLE
+        fragmentContainer.visibility = View.GONE
+        greenIcon.visibility = View.GONE
+        searchModeTxt.visibility = View.GONE
+        backToHomeBtn.visibility = View.GONE
     }
 
 }

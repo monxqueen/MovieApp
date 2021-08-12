@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.presentation.MovieListener
+import com.monique.projetointegrador.domain.model.Genre
+import com.monique.projetointegrador.presentation.ClickListener
 
 class GenresRvAdapter(
     val context: Context,
-    private val listener: MovieListener? = null,
+    private val listener: ClickListener? = null,
     var dataset: MutableList<Genre> = mutableListOf()
 ): RecyclerView.Adapter<GenresRvAdapter.ViewHolder>() {
 
@@ -30,15 +30,23 @@ class GenresRvAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.genreChip?.text = dataset[position].name
-        holder.genreChip?.setOnCheckedChangeListener { _, isChecked ->
+
+        holder.genreChip?.setOnClickListener {
+            if(selectedItems.contains(dataset[position].id)){
+                selectedItems.remove(dataset[position].id)
+            } else {
+              selectedItems.add(dataset[position].id)
+            }
+            listener?.loadMoviesWithGenre(selectedItems)
+        }
+        /*holder.genreChip?.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked){
                 selectedItems.add(dataset[position].id)
             }else{
                 selectedItems.remove(dataset[position].id)
             }
             listener?.loadMoviesWithGenre(selectedItems)
-        }
-
+        }*/
     }
 
     override fun getItemCount() = dataset.size

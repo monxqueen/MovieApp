@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.presentation
+package com.monique.projetointegrador.presentation.popularmovies
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,26 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.presentation.GeneralErrorActivity
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
+import com.monique.projetointegrador.presentation.ClickListener
 import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
 
-class AllMoviesFragment : Fragment(), MovieListener {
+class PopularMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var moviesViewModel: MoviesViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,8 +60,8 @@ class AllMoviesFragment : Fragment(), MovieListener {
     }
 
     private fun observeMovies(){
-        moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { response ->
-            response?.let{
+        moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { result ->
+            result?.let{
                 moviesAdapter.dataset.clear()
                 moviesAdapter.dataset.addAll(it)
                 moviesAdapter.notifyDataSetChanged()
@@ -72,8 +71,8 @@ class AllMoviesFragment : Fragment(), MovieListener {
     }
 
     private fun observeGenres(){
-        moviesViewModel.genreListLiveData.observe(viewLifecycleOwner,{ response ->
-            response?.let{
+        moviesViewModel.genreListLiveData.observe(viewLifecycleOwner,{ result ->
+            result?.let{
                 genresAdapter.dataset.addAll(it)
                 genresAdapter.notifyDataSetChanged()
             }
@@ -82,19 +81,16 @@ class AllMoviesFragment : Fragment(), MovieListener {
 
     private fun observeViewState(){
         moviesViewModel.viewStateLiveData.observe(viewLifecycleOwner, { result ->
-            when(result){
-                ViewState.GeneralError -> {
-                    Toast.makeText(requireContext(), "General error all movies fragment", Toast.LENGTH_LONG).show()
-                    val intent = Intent(requireContext(), GeneralErrorActivity::class.java)
-                    startActivity(intent)
-                }
+            if(result == ViewState.GeneralError){
+                val intent = Intent(requireContext(), GeneralErrorActivity::class.java)
+                startActivity(intent)
             }
         })
     }
 
     override fun openMovieDetails(movieId: Int){
         val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-        intent.putExtra("MOVIE_ID", movieId)
+        intent.putExtra(MOVIE_ID, movieId)
         startActivity(intent)
     }
 
@@ -105,10 +101,10 @@ class AllMoviesFragment : Fragment(), MovieListener {
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if(isChecked){
             movie.isFavorite = true
-            moviesViewModel.favoriteMovie(movie)
+            moviesViewModel.addToFavorites(movie)
         }else{
             movie.isFavorite = false
-            moviesViewModel.unfavoriteMovie(movie)
+            moviesViewModel.removeFromFavorites(movie)
         }
     }
 

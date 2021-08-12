@@ -1,7 +1,7 @@
 package com.monique.projetointegrador.data.mappers
 
 import com.monique.projetointegrador.data.model.genres.GenreResponse
-import com.monique.projetointegrador.domain.Genre
+import com.monique.projetointegrador.domain.model.Genre
 
 class GenreMapper {
     fun map(genresResponseList: List<GenreResponse>): List<Genre> {

@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.presentation
+package com.monique.projetointegrador.presentation.moviesearch
 
 import android.content.Intent
 import android.net.Uri
@@ -10,15 +10,19 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.presentation.GeneralErrorActivity
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
+import com.monique.projetointegrador.presentation.ClickListener
+import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
 
-class SearchMoviesFragment : Fragment(), MovieListener {
+class SearchMoviesFragment : Fragment(), ClickListener {
 
     private var movieSearched: String? = null
     private lateinit var moviesAdapter: MoviesRvAdapter
@@ -112,7 +116,7 @@ class SearchMoviesFragment : Fragment(), MovieListener {
 
     override fun openMovieDetails(movieId: Int) {
         val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-        intent.putExtra("MOVIE_ID", movieId)
+        intent.putExtra(MOVIE_ID, movieId)
         startActivity(intent)
     }
 
@@ -135,10 +139,10 @@ class SearchMoviesFragment : Fragment(), MovieListener {
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if(isChecked){
             movie.isFavorite = true
-            moviesViewModel.favoriteMovie(movie)
+            moviesViewModel.addToFavorites(movie)
         }else{
             movie.isFavorite = false
-            moviesViewModel.unfavoriteMovie(movie)
+            moviesViewModel.removeFromFavorites(movie)
         }
     }
 

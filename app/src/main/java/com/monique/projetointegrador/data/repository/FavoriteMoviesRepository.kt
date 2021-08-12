@@ -1,13 +1,10 @@
 package com.monique.projetointegrador.data.repository
 
-import com.monique.projetointegrador.data.model.movies.MovieResponse
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
 import io.reactivex.Single
 
 interface FavoriteMoviesRepository {
-    //fun favoriteMovie(movie: Movie): Single<Boolean>
-    fun favoriteMovie(movie: Movie): Single<List<Movie>>
-    fun unfavoriteMovie(movie: Movie): Single<List<Movie>>
+    fun addToFavorites(movie: Movie): Single<List<Movie>>
+    fun removeFromFavorites(movie: Movie): Single<List<Movie>>
     fun getFavoriteMovies(): Single<List<Movie>>
-    fun checkIfFavorite(movie: Movie): Single<Boolean>
 }

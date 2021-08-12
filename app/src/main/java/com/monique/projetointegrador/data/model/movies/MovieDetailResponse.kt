@@ -1,11 +1,11 @@
 package com.monique.projetointegrador.data.model.movies
 
 import com.google.gson.annotations.SerializedName
-import com.monique.projetointegrador.domain.Genre
+import com.monique.projetointegrador.domain.model.Genre
 
 class MovieDetailResponse(
     @SerializedName("backdrop_path")
-    val backdrop_path: String? = null,
+    val backdropPath: String? = null,
     @SerializedName("genres")
     val genres: List<Genre>,
     @SerializedName("id")
@@ -13,11 +13,11 @@ class MovieDetailResponse(
     @SerializedName("overview")
     val overview: String? = null,
     @SerializedName("release_date")
-    val release_date: String,
+    val releaseDate: String,
     @SerializedName("runtime")
     val runtime: Int? = null,
     @SerializedName("vote_average")
-    val vote_average: Float,
+    val voteAverage: Float,
     @SerializedName("title")
     val title: String,
     var isFavorite: Boolean = false

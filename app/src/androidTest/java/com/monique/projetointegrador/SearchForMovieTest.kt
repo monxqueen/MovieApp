@@ -4,7 +4,10 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isSelected
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.monique.projetointegrador.presentation.HomeActivity
@@ -18,10 +21,7 @@ class SearchForMovieTest {
     val homeActivity = ActivityScenarioRule(HomeActivity::class.java)
 
     @Test
-    fun search_for_a_movie(){
-            onView(ViewMatchers.withId(R.id.searchMovie)).perform(
-            typeText("Moana"),
-            pressImeActionButton(),
-        )
+    fun check_if_edit_text_is_displayed(){
+        onView(ViewMatchers.withId(R.id.searchMovie)).check(matches(isDisplayed()))
     }
 }

@@ -6,5 +6,5 @@ class CertificationResponse(
     @SerializedName("iso_3166_1")
     val region: String,
     @SerializedName("release_dates")
-    val release_date: List<ReleaseDatesResponse>
+    val releaseDates: List<ReleaseDatesResponse>
 )

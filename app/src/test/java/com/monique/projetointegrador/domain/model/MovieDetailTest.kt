@@ -1,14 +1,13 @@
 package com.monique.projetointegrador.domain.model
 
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.domain.MovieDetail
 import org.junit.Assert
 import org.junit.Test
 
 class MovieDetailTest {
 
     @Test
-    fun `when the user decides to see movie details, that movie's rating should be displayed as a 0-100 percentage`(){
+    fun `when getRating function is called, it should be returned as a 0-100 percentage`(){
+        //given
         val genreList = mutableListOf<Genre>()
         val movieDetailed = MovieDetail(
             "",
@@ -20,14 +19,18 @@ class MovieDetailTest {
             8f,
             "Barbie",
         )
+        val expectedResult = "80%"
 
+        //when
         val result = movieDetailed.getRating()
 
-        Assert.assertEquals("80%", result)
+        //then
+        Assert.assertEquals(expectedResult, result)
     }
 
     @Test
-    fun `when the user decides to see movie details, that movie's release date should only display the year it was released`(){
+    fun `when getReleaseYear function is called, it should only display the year that movie was released`(){
+        //given
         val genreList = mutableListOf<Genre>()
         val movieDetailed = MovieDetail(
             "",
@@ -39,14 +42,18 @@ class MovieDetailTest {
             8f,
             "Lilo & Stitch",
         )
+        val expectedResult = "2001"
 
+        //when
         val result = movieDetailed.getReleaseYear()
 
-        Assert.assertEquals("2001", result)
+        //then
+        Assert.assertEquals(expectedResult, result)
     }
 
     @Test
-    fun `when the user decides to see movie details and its runtime is more than an hour, it should be displayed with hours separated from minutes`(){
+    fun `when getRuntime function is called, it should be displayed with hours apart from minutes`(){
+        //given
         val genreList = mutableListOf<Genre>()
         val movieDetailed = MovieDetail(
             "",
@@ -58,14 +65,18 @@ class MovieDetailTest {
             8f,
             "Moana",
         )
+        val expectedResult = "1h 53min"
 
+        //when
         val result = movieDetailed.getRuntime()
 
-        Assert.assertEquals("1h 53min", result)
+        //then
+        Assert.assertEquals(expectedResult, result)
     }
 
     @Test
-    fun `when the user decides to see movie details and its runtime is less than an hour, it should be displayed only in minutes`(){
+    fun `when getRuntime function is called and the movie duration is less than an hour, it should be displayed only in minutes`(){
+        //given
         val genreList = mutableListOf<Genre>()
         val movieDetailed = MovieDetail(
             "",
@@ -77,14 +88,18 @@ class MovieDetailTest {
             8f,
             "Interstellar",
         )
+        val expectedResult = "45min"
 
+        //when
         val result = movieDetailed.getRuntime()
 
-        Assert.assertEquals("45min", result)
+        //then
+        Assert.assertEquals(expectedResult, result)
     }
 
     @Test
-    fun `when user decides to see movie details and its runtime is null, an empty string should be displayed`(){
+    fun `when getRuntime function is called and the runtime attribute is null, an empty string should be displayed`(){
+        //given
         val genreList = mutableListOf<Genre>()
         val movieDetailed = MovieDetail(
             "",
@@ -96,9 +111,12 @@ class MovieDetailTest {
             8f,
             "Shrek",
         )
+        val expectedResult = ""
 
+        //when
         val result = movieDetailed.getRuntime()
 
-        Assert.assertEquals("", result)
+        //then
+        Assert.assertEquals(expectedResult, result)
     }
 }

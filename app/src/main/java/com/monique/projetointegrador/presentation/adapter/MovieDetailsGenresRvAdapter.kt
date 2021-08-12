@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.domain.Genre
+import com.monique.projetointegrador.domain.model.Genre
 
 class MovieDetailsGenresRvAdapter(private var dataset: List<Genre> = mutableListOf()): RecyclerView.Adapter<MovieDetailsGenresRvAdapter.ViewHolder>() {
 

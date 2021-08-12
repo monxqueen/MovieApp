@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
-import com.monique.projetointegrador.domain.Cast
+import com.monique.projetointegrador.domain.model.Cast
 
 class CastRvAdapter(val context: Context, val dataset: MutableList<Cast> = mutableListOf()): RecyclerView.Adapter<CastRvAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class CastRvAdapter(val context: Context, val dataset: MutableList<Cast> = mutab
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.personImg?.let{ Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].profile_path).into(it) }
+        holder.personImg?.let{ Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].profilePath).into(it) }
         holder.personName?.text = dataset[position].name
         holder.character?.text = dataset[position].character
     }

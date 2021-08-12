@@ -4,7 +4,7 @@
 //import androidx.room.Insert
 //import androidx.room.OnConflictStrategy
 //import androidx.room.Query
-//import com.monique.projetointegrador.domain.Movie
+//import com.monique.projetointegrador.domain.model.Movie
 //
 //@Dao
 //interface FavoriteMovieDao {

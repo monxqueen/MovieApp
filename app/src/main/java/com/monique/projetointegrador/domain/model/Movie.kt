@@ -1,9 +1,6 @@
-package com.monique.projetointegrador.domain
+package com.monique.projetointegrador.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class Movie(
     val imgHome: String? = null,
     val id: Int,
@@ -11,7 +8,7 @@ data class Movie(
     val rating: Float,
     val genreIds: List<Int>,
     var isFavorite: Boolean = false,
-) : Parcelable {
+) {
 
     fun getRating(): String{
         val rating = (rating*10).toInt()

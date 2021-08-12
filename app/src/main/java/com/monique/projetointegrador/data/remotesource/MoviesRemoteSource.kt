@@ -1,11 +1,11 @@
 package com.monique.projetointegrador.data.remotesource
 
 import android.net.Uri
-import com.monique.projetointegrador.data.model.cast.ResponseCast
-import com.monique.projetointegrador.data.model.certification.ResponseCertification
-import com.monique.projetointegrador.data.model.genres.ResponseGenres
+import com.monique.projetointegrador.data.model.cast.CastListResponse
+import com.monique.projetointegrador.data.model.certification.CertificationListReponse
+import com.monique.projetointegrador.data.model.genres.GenresListResponse
 import com.monique.projetointegrador.data.model.movies.MovieDetailResponse
-import com.monique.projetointegrador.data.model.movies.ResponseMovies
+import com.monique.projetointegrador.data.model.movies.MoviesListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,26 +13,24 @@ import retrofit2.http.Query
 
 interface MoviesRemoteSource {
 
-    //Antes eu estava usando o observable, mas não é tão importante usar pra esse projeto pois ele só faz requisições q retornam response na hora
-    //um observable seria mais pra caso eu fosse implementar algo tipo um chat, que sempre precisa ficar de olho se chegou uma resposta ou não
     @GET("movie/popular")
-    fun getPopularMovies(): Single<ResponseMovies>
+    fun getPopularMovies(): Single<MoviesListResponse>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") movieId: Int): Single<MovieDetailResponse>
 
     @GET("search/movie")
-    fun searchForMovie(@Query("query") movieSearched: Uri): Single<ResponseMovies>
+    fun searchForMovie(@Query("query") movieSearched: Uri): Single<MoviesListResponse>
 
     @GET("movie/{movie_id}/credits")
-    fun getCast(@Path("movie_id") movieId: Int): Single<ResponseCast>
+    fun getCast(@Path("movie_id") movieId: Int): Single<CastListResponse>
 
     @GET("genre/movie/list")
-    fun getAllGenres(): Single<ResponseGenres>
+    fun getAllGenres(): Single<GenresListResponse>
 
     @GET("movie/{movie_id}/release_dates")
-    fun getCertification(@Path("movie_id") movieId: Int): Single<ResponseCertification>
+    fun getCertification(@Path("movie_id") movieId: Int): Single<CertificationListReponse>
 
     @GET("discover/movie")
-    fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<ResponseMovies>
+    fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<MoviesListResponse>
 }

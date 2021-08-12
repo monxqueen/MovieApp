@@ -16,12 +16,9 @@ object Network {
 
     private fun createService(): Retrofit {
 
-        //criando uma instância do logging interceptor pra poder me mostrar no logcat tudo que vier do body da aplicação
-        //precisa importar a biblioteca do logging interceptor la no build.gradle
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
-        //okhttp me ajuda a colocar algo no meu request (url) através do addInterceptor, nesse caso estou inserindo a minha api key.
         val okHttpClient = OkHttpClient.Builder()
         okHttpClient.addInterceptor(logging)
         okHttpClient.addInterceptor { chain ->

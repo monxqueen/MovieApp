@@ -5,7 +5,7 @@ import com.monique.projetointegrador.data.base.Network
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.*
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
-import com.monique.projetointegrador.domain.*
+import com.monique.projetointegrador.domain.model.*
 import io.reactivex.Single
 
 class MoviesRepositoryImpl: MoviesRepository {
@@ -94,13 +94,13 @@ class MoviesRepositoryImpl: MoviesRepository {
             }
     }
 
-    override fun getCertification(movieId: Int): Single<List<Certification>> {
+    override fun getCertification(movieId: Int): Single<List<Certification>?> {
         return moviesRemoteSource
             .getCertification(movieId)
             .map {
                 val br = it.results.find { certificationResponse ->
-                    certificationResponse.region == "BR" }
-                certificationMapper.map(br?.release_date)
+                    certificationResponse.region == BR }
+                certificationMapper.map(br?.releaseDates)
             }
     }
 
@@ -123,6 +123,10 @@ class MoviesRepositoryImpl: MoviesRepository {
             .map {
                 movieMapper.map(it)
             }
+    }
+
+    companion object {
+        private const val BR = "BR"
     }
 
 }

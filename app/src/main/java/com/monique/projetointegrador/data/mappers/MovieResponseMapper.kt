@@ -1,7 +1,7 @@
 package com.monique.projetointegrador.data.mappers
 
 import com.monique.projetointegrador.data.model.movies.MovieResponse
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
 
 class MovieResponseMapper {
     fun map(movie: Movie): MovieResponse {

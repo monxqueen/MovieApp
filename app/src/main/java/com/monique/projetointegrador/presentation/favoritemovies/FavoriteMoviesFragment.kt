@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.presentation
+package com.monique.projetointegrador.presentation.favoritemovies
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,15 @@ import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.presentation.ClickListener
+import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
+import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
 
-class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a interface de fav movies, coloca FavMoviesListListener como parâmetro aqui e recebe a lista de filmes fav da fragment all movies*/
+class FavoriteMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var progressBar: ProgressBar
@@ -82,13 +86,13 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
         if (!isChecked) {
             movie.isFavorite = false
-            viewModelFavorites.unfavoriteMovie(movie)
+            viewModelFavorites.removeFromFavorites(movie)
         }
     }
 
     override fun openMovieDetails(movieId: Int) {
         val intent = Intent(requireContext(), MovieDetailsActivity::class.java)
-        intent.putExtra("MOVIE_ID", movieId)
+        intent.putExtra(MOVIE_ID, movieId)
         startActivity(intent)
     }
 
@@ -107,4 +111,6 @@ class FavoriteMoviesFragment : Fragment(), MovieListener { /*se for utilizar a i
             }
         })
     }
+
+
 }

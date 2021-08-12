@@ -1,7 +1,7 @@
 package com.monique.projetointegrador.data.mappers
 
 import com.monique.projetointegrador.data.model.cast.CastResponse
-import com.monique.projetointegrador.domain.Cast
+import com.monique.projetointegrador.domain.model.Cast
 
 class CastMapper {
     fun map(castList: List<CastResponse>): List<Cast>{
@@ -9,7 +9,7 @@ class CastMapper {
         castList.forEach {
             val celebrity = Cast(
                 name = it.name,
-                profile_path = it.profile_path,
+                profilePath = it.profilePath,
                 character = it.character
             )
             celebrities.add(celebrity)

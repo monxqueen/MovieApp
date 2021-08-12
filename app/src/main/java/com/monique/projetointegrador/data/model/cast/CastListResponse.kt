@@ -2,7 +2,7 @@ package com.monique.projetointegrador.data.model.cast
 
 import com.google.gson.annotations.SerializedName
 
-class ResponseCast(
+class CastListResponse(
     @SerializedName("cast")
     val cast: List<CastResponse>
 )

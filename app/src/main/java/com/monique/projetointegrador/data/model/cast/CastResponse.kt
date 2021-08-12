@@ -6,7 +6,7 @@ class CastResponse(
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("profile_path")
-    val profile_path: String? = null,
+    val profilePath: String? = null,
     @SerializedName("character")
     val character: String? = null
 )

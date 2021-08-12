@@ -3,8 +3,7 @@ package com.monique.projetointegrador.data.repository
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.MovieMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
-import com.monique.projetointegrador.data.model.movies.MovieResponse
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Movie
 import io.reactivex.Single
 
 class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
@@ -12,19 +11,19 @@ class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
     private val movieMapper = MovieMapper()
     private val movieResponseMapper = MovieResponseMapper()
 
-    override fun favoriteMovie(movie: Movie): Single<List<Movie>> {
+    override fun addToFavorites(movie: Movie): Single<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)
         return movieLocalDataSource
-            .favoriteMovie(movieMapped)
+            .addToFavorites(movieMapped)
             .map{
                 movieMapper.map(it)
             }
     }
 
-    override fun unfavoriteMovie(movie: Movie): Single<List<Movie>> {
+    override fun removeFromFavorites(movie: Movie): Single<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)
         return movieLocalDataSource
-            .unfavoriteMovie(movieMapped)
+            .removeFromFavorites(movieMapped)
             .map {
                 movieMapper.map(it)
             }
@@ -36,9 +35,5 @@ class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
             .map {
                 movieMapper.map(it)
             }
-    }
-
-    override fun checkIfFavorite(movie: Movie): Single<Boolean> {
-        TODO("Not yet implemented")
     }
 }

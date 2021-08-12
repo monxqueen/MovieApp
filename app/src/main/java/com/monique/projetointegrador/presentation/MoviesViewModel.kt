@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.monique.projetointegrador.domain.Genre
-import com.monique.projetointegrador.domain.Movie
+import com.monique.projetointegrador.domain.model.Genre
+import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.domain.usecase.*
 import com.monique.projetointegrador.presentation.model.ViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 
 class MoviesViewModel: ViewModel() {
 
-    private val getAllMoviesUseCase = GetAllMoviesUseCase()
+    private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
     private val getGenresUseCase = GetGenresUseCase()
     private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
     private val favoriteMoviesUseCase = FavoriteMoviesUseCase()
@@ -40,7 +40,7 @@ class MoviesViewModel: ViewModel() {
     private val disposable = CompositeDisposable()
 
     fun getPopularMovies(){
-        getAllMoviesUseCase.execute()
+        getPopularMoviesUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -98,7 +98,7 @@ class MoviesViewModel: ViewModel() {
             ).handleDisposable()
     }
 
-    fun favoriteMovie(movie: Movie){
+    fun addToFavorites(movie: Movie){
         favoriteMoviesUseCase.addFavoriteMovie(movie)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +112,7 @@ class MoviesViewModel: ViewModel() {
             ).handleDisposable()
     }
 
-    fun unfavoriteMovie(movieToRemove: Movie){
+    fun removeFromFavorites(movieToRemove: Movie){
         favoriteMoviesUseCase.removeFavoriteMovie(movieToRemove)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -122,8 +122,8 @@ class MoviesViewModel: ViewModel() {
                     val result = _moviesLiveData.value?.find { movie ->
                         movie.id == movieToRemove.id
                     }
-                    result?.let {
-                        it.isFavorite = false
+                    result?.let { movie ->
+                        movie.isFavorite = false
                     }
                 },
                 {
@@ -136,7 +136,6 @@ class MoviesViewModel: ViewModel() {
         searchForMoviesUseCase.executeSearch(movieSearched)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            //.timeout(5, TimeUnit.SECONDS)
             .subscribe(
                 {
                     _searchResultsLiveData.value = it
@@ -150,27 +149,6 @@ class MoviesViewModel: ViewModel() {
                 }
             ).handleDisposable()
     }
-
-    fun updateMovies(){
-        favoriteMoviesUseCase.getFavoriteMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe( //
-                { favoriteMoviesList ->
-                    _favoriteMoviesLiveData.value = favoriteMoviesList
-                    _moviesLiveData.value?.forEach { movie ->
-                        val result = favoriteMoviesList.any { favoriteMovie ->
-                            favoriteMovie.id == movie.id
-                        }
-                        movie.isFavorite = result
-                    }
-                },
-                {
-                    print(it.message)
-                }
-            ).handleDisposable()
-    }
-
 
     override fun onCleared() {
         disposable.dispose()

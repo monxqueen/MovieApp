@@ -1,23 +1,23 @@
-package com.monique.projetointegrador.domain
+package com.monique.projetointegrador.domain.model
 
 class MovieDetail(
-    val backdrop_path: String? = null,
+    val backdropPath: String? = null,
     val genres: List<Genre>,
     val id: Int,
     val overview: String? = null,
-    val release_date: String,
+    val releaseDate: String,
     val runtime: Int? = null,
-    val vote_average: Float,
+    val voteAverage: Float,
     val title: String,
     var isFavorite: Boolean = false,
 ) {
     fun getRating(): String{
-        val rating = (vote_average*10).toInt()
+        val rating = (voteAverage*10).toInt()
         return "$rating%"
     }
 
     fun getReleaseYear(): String {
-        return release_date.take(4)
+        return releaseDate.take(4)
     }
 
     fun getRuntime(): String {

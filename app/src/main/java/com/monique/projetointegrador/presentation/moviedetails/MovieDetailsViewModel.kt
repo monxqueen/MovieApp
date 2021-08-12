@@ -1,12 +1,12 @@
-package com.monique.projetointegrador.presentation
+package com.monique.projetointegrador.presentation.moviedetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.monique.projetointegrador.domain.Cast
-import com.monique.projetointegrador.domain.Certification
-import com.monique.projetointegrador.domain.Movie
-import com.monique.projetointegrador.domain.MovieDetail
+import com.monique.projetointegrador.domain.model.Cast
+import com.monique.projetointegrador.domain.model.Certification
+import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.domain.model.MovieDetail
 import com.monique.projetointegrador.domain.usecase.FavoriteMoviesUseCase
 import com.monique.projetointegrador.domain.usecase.GetMovieDetailsUseCase
 import com.monique.projetointegrador.presentation.model.ViewState
@@ -18,7 +18,6 @@ import io.reactivex.schedulers.Schedulers
 class MovieDetailsViewModel: ViewModel() {
 
     private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
-    private val favoriteMoviesUseCase = FavoriteMoviesUseCase()
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
     val movieLiveData: LiveData<MovieDetail> = _movieLiveData
@@ -78,51 +77,6 @@ class MovieDetailsViewModel: ViewModel() {
                 }
             ).handleDisposable()
     }
-
-    /*fun removeFromFavorites(movie: MovieDetail){
-        val mappedMovie: Movie = mapDetailToMovie(movie)
-        favoriteMoviesUseCase.removeFavoriteMovie(mappedMovie)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _favoriteMoviesLiveData.value = it
-                },
-                {
-                    TODO()
-                }
-            ).handleDisposable()
-    }
-
-    //não funciona como deveria (classe moviedetail precisa de um poster_path)
-    fun addToFavorites(movie: MovieDetail){
-        val mappedMovie: Movie = mapDetailToMovie(movie)
-        favoriteMoviesUseCase.addFavoriteMovie(mappedMovie)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    _favoriteMoviesLiveData.value = it
-                },
-                {
-                    TODO()
-                }
-            ).handleDisposable()
-    }
-
-    fun mapDetailToMovie(movie: MovieDetail): Movie {
-        val genreIdsList = mutableListOf<Int>()
-        movie.genres.forEach { genre ->
-            genreIdsList.add(genre.id)
-        }
-        val mappedMovie = Movie(
-            id = movie.id,
-            title = movie.title,
-            genreIds = genreIdsList,
-            isFavorite = false
-        )
-        return mappedMovie
-    }*/
 
     override fun onCleared() {
         disposable.dispose()

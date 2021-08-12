@@ -2,7 +2,8 @@ package com.monique.projetointegrador.data.repository
 
 import android.net.Uri
 import com.monique.projetointegrador.data.base.Network
-import com.monique.projetointegrador.data.localsource.MovieLocalDataSourceImpl
+import com.monique.projetointegrador.data.localsource.MovieMemoryDataSourceImpl
+import com.monique.projetointegrador.data.localsource.database.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.*
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import com.monique.projetointegrador.domain.model.*
@@ -10,7 +11,7 @@ import io.reactivex.Single
 
 class MoviesRepositoryImpl: MoviesRepository {
     private val moviesRemoteSource: MoviesRemoteSource = Network.getMoviesRemoteSource()
-    private val movieLocalDataSource = MovieLocalDataSourceImpl
+    private val movieLocalDataSource = MovieLocalDataSourceImpl()
     private val movieMapper = MovieMapper()
     private val genreMapper = GenreMapper()
     private val castMapper = CastMapper()

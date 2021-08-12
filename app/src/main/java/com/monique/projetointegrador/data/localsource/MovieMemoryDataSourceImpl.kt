@@ -4,7 +4,7 @@ import com.monique.projetointegrador.data.model.movies.MovieResponse
 import io.reactivex.Single
 import java.lang.IllegalStateException
 
-object MovieLocalDataSourceImpl: MovieLocalDataSource{
+object MovieMemoryDataSourceImpl: MovieLocalDataSource{
 
     private val favoriteMoviesList = mutableListOf<MovieResponse>()
 

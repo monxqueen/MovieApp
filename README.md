@@ -23,5 +23,5 @@ Esse é um aplicativo Android feito em Kotlin que oferece aos usuários uma list
 - Crashlytics
 - Constraint Layout
 - JUnit (testes unitários)
-- Espresso (testes automatizados)
+- Espresso (testes instrumentados)
 - MVVM & Clean Architecture

@@ -1,9 +1,9 @@
-<h1 align= "center">Movies App: Projeto Integrador - Vitória Code 2021</h1>
+<h1 align= "center">Movies App: Vitória Code 2021</h1>
 
-### 🎬 Sobre o projeto
-Esse é um aplicativo Android feito em Kotlin que oferece aos usuários uma listagem de filmes utilizando o banco de dados da API do The Movie Database. Nele os usuários podem favoritar filmes (salvando-os localmente), filtrar filmes por um ou mais gêneros, pesquisar por filmes e ver os detalhes de algum filme selecionado.
+### 🎬 About de project
+This is an Android application made in Kotlin that provides users with a list of movies using The Movie Database API database. On the app, users can favorite movies (saving them locally on their phones), filter movies by one or more genres, search for movies and see the details of any selected movie.
 
-## 📱 Imagens do app
+## 📱 Images
 <h1 align="center">
  <p>
  <img src="images/home.jpg" alt="Logo" width="250" height="500" padding-left="50px">
@@ -16,12 +16,12 @@ Esse é um aplicativo Android feito em Kotlin que oferece aos usuários uma list
  </p>
 </h1>
 
-## 👩‍💻 Esse projeto utiliza: 
+## 👩‍💻 Technologies and tools used:
 - Retrofit
 - RxJava
 - Room Database
 - Crashlytics
 - Constraint Layout
-- JUnit (testes unitários)
-- Espresso (testes instrumentados)
+- JUnit (unit tests)
+- Espresso (instrumented tests)
 - MVVM & Clean Architecture

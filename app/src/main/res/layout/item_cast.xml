@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/img_exemplo2" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/personName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,18 +30,18 @@
         app:layout_constraintStart_toStartOf="@+id/personImg"
         app:layout_constraintTop_toBottomOf="@+id/personImg" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/personRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato_regular"
-        android:text="@string/role"
         android:maxEms="5"
+        android:text="@string/role"
         android:textAlignment="center"
-        tools:text="@string/role"
         android:textColor="@color/movieInfoTextColor"
         app:layout_constraintEnd_toEndOf="@+id/personName"
         app:layout_constraintStart_toStartOf="@+id/personName"
-        app:layout_constraintTop_toBottomOf="@+id/personName" />
+        app:layout_constraintTop_toBottomOf="@+id/personName"
+        tools:text="@string/role" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

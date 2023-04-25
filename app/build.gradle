@@ -25,6 +25,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "PRIVATE_KEY", PRIVATE_KEY
+            buildConfigField "String", "BASE_URL", BASE_URL
+            buildConfigField "String", "BASE_URL_IMAGE", BASE_URL_IMAGE
+        }
+        debug {
+            buildConfigField "String", "PRIVATE_KEY", PRIVATE_KEY
+            buildConfigField "String", "BASE_URL", BASE_URL
+            buildConfigField "String", "BASE_URL_IMAGE", BASE_URL_IMAGE
         }
     }
     compileOptions {

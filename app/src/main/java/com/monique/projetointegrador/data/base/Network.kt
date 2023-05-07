@@ -1,5 +1,6 @@
 package com.monique.projetointegrador.data.base
 
+import com.monique.projetointegrador.BuildConfig
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -25,7 +26,7 @@ object Network {
             val original = chain.request()
             val originalHttpUrl = original.url()
             val urlWithKey = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", Constants.PRIVATE_KEY.value)
+                .addQueryParameter("api_key", BuildConfig.PRIVATE_KEY)
                 .addQueryParameter("language", "pt-BR")
                 .build()
 
@@ -33,7 +34,7 @@ object Network {
         }
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL.value)
+            .baseUrl(BuildConfig.BASE_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient.build())

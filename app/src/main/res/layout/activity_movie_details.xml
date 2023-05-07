@@ -50,7 +50,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ratingMovieInfoAct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             app:layout_constraintStart_toEndOf="@+id/starImg"
             app:layout_constraintTop_toTopOf="@id/materialCardView" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieTitle"
             style="@style/movieTitle"
             android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             tools:text="@string/movie_title" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textView3"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="@+id/ratingMovieInfoAct"
             app:layout_constraintTop_toBottomOf="@+id/ratingMovieInfoAct" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/starImg"
             android:layout_width="@dimen/large"
             android:layout_height="@dimen/large"
@@ -100,7 +100,7 @@
             app:layout_constraintStart_toStartOf="@+id/materialCardView"
             app:layout_constraintTop_toTopOf="@+id/materialCardView" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieYear"
             style="@style/movieAdditionalInfo"
             android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
             app:layout_constraintStart_toStartOf="@+id/movieTitle"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/ageRestriction"
             style="@style/movieAdditionalInfo"
             android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
             app:layout_constraintStart_toEndOf="@+id/movieYear"
             app:layout_constraintTop_toTopOf="@+id/movieYear" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieDuration"
             style="@style/movieAdditionalInfo"
             android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
             app:layout_constraintStart_toEndOf="@+id/ageRestriction"
             app:layout_constraintTop_toTopOf="@+id/ageRestriction" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/favBtnMovieInfo"
             android:layout_width="@dimen/xlarge"
             android:layout_height="@dimen/large"
@@ -168,7 +168,7 @@
             app:layout_constraintTop_toBottomOf="@+id/movieYear"
             tools:listitem="@layout/item_movie_genres" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtViewSynopsis"
             style="@style/movieTitle"
             android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
             app:layout_constraintStart_toStartOf="@+id/movieYear"
             app:layout_constraintTop_toBottomOf="@+id/genreRvMovieInfo" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieSynopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -193,7 +193,7 @@
             app:layout_constraintTop_toBottomOf="@+id/txtViewSynopsis"
             tools:text="@string/synopsis" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/castTxtView"
             style="@style/movieTitle"
             android:layout_width="wrap_content"

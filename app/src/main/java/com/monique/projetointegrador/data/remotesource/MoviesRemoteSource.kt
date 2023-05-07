@@ -2,7 +2,7 @@ package com.monique.projetointegrador.data.remotesource
 
 import android.net.Uri
 import com.monique.projetointegrador.data.model.cast.CastListResponse
-import com.monique.projetointegrador.data.model.certification.CertificationListReponse
+import com.monique.projetointegrador.data.model.certification.CertificationListResponse
 import com.monique.projetointegrador.data.model.genres.GenresListResponse
 import com.monique.projetointegrador.data.model.movies.MovieDetailResponse
 import com.monique.projetointegrador.data.model.movies.MoviesListResponse
@@ -29,7 +29,7 @@ interface MoviesRemoteSource {
     fun getAllGenres(): Single<GenresListResponse>
 
     @GET("movie/{movie_id}/release_dates")
-    fun getCertification(@Path("movie_id") movieId: Int): Single<CertificationListReponse>
+    fun getCertification(@Path("movie_id") movieId: Int): Single<CertificationListResponse>
 
     @GET("discover/movie")
     fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<MoviesListResponse>

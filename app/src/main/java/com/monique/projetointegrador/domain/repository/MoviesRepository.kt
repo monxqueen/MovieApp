@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.data.repository
+package com.monique.projetointegrador.domain.repository
 
 import android.net.Uri
 import com.monique.projetointegrador.domain.model.*

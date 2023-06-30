@@ -2,57 +2,83 @@ package com.monique.projetointegrador.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.ToggleButton
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
+import com.monique.projetointegrador.databinding.ItemMovieBinding
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.ClickListener
 
-class MoviesRvAdapter(
+internal class MoviesRvAdapter(
     val context: Context,
-    private val listener: ClickListener? = null,
-    var dataset: MutableList<Movie> = mutableListOf()
-): RecyclerView.Adapter<MoviesRvAdapter.ViewHolder>() {
+    private val listener: ClickListener? = null
+): ListAdapter<Movie, MoviesRvAdapter.ViewHolder>(DiffUtil()) {
 
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        var imgMovie: ImageView? = view.findViewById(R.id.imgMovie)
-        var titleMovie: TextView? = view.findViewById(R.id.titleMovie)
-        var rateMovie: TextView? = view.findViewById(R.id.rateMovie)
-        var favBtn: ToggleButton? = view.findViewById(R.id.favBtn)
-    }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_movie, viewGroup, false)
+        val binding = ItemMovieBinding
+            .inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
 
-        return ViewHolder(view)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(dataset[position].imgHome !== ""){
-            holder.imgMovie?.let { Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].imgHome).into(it) }
-        }
-        holder.titleMovie?.text = dataset[position].title
-        holder.rateMovie?.text = dataset[position].getRating()
+        holder.bindView(position)
+    }
 
-        holder.imgMovie?.setOnClickListener {
-            listener?.openMovieDetails(dataset[position].id)
+    inner class ViewHolder(private val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bindView(position: Int) {
+            setupImage(position)
+            setupTexts(position)
+            setupListeners(position)
+            setupButtonChecked(position)
         }
 
-        holder.favBtn?.isChecked = dataset[position].isFavorite
-        holder.favBtn?.setOnClickListener {
-            listener?.onFavoriteClickedListener(dataset[position], !dataset[position].isFavorite)
+        private fun setupImage(position: Int) {
+            if (currentList[position].imgHome !== ""){
+                Glide.with(context)
+                    .load(Constants.BASE_URL_IMAGE.value + currentList[position].imgHome)
+                    .into(binding.imgMovie)
+            }
+        }
+
+        private fun setupTexts(position: Int) {
+            binding.titleMovie.text = currentList[position].title
+            binding.rateMovie.text = currentList[position].getRating()
+        }
+
+        private fun setupListeners(position: Int) {
+            binding.imgMovie.setOnClickListener {
+                listener?.openMovieDetails(currentList[position].id)
+            }
+            binding.favBtn.setOnClickListener {
+                listener?.onFavoriteClickedListener(
+                    currentList[position],
+                    !currentList[position].isFavorite
+                )
+            }
+        }
+
+        private fun setupButtonChecked(position: Int) {
+            binding.favBtn.isChecked = currentList[position].isFavorite
         }
 
     }
 
-    override fun getItemCount() = dataset.size
+    override fun getItemCount() = currentList.size
 
+}
+
+internal class DiffUtil : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        return oldItem == newItem
+    }
 }

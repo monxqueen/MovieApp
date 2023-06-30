@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/searchMovie"
+        android:id="@+id/searchMovieEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/xsmall"
@@ -38,9 +38,9 @@
         android:textColor="@color/black"
         android:textColorHint="@color/movieInfoTextColor"
         android:textSize="@dimen/small_sp"
-        app:layout_constraintBottom_toBottomOf="@+id/submitSearch"
-        app:layout_constraintStart_toEndOf="@+id/submitSearch"
-        app:layout_constraintTop_toTopOf="@+id/submitSearch" />
+        app:layout_constraintBottom_toBottomOf="@id/submitSearch"
+        app:layout_constraintStart_toEndOf="@id/submitSearch"
+        app:layout_constraintTop_toTopOf="@id/submitSearch" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLytOptions"
@@ -50,7 +50,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchMovie"
+        app:layout_constraintTop_toBottomOf="@id/searchMovieEditText"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabIndicatorColor="@color/greenPrimaryColor"
         app:tabIndicatorFullWidth="false"
@@ -65,8 +65,8 @@
         android:layout_marginTop="@dimen/small"
         android:visibility="gone"
         android:src="@drawable/tab_indicator"
-        app:layout_constraintStart_toStartOf="@+id/submitSearch"
-        app:layout_constraintTop_toBottomOf="@+id/submitSearch" />
+        app:layout_constraintStart_toStartOf="@id/submitSearch"
+        app:layout_constraintTop_toBottomOf="@id/submitSearch" />
 
     <TextView
         android:id="@+id/searchModeTxt"
@@ -76,8 +76,8 @@
         android:layout_marginTop="4dp"
         android:text="@string/search_mode"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/greenIcon"
-        app:layout_constraintTop_toBottomOf="@+id/greenIcon" />
+        app:layout_constraintStart_toStartOf="@id/greenIcon"
+        app:layout_constraintTop_toBottomOf="@id/greenIcon" />
 
     <TextView
         android:id="@+id/backToHomeBtn"
@@ -90,14 +90,14 @@
         android:textColor="@color/greenPrimaryColor"
         android:textSize="@dimen/small_sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/searchModeTxt"
-        app:layout_constraintTop_toBottomOf="@+id/searchModeTxt" />
+        app:layout_constraintStart_toStartOf="@id/searchModeTxt"
+        app:layout_constraintTop_toBottomOf="@id/searchModeTxt" />
 
     <FrameLayout
         android:id="@+id/searchFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/backToHomeBtn"
+        app:layout_constraintTop_toBottomOf="@id/backToHomeBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLytOptions" />
+        app:layout_constraintTop_toBottomOf="@id/tabLytOptions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

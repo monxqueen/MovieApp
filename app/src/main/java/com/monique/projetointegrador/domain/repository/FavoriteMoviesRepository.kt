@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.data.repository
+package com.monique.projetointegrador.domain.repository
 
 import com.monique.projetointegrador.domain.model.Movie
 import io.reactivex.Single

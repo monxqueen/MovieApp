@@ -1,10 +1,10 @@
 package com.monique.projetointegrador.data.repository
 
-import com.monique.projetointegrador.data.localsource.MovieMemoryDataSourceImpl
 import com.monique.projetointegrador.data.localsource.database.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.MovieMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
 import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.domain.repository.FavoriteMoviesRepository
 import io.reactivex.Single
 
 class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {

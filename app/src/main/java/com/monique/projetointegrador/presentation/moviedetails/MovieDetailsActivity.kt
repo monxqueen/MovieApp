@@ -17,7 +17,7 @@ import com.monique.projetointegrador.presentation.adapter.CastRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MovieDetailsGenresRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
 
-class MovieDetailsActivity : AppCompatActivity() {
+internal class MovieDetailsActivity : AppCompatActivity() {
 
     private lateinit var returnBtn: FloatingActionButton
     private lateinit var posterMovie: ShapeableImageView

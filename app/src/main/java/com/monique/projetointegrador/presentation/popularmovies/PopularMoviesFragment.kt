@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.databinding.FragmentHomeMoviesBinding
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.GeneralErrorActivity
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
@@ -24,31 +25,32 @@ class PopularMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
-    private lateinit var progressBar: ProgressBar
     private lateinit var moviesViewModel: MoviesViewModel
+
+    private lateinit var binding: FragmentHomeMoviesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home_movies, container, false)
+    ): View {
+        binding = FragmentHomeMoviesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val rvMovies = view.findViewById<RecyclerView>(R.id.rvMovies)
-        val rvGenres = view.findViewById<RecyclerView>(R.id.rvGenres)
-
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
-        rvMovies.adapter = moviesAdapter
-        rvGenres.adapter = genresAdapter
+        binding.rvMovies.adapter = moviesAdapter
+        binding.rvGenres.adapter = genresAdapter
 
         moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         moviesViewModel.getPopularMovies()
         moviesViewModel.getGenres()
-        progressBar = view.findViewById(R.id.loading)
+
+        binding.loading.visibility = View.VISIBLE
+
         observeGenres()
         observeMovies()
         observeViewState()
@@ -60,32 +62,29 @@ class PopularMoviesFragment : Fragment(), ClickListener {
     }
 
     private fun observeMovies(){
-        moviesViewModel.movieListLiveData.observe(viewLifecycleOwner, { result ->
-            result?.let{
-                moviesAdapter.dataset.clear()
-                moviesAdapter.dataset.addAll(it)
-                moviesAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
+        moviesViewModel.movieListLiveData.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                moviesAdapter.submitList(it)
+                binding.loading.visibility = View.GONE
             }
-        })
+        }
     }
 
     private fun observeGenres(){
-        moviesViewModel.genreListLiveData.observe(viewLifecycleOwner,{ result ->
-            result?.let{
-                genresAdapter.dataset.addAll(it)
-                genresAdapter.notifyDataSetChanged()
+        moviesViewModel.genreListLiveData.observe(viewLifecycleOwner) { result ->
+            result?.let {
+                genresAdapter.submitList(it)
             }
-        })
+        }
     }
 
     private fun observeViewState(){
-        moviesViewModel.viewStateLiveData.observe(viewLifecycleOwner, { result ->
-            if(result == ViewState.GeneralError){
+        moviesViewModel.viewStateLiveData.observe(viewLifecycleOwner) { result ->
+            if (result == ViewState.GeneralError) {
                 val intent = Intent(requireContext(), GeneralErrorActivity::class.java)
                 startActivity(intent)
             }
-        })
+        }
     }
 
     override fun openMovieDetails(movieId: Int){

@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.monique.projetointegrador.R
+import com.monique.projetointegrador.databinding.FragmentHomeMoviesBinding
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.ClickListener
 import com.monique.projetointegrador.presentation.MoviesViewModel
@@ -18,40 +19,30 @@ import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
 
-class FavoriteMoviesFragment : Fragment(), ClickListener {
+internal class FavoriteMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
-    private lateinit var progressBar: ProgressBar
     private lateinit var genresAdapter: GenresRvAdapter
-    private lateinit var rvGenres: RecyclerView
-    private lateinit var rvMovies: RecyclerView
     private lateinit var viewModelFavorites: MoviesViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var binding: FragmentHomeMoviesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home_movies, container, false)
+    ): View {
+        binding = FragmentHomeMoviesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvGenres = view.findViewById(R.id.rvGenres)
-        rvMovies = view.findViewById(R.id.rvMovies)
-
-        progressBar = view.findViewById(R.id.loading)
-
         viewModelFavorites = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
 
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
-        rvGenres.adapter = genresAdapter
-        rvMovies.adapter = moviesAdapter
+        binding.rvGenres.adapter = genresAdapter
+        binding.rvMovies.adapter = moviesAdapter
 
         viewModelFavorites.getGenres()
         observeGenres()
@@ -64,23 +55,20 @@ class FavoriteMoviesFragment : Fragment(), ClickListener {
     }
 
     private fun observeGenres() {
-        viewModelFavorites.genreListLiveData.observe(viewLifecycleOwner, { result ->
+        viewModelFavorites.genreListLiveData.observe(viewLifecycleOwner) { result ->
             result?.let {
-                genresAdapter.dataset.addAll(it)
-                genresAdapter.notifyDataSetChanged()
+                genresAdapter.submitList(it)
             }
-        })
+        }
     }
 
     private fun observeFavoriteMovies() {
-        viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner, { result ->
+        viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner) { result ->
             result?.let {
-                moviesAdapter.dataset.clear()
-                moviesAdapter.dataset.addAll(it)
-                moviesAdapter.notifyDataSetChanged()
-                progressBar.visibility = View.GONE
+                moviesAdapter.submitList(it)
+                binding.loading.visibility = View.GONE
             }
-        })
+        }
     }
 
     override fun onFavoriteClickedListener(movie: Movie, isChecked: Boolean) {
@@ -97,7 +85,7 @@ class FavoriteMoviesFragment : Fragment(), ClickListener {
     }
 
     override fun loadMoviesWithGenre(genreIds: List<Int>) {
-        viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner, { result ->
+        viewModelFavorites.favoriteMoviesLiveData.observe(viewLifecycleOwner) { result ->
             result?.let { movies ->
                 val movieList = mutableListOf<Movie>()
                 movies.forEach { movie ->
@@ -105,11 +93,10 @@ class FavoriteMoviesFragment : Fragment(), ClickListener {
                         movieList.add(movie)
                     }
                 }
-                moviesAdapter.dataset.clear()
-                moviesAdapter.dataset.addAll(movieList)
-                moviesAdapter.notifyDataSetChanged()
+                moviesAdapter.currentList.clear()
+                moviesAdapter.submitList(movieList)
             }
-        })
+        }
     }
 
 

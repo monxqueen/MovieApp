@@ -29,7 +29,9 @@ internal class MoviesRvAdapter(
         holder.bindView(position)
     }
 
-    inner class ViewHolder(private val binding: ItemMovieBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(
+        private val binding: ItemMovieBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(position: Int) {
             setupImage(position)

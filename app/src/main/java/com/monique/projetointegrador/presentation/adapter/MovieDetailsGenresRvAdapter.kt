@@ -1,27 +1,31 @@
 package com.monique.projetointegrador.presentation.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
-import com.monique.projetointegrador.R
+import com.monique.projetointegrador.databinding.ItemMovieGenresBinding
 import com.monique.projetointegrador.domain.model.Genre
 
-class MovieDetailsGenresRvAdapter(private var dataset: List<Genre> = mutableListOf()): RecyclerView.Adapter<MovieDetailsGenresRvAdapter.ViewHolder>() {
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val itemGenre: Chip? = view.findViewById(R.id.itemGenre)
-    }
+class MovieDetailsGenresRvAdapter
+    : ListAdapter<Genre, MovieDetailsGenresRvAdapter.ViewHolder>(DiffUtilGenre()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie_genres, parent, false)
-        return ViewHolder(view)
+        val binding = ItemMovieGenresBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemGenre?.text = dataset[position].name
+        holder.bindView(position)
     }
 
-    override fun getItemCount() = dataset.size
+    inner class ViewHolder(
+        private val binding: ItemMovieGenresBinding
+    ): RecyclerView.ViewHolder(binding.root) {
+
+        fun bindView(position: Int) {
+            binding.itemGenre.text = currentList[position].name
+        }
+    }
 }

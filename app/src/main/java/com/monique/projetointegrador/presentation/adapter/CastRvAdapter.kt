@@ -2,34 +2,48 @@ package com.monique.projetointegrador.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.monique.projetointegrador.R
 import com.monique.projetointegrador.data.base.Constants
+import com.monique.projetointegrador.databinding.ItemCastBinding
 import com.monique.projetointegrador.domain.model.Cast
 
-class CastRvAdapter(val context: Context, val dataset: MutableList<Cast> = mutableListOf()): RecyclerView.Adapter<CastRvAdapter.ViewHolder>() {
+class CastRvAdapter(
+    val context: Context
+): ListAdapter<Cast, CastRvAdapter.ViewHolder>(DiffUtilCast()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cast, parent, false)
-        return ViewHolder(view)
-    }
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view){
-        val personImg = view.findViewById<ImageView>(R.id.personImg)
-        val personName = view.findViewById<TextView>(R.id.personName)
-        val character = view.findViewById<TextView>(R.id.personRole)
+        val binding = ItemCastBinding
+            .inflate(LayoutInflater.from(parent.context), parent,false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.personImg?.let{ Glide.with(context).load(Constants.BASE_URL_IMAGE.value + dataset[position].profilePath).into(it) }
-        holder.personName?.text = dataset[position].name
-        holder.character?.text = dataset[position].character
+        holder.bindView(position)
     }
 
-    override fun getItemCount() = dataset.size
+    inner class ViewHolder(
+        private val binding: ItemCastBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bindView(position: Int) {
+            Glide.with(context)
+                .load(Constants.BASE_URL_IMAGE.value + currentList[position].profilePath)
+                .into(binding.personImg)
+            binding.personName.text = currentList[position].name
+            binding.personRole.text = currentList[position].character
+        }
+    }
+
+}
+
+class DiffUtilCast : androidx.recyclerview.widget.DiffUtil.ItemCallback<Cast>() {
+    override fun areItemsTheSame(oldItem: Cast, newItem: Cast): Boolean {
+        return oldItem.name == newItem.name
+    }
+    override fun areContentsTheSame(oldItem: Cast, newItem: Cast): Boolean {
+        return oldItem == newItem
+    }
 }

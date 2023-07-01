@@ -38,8 +38,6 @@ internal class FavoriteMoviesFragment : Fragment(), ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //viewModelFavorites = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
-
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
         binding.rvGenres.adapter = genresAdapter

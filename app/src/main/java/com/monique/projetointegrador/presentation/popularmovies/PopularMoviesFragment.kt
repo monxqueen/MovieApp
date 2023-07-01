@@ -47,7 +47,6 @@ class PopularMoviesFragment : Fragment(), ClickListener {
         binding.rvMovies.adapter = moviesAdapter
         binding.rvGenres.adapter = genresAdapter
 
-        //moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         moviesViewModel.getPopularMovies()
         moviesViewModel.getGenres()
 

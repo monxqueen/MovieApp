@@ -20,12 +20,14 @@ import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PopularMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
-    private lateinit var moviesViewModel: MoviesViewModel
+    private val moviesViewModel: MoviesViewModel by viewModel()
 
     private lateinit var binding: FragmentHomeMoviesBinding
 
@@ -45,7 +47,7 @@ class PopularMoviesFragment : Fragment(), ClickListener {
         binding.rvMovies.adapter = moviesAdapter
         binding.rvGenres.adapter = genresAdapter
 
-        moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
+        //moviesViewModel = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
         moviesViewModel.getPopularMovies()
         moviesViewModel.getGenres()
 

@@ -16,6 +16,7 @@ import com.monique.projetointegrador.presentation.GeneralErrorActivity
 import com.monique.projetointegrador.presentation.adapter.CastRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MovieDetailsGenresRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class MovieDetailsActivity : AppCompatActivity() {
 
@@ -32,7 +33,7 @@ internal class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var castRv: RecyclerView
     private lateinit var castRvAdapter: CastRvAdapter
     private lateinit var genresRvAdapter: MovieDetailsGenresRvAdapter
-    private val viewModel = MovieDetailsViewModel()
+    private val viewModel: MovieDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

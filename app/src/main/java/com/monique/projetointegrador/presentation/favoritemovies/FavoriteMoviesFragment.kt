@@ -18,12 +18,13 @@ import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FavoriteMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
-    private lateinit var viewModelFavorites: MoviesViewModel
+    private val  viewModelFavorites: MoviesViewModel by viewModel()
     private lateinit var binding: FragmentHomeMoviesBinding
 
     override fun onCreateView(
@@ -37,7 +38,7 @@ internal class FavoriteMoviesFragment : Fragment(), ClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModelFavorites = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
+        //viewModelFavorites = ViewModelProvider(requireActivity()).get(MoviesViewModel::class.java)
 
         genresAdapter = GenresRvAdapter(context = view.context, listener = this)
         moviesAdapter = MoviesRvAdapter(context = view.context, listener = this)
@@ -93,7 +94,6 @@ internal class FavoriteMoviesFragment : Fragment(), ClickListener {
                         movieList.add(movie)
                     }
                 }
-                moviesAdapter.currentList.clear()
                 moviesAdapter.submitList(movieList)
             }
         }

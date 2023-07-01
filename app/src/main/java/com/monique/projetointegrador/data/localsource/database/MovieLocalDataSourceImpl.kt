@@ -8,10 +8,11 @@ import com.monique.projetointegrador.data.model.movies.MovieResponse
 import io.reactivex.Single
 import java.lang.IllegalStateException
 
-class MovieLocalDataSourceImpl: MovieLocalDataSource {
+class MovieLocalDataSourceImpl(
+    private val movieDataMapper: MovieDataMapper,
+    private val movieResponseMapper: MovieResponseMapper
+): MovieLocalDataSource {
     private val dao = AppDatabaseProvider.getFavoriteMovieDao()
-    private val movieDataMapper = MovieDataMapper()
-    private val movieResponseMapper = MovieResponseMapper()
 
     override fun addToFavorites(movie: MovieResponse): Single<List<MovieResponse>> {
         return Single.create { emitter ->

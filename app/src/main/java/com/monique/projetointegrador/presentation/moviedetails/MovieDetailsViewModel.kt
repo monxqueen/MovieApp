@@ -15,9 +15,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class MovieDetailsViewModel: ViewModel() {
-
-    private val getMovieDetailsUseCase = GetMovieDetailsUseCase()
+class MovieDetailsViewModel(
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+): ViewModel() {
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
     val movieLiveData: LiveData<MovieDetail> = _movieLiveData

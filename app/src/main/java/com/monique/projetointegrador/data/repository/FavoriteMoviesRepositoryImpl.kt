@@ -1,5 +1,6 @@
 package com.monique.projetointegrador.data.repository
 
+import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
 import com.monique.projetointegrador.data.localsource.database.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.MovieMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
@@ -7,10 +8,12 @@ import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.domain.repository.FavoriteMoviesRepository
 import io.reactivex.Single
 
-class FavoriteMoviesRepositoryImpl: FavoriteMoviesRepository {
-    private val movieLocalDataSource = MovieLocalDataSourceImpl()
-    private val movieMapper = MovieMapper()
-    private val movieResponseMapper = MovieResponseMapper()
+class FavoriteMoviesRepositoryImpl(
+    private val movieLocalDataSource: MovieLocalDataSource,
+    private val movieMapper: MovieMapper,
+    private val movieResponseMapper: MovieResponseMapper
+): FavoriteMoviesRepository {
+
 
     override fun addToFavorites(movie: Movie): Single<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)

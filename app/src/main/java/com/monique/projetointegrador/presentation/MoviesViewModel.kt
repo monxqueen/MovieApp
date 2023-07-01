@@ -14,13 +14,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-internal class MoviesViewModel: ViewModel() {
-
-    private val getPopularMoviesUseCase = GetPopularMoviesUseCase()
-    private val getGenresUseCase = GetGenresUseCase()
-    private val getMoviesByGenreUseCase = GetMoviesByGenreUseCase()
-    private val favoriteMoviesUseCase = FavoriteMoviesUseCase()
-    private val searchForMoviesUseCase = SearchForMovieUseCase()
+internal class MoviesViewModel(
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    private val getGenresUseCase: GetGenresUseCase,
+    private val getMoviesByGenreUseCase: GetMoviesByGenreUseCase,
+    private val favoriteMoviesUseCase: FavoriteMoviesUseCase,
+    private val searchForMoviesUseCase: SearchForMovieUseCase
+): ViewModel() {
 
     private val _moviesLiveData = MutableLiveData<List<Movie>>(mutableListOf())
     val movieListLiveData : LiveData<List<Movie>> = _moviesLiveData

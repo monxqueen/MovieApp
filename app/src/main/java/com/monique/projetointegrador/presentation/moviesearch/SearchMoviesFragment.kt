@@ -22,13 +22,14 @@ import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
 import com.monique.projetointegrador.presentation.moviedetails.MovieDetailsActivity.Companion.MOVIE_ID
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class SearchMoviesFragment : Fragment(), ClickListener {
 
     private var movieSearched: String? = null
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter
-    private var moviesViewModel = MoviesViewModel()
+    private val moviesViewModel: MoviesViewModel by viewModel()
     private lateinit var binding: FragmentHomeMoviesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

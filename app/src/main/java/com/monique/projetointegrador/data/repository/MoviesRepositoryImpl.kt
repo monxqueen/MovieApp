@@ -2,6 +2,7 @@ package com.monique.projetointegrador.data.repository
 
 import android.net.Uri
 import com.monique.projetointegrador.data.base.Network
+import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
 import com.monique.projetointegrador.data.localsource.database.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.*
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
@@ -9,14 +10,15 @@ import com.monique.projetointegrador.domain.model.*
 import com.monique.projetointegrador.domain.repository.MoviesRepository
 import io.reactivex.Single
 
-class MoviesRepositoryImpl: MoviesRepository {
+class MoviesRepositoryImpl(
+    private val movieLocalDataSource: MovieLocalDataSource,
+    private val movieMapper: MovieMapper,
+    private val genreMapper: GenreMapper,
+    private val castMapper: CastMapper,
+    private val movieDetailMapper: MovieDetailMapper,
+    private val certificationMapper: CertificationMapper,
+): MoviesRepository {
     private val moviesRemoteSource: MoviesRemoteSource = Network.getMoviesRemoteSource()
-    private val movieLocalDataSource = MovieLocalDataSourceImpl()
-    private val movieMapper = MovieMapper()
-    private val genreMapper = GenreMapper()
-    private val castMapper = CastMapper()
-    private val movieDetailMapper = MovieDetailMapper()
-    private val certificationMapper = CertificationMapper()
 
     override fun getPopularMovies(): Single<List<Movie>> {
         return moviesRemoteSource

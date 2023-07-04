@@ -90,6 +90,8 @@
         android:textColor="@color/greenPrimaryColor"
         android:textSize="@dimen/small_sp"
         android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toStartOf="@id/searchModeTxt"
         app:layout_constraintTop_toBottomOf="@id/searchModeTxt" />
 

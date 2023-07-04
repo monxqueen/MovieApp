@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.common.utils.loadImage
 import com.monique.projetointegrador.data.base.Constants
 import com.monique.projetointegrador.databinding.ItemCastBinding
 import com.monique.projetointegrador.domain.model.Cast
@@ -29,9 +30,11 @@ class CastRvAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(position: Int) {
-            Glide.with(context)
-                .load(Constants.BASE_URL_IMAGE.value + currentList[position].profilePath)
-                .into(binding.personImg)
+            binding.personImg
+                .loadImage(
+                Constants.BASE_URL_IMAGE.value +
+                        currentList[position].profilePath
+                )
             binding.personName.text = currentList[position].name
             binding.personRole.text = currentList[position].character
         }

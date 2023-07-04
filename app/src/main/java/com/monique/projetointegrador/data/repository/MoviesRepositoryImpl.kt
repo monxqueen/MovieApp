@@ -3,12 +3,14 @@ package com.monique.projetointegrador.data.repository
 import android.net.Uri
 import com.monique.projetointegrador.data.base.Network
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
-import com.monique.projetointegrador.data.localsource.database.MovieLocalDataSourceImpl
 import com.monique.projetointegrador.data.mappers.*
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import com.monique.projetointegrador.domain.model.*
 import com.monique.projetointegrador.domain.repository.MoviesRepository
-import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class MoviesRepositoryImpl(
     private val movieLocalDataSource: MovieLocalDataSource,
@@ -20,112 +22,123 @@ class MoviesRepositoryImpl(
 ): MoviesRepository {
     private val moviesRemoteSource: MoviesRemoteSource = Network.getMoviesRemoteSource()
 
-    override fun getPopularMovies(): Single<List<Movie>> {
-        return moviesRemoteSource
-            .getPopularMovies()
-            .flatMap { movieResponseList ->
-                movieLocalDataSource
-                    .getFavoriteMovies()
-                    .map { favoriteMovieList ->
-                        movieResponseList.movieResults.forEach { movieResponse ->
-                            val result = favoriteMovieList.any { favoriteMovie ->
-                                favoriteMovie.id == movieResponse.id
-                            }
-                            movieResponse.isFavorite = result
+    override fun getPopularMovies(): Flow<List<Movie>> {
+        return flow {
+            emit(
+                movieMapper.map(
+                    moviesRemoteSource
+                        .getPopularMovies()
+                        .movieResults
+                        .map { movieResponse ->
+                            movieLocalDataSource
+                                .getFavoriteMovies()
+                                .map { favoriteMovieList ->
+                                    val result = favoriteMovieList.any { favoriteMovie ->
+                                        favoriteMovie.id == movieResponse.id
+                                    }
+                                    movieResponse.isFavorite = result
+                                }
+                            movieResponse
                         }
-                        movieResponseList.movieResults
-                    }
-            }
-            .map {
-                movieMapper.map(it)
-            }
-    }
-
-    override fun getMovieDetails(movieId: Int): Single<MovieDetail> {
-        return moviesRemoteSource
-            .getMovieDetails(movieId)
-            .flatMap { movieResponse ->
-                movieLocalDataSource
-                    .getFavoriteMovies()
-                    .map { favoriteMovieList ->
-                        val result = favoriteMovieList.any { favoriteMovie ->
-                            favoriteMovie.id == movieResponse.id
-                        }
-                        movieResponse.isFavorite = result
-                        movieResponse
-                    }
-            }
-            .map{
-                movieDetailMapper.map(it)
+                )
+            )
         }
     }
 
-    override fun getAllGenres(): Single<List<Genre>> {
-        return moviesRemoteSource
-            .getAllGenres()
-            .map {
-                genreMapper.map(it.genres)
-            }
-    }
-
-    override fun getMoviesByGenre(genresId: String): Single<List<Movie>> {
-        return moviesRemoteSource
-            .getMoviesByGenre(genresId)
-            .flatMap { movieResponseList ->
-                movieLocalDataSource
-                    .getFavoriteMovies()
-                    .map { favoriteMovieList ->
-                        movieResponseList.movieResults.forEach { movieResponse ->
-                            val result = favoriteMovieList.any { favoriteMovie ->
-                                favoriteMovie.id == movieResponse.id
-                            }
-                            movieResponse.isFavorite = result
+    override fun getMovieDetails(movieId: Int): Flow<MovieDetail> {
+        return flow {
+            emit(
+                movieDetailMapper.map(
+                    moviesRemoteSource
+                        .getMovieDetails(movieId).also { movieResponse ->
+                            movieLocalDataSource
+                                .getFavoriteMovies()
+                                .map {favoriteMovieList ->
+                                    val result = favoriteMovieList.any { favoriteMovie ->
+                                        favoriteMovie.id == movieResponse.id
+                                    }
+                                    movieResponse.isFavorite = result
+                                    movieResponse
+                                }
                         }
-                        movieResponseList.movieResults
-                    }
-            }
-            .map {
-                movieMapper.map(it)
-            }
+                )
+            )
+        }
     }
 
-    override fun getCast(movieId: Int): Single<List<Cast>> {
-        return moviesRemoteSource
-            .getCast(movieId)
-            .map {
-                castMapper.map(it.cast)
-            }
+    override fun getAllGenres(): Flow<List<Genre>> {
+        return flow {
+            emit(
+                genreMapper.map(
+                    moviesRemoteSource.getAllGenres().genres
+                )
+            )
+        }
     }
 
-    override fun getCertification(movieId: Int): Single<List<Certification>?> {
-        return moviesRemoteSource
-            .getCertification(movieId)
-            .map {
-                val br = it.results.find { certificationResponse ->
-                    certificationResponse.region == BR }
-                certificationMapper.map(br?.releaseDates)
-            }
-    }
-
-    override fun searchForMovie(movieSearched: Uri): Single<List<Movie>> {
-        return moviesRemoteSource
-            .searchForMovie(movieSearched)
-            .flatMap { movieResponseList ->
-                movieLocalDataSource
-                    .getFavoriteMovies()
-                    .map { favoriteMovieList ->
-                        movieResponseList.movieResults.forEach { movieResponse ->
-                            val result = favoriteMovieList.any { favoriteMovie ->
-                                favoriteMovie.id == movieResponse.id
-                            }
-                            movieResponse.isFavorite = result
+    override fun getMoviesByGenre(genresId: String): Flow<List<Movie>> {
+        return flow {
+            emit(
+                movieMapper.map(
+                    moviesRemoteSource
+                        .getMoviesByGenre(genresId)
+                        .movieResults
+                        .map { movieResponse ->
+                            movieLocalDataSource
+                                .getFavoriteMovies()
+                                .map { favoriteMovieList ->
+                                    val result = favoriteMovieList.any { favoriteMovie ->
+                                        favoriteMovie.id == movieResponse.id
+                                    }
+                                    movieResponse.isFavorite = result
+                                }
+                            movieResponse
                         }
-                        movieResponseList.movieResults
-                    }
-            }
-            .map {
-                movieMapper.map(it)
-            }
+                )
+            )
+
+        }
+    }
+
+    override fun getCast(movieId: Int): Flow<List<Cast>> {
+        return flow {
+            emit(castMapper.map(moviesRemoteSource.getCast(movieId).cast))
+        }
+    }
+
+    override fun getCertification(movieId: Int): Flow<List<Certification>?> {
+        return flow {
+            emit(
+                certificationMapper.map(
+                    moviesRemoteSource.getCertification(movieId).results.find { certificationResponse ->
+                        certificationResponse.region == BR
+                    }?.releaseDates
+                )
+            )
+        }
+    }
+
+    override fun searchForMovie(movieSearched: Uri): Flow<List<Movie>> {
+        return flow {
+            emit(
+                movieMapper.map(
+                    moviesRemoteSource
+                        .searchForMovie(movieSearched)
+                        .movieResults
+                        .map { movieResponse ->
+                            movieLocalDataSource
+                                .getFavoriteMovies()
+                                .map { favoriteMovieList ->
+                                    val result = favoriteMovieList.any { favoriteMovie ->
+                                        favoriteMovie.id == movieResponse.id
+                                    }
+                                    movieResponse.isFavorite = result
+                                }
+                            movieResponse
+                        }
+                )
+            )
+        }
     }
 
     companion object {

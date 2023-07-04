@@ -7,6 +7,8 @@ import com.monique.projetointegrador.data.mappers.MovieResponseMapper
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.domain.repository.FavoriteMoviesRepository
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class FavoriteMoviesRepositoryImpl(
     private val movieLocalDataSource: MovieLocalDataSource,
@@ -15,16 +17,16 @@ class FavoriteMoviesRepositoryImpl(
 ): FavoriteMoviesRepository {
 
 
-    override fun addToFavorites(movie: Movie): Single<List<Movie>> {
+    override fun addToFavorites(movie: Movie): Flow<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)
         return movieLocalDataSource
             .addToFavorites(movieMapped)
-            .map{
+            .map {
                 movieMapper.map(it)
             }
     }
 
-    override fun removeFromFavorites(movie: Movie): Single<List<Movie>> {
+    override fun removeFromFavorites(movie: Movie): Flow<List<Movie>> {
         val movieMapped = movieResponseMapper.map(movie)
         return movieLocalDataSource
             .removeFromFavorites(movieMapped)
@@ -33,7 +35,7 @@ class FavoriteMoviesRepositoryImpl(
             }
     }
 
-    override fun getFavoriteMovies(): Single<List<Movie>> {
+    override fun getFavoriteMovies(): Flow<List<Movie>> {
         return movieLocalDataSource
             .getFavoriteMovies()
             .map {

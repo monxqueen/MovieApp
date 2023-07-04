@@ -7,6 +7,7 @@ import com.monique.projetointegrador.data.model.genres.GenresListResponse
 import com.monique.projetointegrador.data.model.movies.MovieDetailResponse
 import com.monique.projetointegrador.data.model.movies.MoviesListResponse
 import io.reactivex.Single
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,23 +15,23 @@ import retrofit2.http.Query
 interface MoviesRemoteSource {
 
     @GET("movie/popular")
-    fun getPopularMovies(): Single<MoviesListResponse>
+    suspend fun getPopularMovies(): MoviesListResponse
 
     @GET("movie/{movie_id}")
-    fun getMovieDetails(@Path("movie_id") movieId: Int): Single<MovieDetailResponse>
+    suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailResponse
 
     @GET("search/movie")
-    fun searchForMovie(@Query("query") movieSearched: Uri): Single<MoviesListResponse>
+    suspend fun searchForMovie(@Query("query") movieSearched: Uri): MoviesListResponse
 
     @GET("movie/{movie_id}/credits")
-    fun getCast(@Path("movie_id") movieId: Int): Single<CastListResponse>
+    suspend fun getCast(@Path("movie_id") movieId: Int): CastListResponse
 
     @GET("genre/movie/list")
-    fun getAllGenres(): Single<GenresListResponse>
+    suspend fun getAllGenres(): GenresListResponse
 
     @GET("movie/{movie_id}/release_dates")
-    fun getCertification(@Path("movie_id") movieId: Int): Single<CertificationListReponse>
+    suspend fun getCertification(@Path("movie_id") movieId: Int): CertificationListReponse
 
     @GET("discover/movie")
-    fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): Single<MoviesListResponse>
+    suspend fun getMoviesByGenre(@Query("with_genres", encoded = true) genresId: String): MoviesListResponse
 }

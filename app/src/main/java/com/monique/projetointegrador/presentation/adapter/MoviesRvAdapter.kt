@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.common.utils.loadImage
 import com.monique.projetointegrador.data.base.Constants
 import com.monique.projetointegrador.databinding.ItemMovieBinding
 import com.monique.projetointegrador.domain.model.Movie
@@ -41,10 +42,12 @@ internal class MoviesRvAdapter(
         }
 
         private fun setupImage(position: Int) {
-            if (currentList[position].imgHome !== ""){
-                Glide.with(context)
-                    .load(Constants.BASE_URL_IMAGE.value + currentList[position].imgHome)
-                    .into(binding.imgMovie)
+            if (currentList[position].imgHome !== "") {
+                binding.imgMovie
+                    .loadImage(
+                        Constants.BASE_URL_IMAGE.value
+                                + currentList[position].imgHome
+                    )
             }
         }
 

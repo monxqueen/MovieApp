@@ -4,11 +4,11 @@ import com.monique.projetointegrador.data.model.movies.MovieResponse
 import io.reactivex.Single
 import java.lang.IllegalStateException
 
-object MovieMemoryDataSourceImpl: MovieLocalDataSource{
+object MovieMemoryDataSourceImpl {
 
     private val favoriteMoviesList = mutableListOf<MovieResponse>()
 
-    override fun addToFavorites(movie: MovieResponse): Single<List<MovieResponse>> {
+    fun addToFavorites(movie: MovieResponse): Single<List<MovieResponse>> {
         return Single.create { emitter ->
             val result = favoriteMoviesList.add(movie) //result is either true or false
             if (result) {
@@ -19,7 +19,7 @@ object MovieMemoryDataSourceImpl: MovieLocalDataSource{
         }
     }
 
-    override fun removeFromFavorites(movie: MovieResponse): Single<List<MovieResponse>> {
+    fun removeFromFavorites(movie: MovieResponse): Single<List<MovieResponse>> {
         return Single.create { emitter ->
             val movieToRemove = favoriteMoviesList.find {
                 it.id == movie.id
@@ -33,7 +33,7 @@ object MovieMemoryDataSourceImpl: MovieLocalDataSource{
         }
     }
 
-    override fun getFavoriteMovies(): Single<List<MovieResponse>> {
+    fun getFavoriteMovies(): Single<List<MovieResponse>> {
         return Single.create { emitter ->
             emitter.onSuccess(favoriteMoviesList)
         }

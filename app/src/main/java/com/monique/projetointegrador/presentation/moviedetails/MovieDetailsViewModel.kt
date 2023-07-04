@@ -3,6 +3,7 @@ package com.monique.projetointegrador.presentation.moviedetails
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.monique.projetointegrador.domain.model.Cast
 import com.monique.projetointegrador.domain.model.Certification
 import com.monique.projetointegrador.domain.model.Movie
@@ -14,9 +15,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 
 class MovieDetailsViewModel(
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel() {
 
     private val _movieLiveData = MutableLiveData<MovieDetail>()
@@ -36,46 +43,43 @@ class MovieDetailsViewModel(
 
     private val disposable = CompositeDisposable()
 
-    fun getMovieDetails(movieId: Int){
-        getMovieDetailsUseCase.executeMovie(movieId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
+    fun getMovieDetails(movieId: Int) {
+        viewModelScope.launch {
+            getMovieDetailsUseCase.executeMovie(movieId)
+                .flowOn(dispatcher)
+                .catch {
+                    _viewStateLiveData.value = ViewState.GeneralError
+                }
+                .collect { result ->
                     _movieLiveData.value = result
-                },
-                {
-                    _viewStateLiveData.value = ViewState.GeneralError
                 }
-            ).handleDisposable()
+        }
     }
 
-    fun getCast(movieId: Int){
-        getMovieDetailsUseCase.executeCast(movieId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
+    fun getCast(movieId: Int) {
+        viewModelScope.launch {
+            getMovieDetailsUseCase.executeCast(movieId)
+                .flowOn(dispatcher)
+                .catch {
+                    _viewStateLiveData.value = ViewState.GeneralError
+                }
+                .collect { result ->
                     _castLiveData.value = result
-                },
-                {
-                    _viewStateLiveData.value = ViewState.GeneralError
                 }
-            ).handleDisposable()
+        }
     }
 
-    fun getCertification(movieId: Int){
-        getMovieDetailsUseCase.executeCertification(movieId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
-                    _certificationLiveData.value = result
-                },
-                {
+    fun getCertification(movieId: Int) {
+        viewModelScope.launch {
+            getMovieDetailsUseCase.executeCertification(movieId)
+                .flowOn(dispatcher)
+                .catch {
                     _viewStateLiveData.value = ViewState.GeneralError
                 }
-            ).handleDisposable()
+                .collect {result ->
+                    _certificationLiveData.value = result
+                }
+        }
     }
 
     override fun onCleared() {

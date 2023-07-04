@@ -1,11 +1,14 @@
 package com.monique.projetointegrador.data.base
 
 import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object Network {
 
@@ -13,6 +16,10 @@ object Network {
         val api = createService()
         return api.create(MoviesRemoteSource::class.java)
     }
+
+    private fun createMoshi(): Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     private fun createService(): Retrofit {
 
@@ -34,7 +41,6 @@ object Network {
 
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL.value)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient.build())
             .build()

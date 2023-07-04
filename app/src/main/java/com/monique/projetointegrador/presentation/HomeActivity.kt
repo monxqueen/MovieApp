@@ -103,12 +103,11 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     }
 
     private fun setupButtonListener() {
-        with(binding) {
-            backToHomeBtn.setOnClickListener {
-                visibilityNotSearchMode()
-                searchMovieEditText.text.clear()
-            }
+        backToHomeBtn.setOnClickListener {
+            visibilityNotSearchMode()
+            searchMovieEditText?.text?.clear()
         }
+
     }
 
     private fun getTabTitle(position: Int): String{

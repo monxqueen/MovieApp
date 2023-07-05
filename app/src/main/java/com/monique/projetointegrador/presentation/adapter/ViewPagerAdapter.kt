@@ -3,8 +3,8 @@ package com.monique.projetointegrador.presentation.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.monique.projetointegrador.presentation.popularmovies.PopularMoviesFragment
-import com.monique.projetointegrador.presentation.favoritemovies.FavoriteMoviesFragment
+import com.monique.projetointegrador.features.popularmovies.presentation.PopularMoviesFragment
+import com.monique.projetointegrador.features.favoritemovies.presentation.FavoriteMoviesFragment
 
 class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
     override fun getItemCount(): Int {

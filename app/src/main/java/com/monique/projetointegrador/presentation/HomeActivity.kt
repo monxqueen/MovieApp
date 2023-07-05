@@ -16,7 +16,7 @@ import com.monique.projetointegrador.databinding.ActivityHomeBinding
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter.Companion.ALL_MOVIES_POSITION
 import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter.Companion.FAVORITE_MOVIES_POSITION
-import com.monique.projetointegrador.presentation.moviesearch.SearchMoviesFragment
+import com.monique.projetointegrador.features.moviesearch.presentation.SearchMoviesFragment
 
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {

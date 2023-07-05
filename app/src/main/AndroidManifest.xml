@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".presentation.application.AppApplication"
+        android:name=".application.AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetoIntegrador">
         <activity android:name=".presentation.GeneralErrorActivity"/>
-        <activity android:name=".presentation.moviedetails.MovieDetailsActivity" />
+        <activity android:name=".features.moviedetails.presentation.MovieDetailsActivity" />
         <activity android:name=".presentation.HomeActivity"
             android:exported="true">
             <intent-filter>

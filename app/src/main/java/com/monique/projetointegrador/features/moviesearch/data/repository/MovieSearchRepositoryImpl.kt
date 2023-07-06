@@ -8,6 +8,7 @@ import com.monique.projetointegrador.features.moviesearch.data.mapper.MovieSearc
 import com.monique.projetointegrador.features.moviesearch.data.remotesource.MovieSearchRemoteSource
 import com.monique.projetointegrador.features.moviesearch.domain.repository.MovieSearchRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
@@ -26,11 +27,11 @@ class MovieSearchRepositoryImpl(
                         .map { movieResponse ->
                             movieLocalDataSource
                                 .getFavoriteMovies()
-                                .map { favoriteMovieList ->
-                                    val result = favoriteMovieList.any { favoriteMovie ->
-                                        favoriteMovie.id == movieResponse.id
-                                    }
-                                    movieResponse.isFavorite = result
+                                .collect { favoriteMovieList ->
+                                        val result = favoriteMovieList.any { favoriteMovie ->
+                                            favoriteMovie.id == movieResponse.id
+                                        }
+                                        movieResponse.isFavorite = result
                                 }
                             movieResponse
                         }

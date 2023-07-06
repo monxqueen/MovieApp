@@ -4,12 +4,15 @@ import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
 import com.monique.projetointegrador.features.moviedetails.data.mapper.CastMapper
 import com.monique.projetointegrador.features.moviedetails.data.mapper.CertificationMapper
 import com.monique.projetointegrador.features.moviedetails.data.mapper.MovieDetailMapper
+import com.monique.projetointegrador.features.moviedetails.data.model.MovieDetailResponse
 import com.monique.projetointegrador.features.moviedetails.data.remotesource.MovieDetailsRemoteSource
 import com.monique.projetointegrador.features.moviedetails.domain.model.Cast
 import com.monique.projetointegrador.features.moviedetails.domain.model.Certification
 import com.monique.projetointegrador.features.moviedetails.domain.model.MovieDetail
 import com.monique.projetointegrador.features.moviedetails.domain.repository.MovieDetailsRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
@@ -26,7 +29,22 @@ class MovieDetailsRepositoryImpl(
             emit(
                 movieDetailMapper.map(
                     moviesRemoteSource
-                        .getMovieDetails(movieId).also { movieResponse ->
+                        .getMovieDetails(movieId).apply {
+                            movieLocalDataSource
+                                .getFavoriteMovies()
+                                .collect { favoriteMovieList ->
+                                    val result = favoriteMovieList.any { favoriteMovie ->
+                                        favoriteMovie.id == this.id
+                                    }
+                                    this.isFavorite = result
+                                }
+                        }
+
+                )
+
+                /*movieDetailMapper.map(
+                    moviesRemoteSource
+                        .getMovieDetails(movieId).also {  movieResponse ->
                             movieLocalDataSource
                                 .getFavoriteMovies()
                                 .map {favoriteMovieList ->
@@ -37,7 +55,7 @@ class MovieDetailsRepositoryImpl(
                                     movieResponse
                                 }
                         }
-                )
+                )*/
             )
         }
     }

@@ -54,7 +54,8 @@ class PopularMoviesFragment : Fragment(), ClickListener {
 
     override fun onResume() {
         super.onResume()
-        moviesAdapter.notifyDataSetChanged()
+        moviesViewModel.getPopularMovies()
+        //moviesAdapter.notifyDataSetChanged()
     }
 
     private fun observeMovies(){

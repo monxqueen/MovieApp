@@ -26,7 +26,7 @@ class PopularMoviesRepositoryImpl(
                         .map { movieResponse ->
                             movieLocalDataSource
                                 .getFavoriteMovies()
-                                .map { favoriteMovieList ->
+                                .collect { favoriteMovieList ->
                                     val result = favoriteMovieList.any { favoriteMovie ->
                                         favoriteMovie.id == movieResponse.id
                                     }
@@ -49,7 +49,7 @@ class PopularMoviesRepositoryImpl(
                         .map { movieResponse ->
                             movieLocalDataSource
                                 .getFavoriteMovies()
-                                .map { favoriteMovieList ->
+                                .collect { favoriteMovieList ->
                                     val result = favoriteMovieList.any { favoriteMovie ->
                                         favoriteMovie.id == movieResponse.id
                                     }

@@ -1,5 +1,6 @@
-package com.monique.projetointegrador.domain.model
+package com.monique.projetointegrador.features.moviedetails.domain.model
 
+import com.monique.projetointegrador.domain.model.Genre
 import com.monique.projetointegrador.features.moviedetails.domain.model.MovieDetail
 import org.junit.Assert
 import org.junit.Test

@@ -22,6 +22,6 @@ class SearchForMovieTest {
 
     @Test
     fun check_if_edit_text_is_displayed(){
-        onView(ViewMatchers.withId(R.id.searchMovie)).check(matches(isDisplayed()))
+        onView(ViewMatchers.withId(R.id.searchMovieEditText)).check(matches(isDisplayed()))
     }
 }

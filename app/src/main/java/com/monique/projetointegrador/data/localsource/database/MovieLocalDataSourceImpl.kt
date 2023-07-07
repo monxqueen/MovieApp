@@ -1,14 +1,11 @@
 package com.monique.projetointegrador.data.localsource.database
 
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
-import com.monique.projetointegrador.data.localsource.MovieMemoryDataSourceImpl
 import com.monique.projetointegrador.data.mappers.MovieDataMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
 import com.monique.projetointegrador.data.model.movies.MovieResponse
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.IllegalStateException
 
 class MovieLocalDataSourceImpl(
     private val movieDataMapper: MovieDataMapper,

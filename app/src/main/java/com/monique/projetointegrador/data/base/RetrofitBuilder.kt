@@ -1,13 +1,11 @@
 package com.monique.projetointegrador.data.base
 
-import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitBuilder {
-
     private fun getLoggingInterceptor(): OkHttpClient.Builder {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY

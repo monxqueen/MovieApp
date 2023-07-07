@@ -1,15 +1,12 @@
 package com.monique.projetointegrador.features.popularmovies.data.repository
 
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
-import com.monique.projetointegrador.data.mappers.MovieMapper
-import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.features.popularmovies.data.mapper.PopularMovieMapper
 import com.monique.projetointegrador.features.popularmovies.data.remotesource.PopularMoviesRemoteSource
 import com.monique.projetointegrador.features.popularmovies.domain.repository.PopularMoviesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 
 class PopularMoviesRepositoryImpl(
     private val movieMapper: PopularMovieMapper,

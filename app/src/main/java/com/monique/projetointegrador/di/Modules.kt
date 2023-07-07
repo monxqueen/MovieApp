@@ -7,7 +7,8 @@ import com.monique.projetointegrador.data.mappers.GenreMapper
 import com.monique.projetointegrador.data.mappers.MovieDataMapper
 import com.monique.projetointegrador.data.mappers.MovieMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
-import com.monique.projetointegrador.data.remotesource.MoviesRemoteSource
+import com.monique.projetointegrador.data.remotesource.GenresApi
+import com.monique.projetointegrador.data.remotesource.GenresRemoteDataSourceImpl
 import com.monique.projetointegrador.data.repository.GenresRepositoryImpl
 import com.monique.projetointegrador.domain.repository.GenresRepository
 import com.monique.projetointegrador.domain.usecase.GetGenresUseCase
@@ -27,7 +28,9 @@ class Modules {
         }
         factory<GenresRepository> {
             GenresRepositoryImpl(
-                moviesRemoteSource = get<Retrofit>().create(MoviesRemoteSource::class.java),
+                genresRemoteDataSource = GenresRemoteDataSourceImpl(
+                    genresApi = get<Retrofit>().create(GenresApi::class.java)
+                ),
                 genreMapper = get(),
             )
         }

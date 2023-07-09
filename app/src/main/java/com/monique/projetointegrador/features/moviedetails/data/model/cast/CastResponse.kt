@@ -2,7 +2,7 @@ package com.monique.projetointegrador.features.moviedetails.data.model.cast
 
 import com.google.gson.annotations.SerializedName
 
-class CastResponse(
+internal data class CastResponse(
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("profile_path")

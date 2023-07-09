@@ -5,7 +5,7 @@ import com.monique.projetointegrador.features.popularmovies.data.model.PopularMo
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface PopularMoviesRemoteSource {
+internal interface PopularMoviesRemoteSource {
     @GET("movie/popular")
     suspend fun getPopularMovies(): PopularMoviesListResponse
 

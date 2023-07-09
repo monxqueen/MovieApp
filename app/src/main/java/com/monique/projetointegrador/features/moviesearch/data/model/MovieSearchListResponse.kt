@@ -2,12 +2,12 @@ package com.monique.projetointegrador.features.moviesearch.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieSearchListResponse(
+internal data class MovieSearchListResponse(
     @SerializedName("results")
     val movieResults: List<MovieSearchResponse>
 )
 
-data class MovieSearchResponse(
+internal data class MovieSearchResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("poster_path")

@@ -10,7 +10,7 @@ import com.monique.projetointegrador.data.base.Constants
 import com.monique.projetointegrador.databinding.ItemCastBinding
 import com.monique.projetointegrador.features.moviedetails.domain.model.Cast
 
-class CastRvAdapter(
+internal class CastRvAdapter(
     val context: Context
 ): ListAdapter<Cast, CastRvAdapter.ViewHolder>(DiffUtilCast()) {
 
@@ -41,7 +41,7 @@ class CastRvAdapter(
 
 }
 
-class DiffUtilCast : androidx.recyclerview.widget.DiffUtil.ItemCallback<Cast>() {
+internal class DiffUtilCast : androidx.recyclerview.widget.DiffUtil.ItemCallback<Cast>() {
     override fun areItemsTheSame(oldItem: Cast, newItem: Cast): Boolean {
         return oldItem.name == newItem.name
     }

@@ -3,7 +3,7 @@ package com.monique.projetointegrador.features.moviedetails.data.model
 import com.google.gson.annotations.SerializedName
 import com.monique.projetointegrador.domain.model.Genre
 
-class MovieDetailResponse(
+internal data class MovieDetailResponse(
     @SerializedName("backdrop_path")
     val backdropPath: String? = null,
     @SerializedName("genres")

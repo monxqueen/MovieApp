@@ -4,6 +4,7 @@ import com.monique.projetointegrador.features.moviesearch.data.mapper.MovieSearc
 import com.monique.projetointegrador.features.moviesearch.data.remotesource.MovieSearchRemoteSource
 import com.monique.projetointegrador.features.moviesearch.data.repository.MovieSearchRepositoryImpl
 import com.monique.projetointegrador.features.moviesearch.domain.SearchForMovieUseCase
+import com.monique.projetointegrador.features.moviesearch.domain.SearchForMovieUseCaseImpl
 import com.monique.projetointegrador.features.moviesearch.domain.repository.MovieSearchRepository
 import com.monique.projetointegrador.features.moviesearch.presentation.SearchMoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -11,7 +12,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-class MovieSearchModule {
+internal class MovieSearchModule {
     private val dataModule = module {
         factory<MovieSearchRepository> {
             MovieSearchRepositoryImpl(
@@ -24,7 +25,7 @@ class MovieSearchModule {
     }
 
     private val domainModule = module {
-        factory { SearchForMovieUseCase(moviesRepository = get()) }
+        factory<SearchForMovieUseCase> { SearchForMovieUseCaseImpl(moviesRepository = get()) }
     }
 
     private val presentationModule = module {

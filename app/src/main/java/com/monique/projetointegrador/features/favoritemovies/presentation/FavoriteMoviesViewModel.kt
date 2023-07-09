@@ -9,6 +9,7 @@ import com.monique.projetointegrador.domain.model.Genre
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.domain.usecase.GetGenresUseCase
 import com.monique.projetointegrador.features.favoritemovies.domain.FavoriteMoviesUseCase
+import com.monique.projetointegrador.features.favoritemovies.domain.FavoriteMoviesUseCaseImpl
 import com.monique.projetointegrador.presentation.model.ViewState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-class FavoriteMoviesViewModel(
+internal class FavoriteMoviesViewModel(
     private val favoriteMoviesUseCase: FavoriteMoviesUseCase,
     private val getGenresUseCase: GetGenresUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO

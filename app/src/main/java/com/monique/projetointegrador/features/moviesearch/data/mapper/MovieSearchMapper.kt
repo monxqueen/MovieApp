@@ -3,7 +3,7 @@ package com.monique.projetointegrador.features.moviesearch.data.mapper
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.features.moviesearch.data.model.MovieSearchResponse
 
-class MovieSearchMapper {
+internal class MovieSearchMapper {
 
     fun map(movieResponseList: List<MovieSearchResponse>): List<Movie> {
         val movies = mutableListOf<Movie>()

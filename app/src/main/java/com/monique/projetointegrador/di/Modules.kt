@@ -12,6 +12,7 @@ import com.monique.projetointegrador.data.remotesource.GenresRemoteDataSourceImp
 import com.monique.projetointegrador.data.repository.GenresRepositoryImpl
 import com.monique.projetointegrador.domain.repository.GenresRepository
 import com.monique.projetointegrador.domain.usecase.GetGenresUseCase
+import com.monique.projetointegrador.domain.usecase.GetGenresUseCaseImpl
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -38,7 +39,7 @@ class Modules {
     }
 
     private val domainModules = module {
-        factory { GetGenresUseCase(repository = get()) }
+        factory<GetGenresUseCase> { GetGenresUseCaseImpl(repository = get()) }
     }
 
     fun loadModules() = loadKoinModules(listOf(dataModules, domainModules))

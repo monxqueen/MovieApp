@@ -3,7 +3,7 @@ package com.monique.projetointegrador.features.moviedetails.data.mapper
 import com.monique.projetointegrador.features.moviedetails.data.model.certification.ReleaseDatesResponse
 import com.monique.projetointegrador.features.moviedetails.domain.model.Certification
 
-class CertificationMapper {
+internal class CertificationMapper {
     fun map(certificationList: List<ReleaseDatesResponse>?): List<Certification>{
         val certifications = mutableListOf<Certification>()
         certificationList?.let {

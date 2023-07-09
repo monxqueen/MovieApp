@@ -3,7 +3,7 @@ package com.monique.projetointegrador.features.moviedetails.data.mapper
 import com.monique.projetointegrador.features.moviedetails.data.model.cast.CastResponse
 import com.monique.projetointegrador.features.moviedetails.domain.model.Cast
 
-class CastMapper {
+internal class CastMapper {
     fun map(castList: List<CastResponse>): List<Cast>{
         val celebrities = mutableListOf<Cast>()
         castList.forEach {

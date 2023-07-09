@@ -16,7 +16,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class GetGenresUseCaseTest {
     private val repository: GenresRepository = mockk()
-    private val useCase = GetGenresUseCase(repository)
+    private val useCase = GetGenresUseCaseImpl(repository)
 
     @Test
     fun `executeGenres function should return genre list when repository returns success`() = runBlocking {

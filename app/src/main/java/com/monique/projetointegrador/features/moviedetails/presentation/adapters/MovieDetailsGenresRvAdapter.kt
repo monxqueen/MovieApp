@@ -8,7 +8,7 @@ import com.monique.projetointegrador.databinding.ItemMovieGenresBinding
 import com.monique.projetointegrador.domain.model.Genre
 import com.monique.projetointegrador.presentation.adapter.DiffUtilGenre
 
-class MovieDetailsGenresRvAdapter
+internal class MovieDetailsGenresRvAdapter
     : ListAdapter<Genre, MovieDetailsGenresRvAdapter.ViewHolder>(DiffUtilGenre()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

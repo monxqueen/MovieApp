@@ -6,7 +6,7 @@ import com.monique.projetointegrador.features.moviesearch.data.model.MovieSearch
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieSearchRemoteSource {
+internal interface MovieSearchRemoteSource {
     @GET("search/movie")
     suspend fun searchForMovie(@Query("query") movieSearched: Uri): MovieSearchListResponse
 }

@@ -6,7 +6,7 @@ import com.monique.projetointegrador.features.moviedetails.data.model.certificat
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MovieDetailsRemoteSource {
+internal interface MovieDetailsRemoteSource {
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailResponse
 

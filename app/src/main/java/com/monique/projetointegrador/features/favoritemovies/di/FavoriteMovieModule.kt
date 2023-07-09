@@ -4,13 +4,14 @@ import com.monique.projetointegrador.data.mappers.MovieMapper
 import com.monique.projetointegrador.data.mappers.MovieResponseMapper
 import com.monique.projetointegrador.features.favoritemovies.data.repository.FavoriteMoviesRepositoryImpl
 import com.monique.projetointegrador.features.favoritemovies.domain.FavoriteMoviesUseCase
+import com.monique.projetointegrador.features.favoritemovies.domain.FavoriteMoviesUseCaseImpl
 import com.monique.projetointegrador.features.favoritemovies.domain.repository.FavoriteMoviesRepository
 import com.monique.projetointegrador.features.favoritemovies.presentation.FavoriteMoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
-class FavoriteMovieModule {
+internal class FavoriteMovieModule {
     private val dataModule = module {
         factory<FavoriteMoviesRepository> {
             FavoriteMoviesRepositoryImpl(
@@ -22,7 +23,7 @@ class FavoriteMovieModule {
     }
 
     private val domainModule = module {
-        factory { FavoriteMoviesUseCase(favoriteMoviesRepository = get()) }
+        factory<FavoriteMoviesUseCase> { FavoriteMoviesUseCaseImpl(favoriteMoviesRepository = get()) }
     }
 
     private val presentationModule = module {

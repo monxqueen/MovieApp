@@ -8,7 +8,7 @@ import com.monique.projetointegrador.features.popularmovies.domain.repository.Po
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class PopularMoviesRepositoryImpl(
+internal class PopularMoviesRepositoryImpl(
     private val movieMapper: PopularMovieMapper,
     private val moviesRemoteSource: PopularMoviesRemoteSource,
     private val movieLocalDataSource: MovieLocalDataSource

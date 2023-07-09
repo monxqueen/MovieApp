@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import com.monique.projetointegrador.databinding.FragmentHomeMoviesBinding
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.ClickListener
-import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.features.moviedetails.presentation.MovieDetailsActivity
 import com.monique.projetointegrador.features.moviedetails.presentation.MovieDetailsActivity.Companion.MOVIE_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoriteMoviesFragment : Fragment(), ClickListener {
+internal class FavoriteMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter

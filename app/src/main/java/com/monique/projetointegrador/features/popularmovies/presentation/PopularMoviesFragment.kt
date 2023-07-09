@@ -11,14 +11,13 @@ import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.GeneralErrorActivity
 import com.monique.projetointegrador.features.moviedetails.presentation.MovieDetailsActivity
 import com.monique.projetointegrador.presentation.ClickListener
-import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState
 import com.monique.projetointegrador.features.moviedetails.presentation.MovieDetailsActivity.Companion.MOVIE_ID
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PopularMoviesFragment : Fragment(), ClickListener {
+internal class PopularMoviesFragment : Fragment(), ClickListener {
 
     private lateinit var moviesAdapter: MoviesRvAdapter
     private lateinit var genresAdapter: GenresRvAdapter

@@ -19,7 +19,7 @@ import com.monique.projetointegrador.presentation.adapter.ViewPagerAdapter.Compa
 import com.monique.projetointegrador.features.moviesearch.presentation.SearchMoviesFragment
 
 
-class HomeActivity : AppCompatActivity(R.layout.activity_home) {
+internal class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
     private var searchMovieEditText: EditText? = null
     private lateinit var searchBtn: ImageButton

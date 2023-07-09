@@ -3,9 +3,9 @@ package com.monique.projetointegrador.features.moviedetails.data.mapper
 import com.monique.projetointegrador.features.moviedetails.data.model.MovieDetailResponse
 import com.monique.projetointegrador.features.moviedetails.domain.model.MovieDetail
 
-class MovieDetailMapper {
+internal class MovieDetailMapper {
     fun map(movieResponse: MovieDetailResponse): MovieDetail {
-        val movieDetailed = MovieDetail(
+        return MovieDetail(
             backdropPath = movieResponse.backdropPath,
             genres = movieResponse.genres,
             id = movieResponse.id,
@@ -16,6 +16,5 @@ class MovieDetailMapper {
             title = movieResponse.title,
             isFavorite = movieResponse.isFavorite
         )
-        return movieDetailed
     }
 }

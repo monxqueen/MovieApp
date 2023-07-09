@@ -2,7 +2,7 @@ package com.monique.projetointegrador.features.moviedetails.domain.model
 
 import com.monique.projetointegrador.domain.model.Genre
 
-class MovieDetail(
+data class MovieDetail(
     val backdropPath: String? = null,
     val genres: List<Genre>,
     val id: Int,

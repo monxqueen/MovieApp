@@ -3,12 +3,12 @@ package com.monique.projetointegrador.features.popularmovies.data.model
 import com.google.gson.annotations.SerializedName
 import com.monique.projetointegrador.data.model.movies.MovieResponse
 
-data class PopularMoviesListResponse(
+internal data class PopularMoviesListResponse(
     @SerializedName("results")
     val movieResults: List<PopularMovieResponse>
 )
 
-data class PopularMovieResponse(
+internal data class PopularMovieResponse(
     @SerializedName("id")
     val id: Int,
     @SerializedName("poster_path")

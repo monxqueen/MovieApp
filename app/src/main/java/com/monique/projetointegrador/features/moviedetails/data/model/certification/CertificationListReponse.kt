@@ -2,4 +2,4 @@ package com.monique.projetointegrador.features.moviedetails.data.model.certifica
 
 import com.google.gson.annotations.SerializedName
 
-class CertificationListReponse(@SerializedName("results") val results: List<CertificationResponse>)
+internal data class CertificationListReponse(@SerializedName("results") val results: List<CertificationResponse>)

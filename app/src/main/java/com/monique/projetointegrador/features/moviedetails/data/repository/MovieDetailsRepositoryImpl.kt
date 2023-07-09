@@ -1,4 +1,4 @@
-package com.monique.projetointegrador.features.moviedetails.data.repository
+ package com.monique.projetointegrador.features.moviedetails.data.repository
 
 import com.monique.projetointegrador.data.localsource.MovieLocalDataSource
 import com.monique.projetointegrador.features.moviedetails.data.mapper.CastMapper
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-class MovieDetailsRepositoryImpl(
+internal class MovieDetailsRepositoryImpl(
     private val castMapper: CastMapper,
     private val movieDetailMapper: MovieDetailMapper,
     private val certificationMapper: CertificationMapper,
@@ -41,21 +41,6 @@ class MovieDetailsRepositoryImpl(
                         }
 
                 )
-
-                /*movieDetailMapper.map(
-                    moviesRemoteSource
-                        .getMovieDetails(movieId).also {  movieResponse ->
-                            movieLocalDataSource
-                                .getFavoriteMovies()
-                                .map {favoriteMovieList ->
-                                    val result = favoriteMovieList.any { favoriteMovie ->
-                                        favoriteMovie.id == movieResponse.id
-                                    }
-                                    movieResponse.isFavorite = result
-                                    movieResponse
-                                }
-                        }
-                )*/
             )
         }
     }

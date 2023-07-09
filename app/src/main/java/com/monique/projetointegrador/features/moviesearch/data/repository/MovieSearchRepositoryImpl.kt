@@ -9,7 +9,7 @@ import com.monique.projetointegrador.features.moviesearch.domain.repository.Movi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class MovieSearchRepositoryImpl(
+internal class MovieSearchRepositoryImpl(
     private val moviesRemoteSource: MovieSearchRemoteSource,
     private val movieMapper: MovieSearchMapper,
     private val movieLocalDataSource: MovieLocalDataSource

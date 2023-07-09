@@ -20,7 +20,7 @@ import kotlin.time.ExperimentalTime
 class GetMovieDetailsUseCaseTest {
 
     private val repository: MovieDetailsRepository = mockk()
-    private val useCase = GetMovieDetailsUseCase(repository)
+    private val useCase = GetMovieDetailsUseCaseImpl(repository)
 
     @Test
     fun `executeMovie function should return the movie details when repository returns success`()

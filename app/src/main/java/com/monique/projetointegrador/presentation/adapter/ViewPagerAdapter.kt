@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.monique.projetointegrador.features.popularmovies.presentation.PopularMoviesFragment
 import com.monique.projetointegrador.features.favoritemovies.presentation.FavoriteMoviesFragment
 
-class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
+internal class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
     override fun getItemCount(): Int {
         return 2
     }

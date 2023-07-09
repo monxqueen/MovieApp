@@ -6,7 +6,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.monique.projetointegrador.R
 
-class GeneralErrorActivity : AppCompatActivity() {
+internal class GeneralErrorActivity : AppCompatActivity() {
 
     private lateinit var closeButton: ImageButton
     private lateinit var tryAgainButton: TextView

@@ -14,7 +14,6 @@ import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.presentation.GeneralErrorActivity
 import com.monique.projetointegrador.features.moviedetails.presentation.MovieDetailsActivity
 import com.monique.projetointegrador.presentation.ClickListener
-import com.monique.projetointegrador.presentation.MoviesViewModel
 import com.monique.projetointegrador.presentation.adapter.GenresRvAdapter
 import com.monique.projetointegrador.presentation.adapter.MoviesRvAdapter
 import com.monique.projetointegrador.presentation.model.ViewState

@@ -4,7 +4,9 @@ import com.monique.projetointegrador.features.popularmovies.data.mapper.PopularM
 import com.monique.projetointegrador.features.popularmovies.data.remotesource.PopularMoviesRemoteSource
 import com.monique.projetointegrador.features.popularmovies.data.repository.PopularMoviesRepositoryImpl
 import com.monique.projetointegrador.features.popularmovies.domain.GetMoviesByGenreUseCase
+import com.monique.projetointegrador.features.popularmovies.domain.GetMoviesByGenreUseCaseImpl
 import com.monique.projetointegrador.features.popularmovies.domain.GetPopularMoviesUseCase
+import com.monique.projetointegrador.features.popularmovies.domain.GetPopularMoviesUseCaseImpl
 import com.monique.projetointegrador.features.popularmovies.domain.repository.PopularMoviesRepository
 import com.monique.projetointegrador.features.popularmovies.presentation.PopularMoviesViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -12,7 +14,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-class PopularMoviesModule {
+internal class PopularMoviesModule {
     private val dataModule = module {
         factory<PopularMoviesRepository> {
             PopularMoviesRepositoryImpl(
@@ -24,8 +26,8 @@ class PopularMoviesModule {
     }
 
     private val domainModule = module {
-        factory { GetMoviesByGenreUseCase(repository = get()) }
-        factory { GetPopularMoviesUseCase(moviesRepository = get()) }
+        factory<GetMoviesByGenreUseCase>  { GetMoviesByGenreUseCaseImpl(repository = get()) }
+        factory<GetPopularMoviesUseCase> { GetPopularMoviesUseCaseImpl(moviesRepository = get()) }
     }
 
     private val presentationModule = module {

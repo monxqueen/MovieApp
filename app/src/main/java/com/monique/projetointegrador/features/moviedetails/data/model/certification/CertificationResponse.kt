@@ -2,7 +2,7 @@ package com.monique.projetointegrador.features.moviedetails.data.model.certifica
 
 import com.google.gson.annotations.SerializedName
 
-class CertificationResponse(
+internal data class CertificationResponse(
     @SerializedName("iso_3166_1")
     val region: String,
     @SerializedName("release_dates")

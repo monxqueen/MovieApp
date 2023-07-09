@@ -3,7 +3,7 @@ package com.monique.projetointegrador.features.popularmovies.data.mapper
 import com.monique.projetointegrador.domain.model.Movie
 import com.monique.projetointegrador.features.popularmovies.data.model.PopularMovieResponse
 
-class PopularMovieMapper {
+internal class PopularMovieMapper {
     fun map(movieResponseList: List<PopularMovieResponse>): List<Movie> {
         val movies = mutableListOf<Movie>()
         movieResponseList.forEach {

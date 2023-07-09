@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.monique.projetointegrador.features.moviedetails.domain.model.Cast
 import com.monique.projetointegrador.features.moviedetails.domain.model.Certification
 import com.monique.projetointegrador.domain.model.Movie
+import com.monique.projetointegrador.features.moviedetails.domain.GetMovieDetailsUseCase
 import com.monique.projetointegrador.features.moviedetails.domain.model.MovieDetail
 import com.monique.projetointegrador.features.moviedetails.domain.GetMovieDetailsUseCaseImpl
 import com.monique.projetointegrador.presentation.model.ViewState
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 internal class MovieDetailsViewModel(
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCaseImpl,
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel() {
 
